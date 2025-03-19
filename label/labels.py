@@ -10,15 +10,34 @@ class Labels(object):
 
 
     def add(self):
+        """
+            Yeni bir etiket ekler.
+
+            Bu method, kullanıcının girdiği metni etiket olarak ekler.
+            Etiket text input alanından alınır ve hem etiket listesine
+            hem de görsel listeye eklenir.
+
+            Returns:
+                None
+        """
         text = self._connector.lineEdit_add_label.text()
         if text != '':
             self.label_list.append({len(self.label_list): text})
-            print(self.label_list)
             item = QListWidgetItem(text)
             self._connector.listWidget_label_list.addItem(item)
             self._connector.lineEdit_add_label.clear()
 
     def export_labels(self):
+        """
+            Etiketleri bir dosyaya dışa aktarır.
+
+            Bu method, oluşturulan etiket listesini (.lbl) uzantılı bir dosyaya kaydeder.
+            Kullanıcı bir dosya konumu ve ismi seçmek için dosya kaydetme dialog penceresi açılır.
+            Her etiket, dosyaya ayrı bir satır olarak kaydedilir.
+
+            Returns:
+                None
+        """
         if not self.label_list:
             print("No labels to export.")
             return
@@ -29,6 +48,16 @@ class Labels(object):
                     f.write(f"{label}\n")
 
     def import_labels(self):
+        """
+            Etiketleri bir dosyadan içe aktarın ve etiket listesine ekleyin.
+
+            Bu fonksiyon, kullanıcının bir etiket dosyası seçmesi için bir dosya iletişim kutusu açar,
+            dosyanın içeriğini okur ve her etiketi etiket listesine
+            ve QListWidget'a ekler.
+
+            Returns:
+                None
+        """
         self.label_list.clear()
         fname = QFileDialog.getOpenFileName(self._connector, 'Insert Labels', '', 'Label Files (*.lbl)')[0]
         if fname:
@@ -39,4 +68,3 @@ class Labels(object):
                         item = QListWidgetItem(text[len(self.label_list)])
                         self._connector.listWidget_label_list.addItem(item)
                         self.label_list.append(text)
-        print(self.label_list)
