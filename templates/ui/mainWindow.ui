@@ -29,6 +29,10 @@
 }
 QLabel{
 	color: #BBE1FA;
+}
+QLineEdit{
+	padding-left: 5px;
+	padding-right: 5px;
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -67,7 +71,7 @@ QLabel{
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item>
+       <item alignment="Qt::AlignLeft">
         <widget class="QWidget" name="widget" native="true"/>
        </item>
        <item alignment="Qt::AlignHCenter">
@@ -189,12 +193,12 @@ QLabel{
     <item>
      <widget class="QStackedWidget" name="pages">
       <property name="styleSheet">
-       <string notr="true">#page_labeling, #page_data_importing{
+       <string notr="true">#page_labeling, #page_data_importing, #page_init_label{
 	background-color: #1B262C;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_data_importing">
        <layout class="QHBoxLayout" name="layout_page_data_importing">
@@ -256,6 +260,270 @@ QLabel{
            </item>
           </layout>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_init_label">
+       <property name="styleSheet">
+        <string notr="true">#widget_init_label_area, #widget_insert_label_area{
+	border-radius:10px;
+	border: 3px solid #3282B8;
+}
+QListWidget{
+	background-color: transparent;
+	color: #BBE1FA;
+}
+QPushButton{
+	background-color: #3282B8;
+	color: #FFFFFF;
+	border-radius: 5px;
+	padding: 5px 10px 5px 10px;
+}</string>
+       </property>
+       <layout class="QVBoxLayout" name="layout_page_init_label">
+        <property name="spacing">
+         <number>35</number>
+        </property>
+        <property name="bottomMargin">
+         <number>9</number>
+        </property>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QWidget" name="widget_insert_label_area" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>450</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>150</height>
+           </size>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="topMargin">
+            <number>25</number>
+           </property>
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QLabel" name="icon_insert_label">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/insert.svg</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_import_labels">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Import Labels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QWidget" name="widget_init_label_area" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>450</width>
+            <height>300</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>300</height>
+           </size>
+          </property>
+          <layout class="QVBoxLayout" name="layout_init_label_area">
+           <property name="leftMargin">
+            <number>20</number>
+           </property>
+           <property name="rightMargin">
+            <number>20</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_init_label_header" native="true">
+             <layout class="QVBoxLayout" name="layout_init_label_header">
+              <item alignment="Qt::AlignHCenter">
+               <widget class="QLabel" name="icon_label">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/label.svg</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_create_label">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Create Label&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget_label_list"/>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_add_label" native="true">
+             <layout class="QHBoxLayout" name="layout_add_label">
+              <property name="spacing">
+               <number>20</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_add_label">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>28</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_add_label">
+                <property name="text">
+                 <string>Add</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QWidget" name="widget_init_label_button_area" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>450</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	border: 2px solid #3282B8;
+	background-color: transparent;
+	color: #3282B8;
+	border-radius: 5px;
+	padding: 5px 10px 5px 10px;
+}
+QPushButton:hover{
+	background-color: #3282B8;
+	color: #FFFFFF;
+	border-radius: 5px;
+	padding: 5px 10px 5px 10px;
+}</string>
+          </property>
+          <layout class="QHBoxLayout" name="layout_init_label_button_area">
+           <property name="spacing">
+            <number>50</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton_continue_labeling">
+             <property name="text">
+              <string>Continue</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_export_labels">
+             <property name="text">
+              <string>Export Labels</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -358,7 +626,7 @@ QLabel{
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>80</height>
+        <height>20</height>
        </size>
       </property>
      </widget>

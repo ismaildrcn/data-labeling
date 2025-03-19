@@ -23,6 +23,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QLabel{\n"
 "    color: #BBE1FA;\n"
+"}\n"
+"QLineEdit{\n"
+"    padding-left: 5px;\n"
+"    padding-right: 5px;\n"
 "}")
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -39,7 +43,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.widget = QtWidgets.QWidget(self.widget_top)
         self.widget.setObjectName("widget")
-        self.horizontalLayout_2.addWidget(self.widget)
+        self.horizontalLayout_2.addWidget(self.widget, 0, QtCore.Qt.AlignLeft)
         self.label_image_labeling_title = QtWidgets.QLabel(self.widget_top)
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -89,7 +93,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.widget_topbar_actions, 0, QtCore.Qt.AlignRight)
         self.verticalLayout.addWidget(self.widget_top)
         self.pages = QtWidgets.QStackedWidget(self.centralwidget)
-        self.pages.setStyleSheet("#page_labeling, #page_data_importing{\n"
+        self.pages.setStyleSheet("#page_labeling, #page_data_importing, #page_init_label{\n"
 "    background-color: #1B262C;\n"
 "}")
         self.pages.setObjectName("pages")
@@ -121,6 +125,119 @@ class Ui_MainWindow(object):
         self.layout_importing_area.addWidget(self.label_drop_images)
         self.layout_page_data_importing.addWidget(self.widget_importing_area)
         self.pages.addWidget(self.page_data_importing)
+        self.page_init_label = QtWidgets.QWidget()
+        self.page_init_label.setStyleSheet("#widget_init_label_area, #widget_insert_label_area{\n"
+"    border-radius:10px;\n"
+"    border: 3px solid #3282B8;\n"
+"}\n"
+"QListWidget{\n"
+"    background-color: transparent;\n"
+"    color: #BBE1FA;\n"
+"}\n"
+"QPushButton{\n"
+"    background-color: #3282B8;\n"
+"    color: #FFFFFF;\n"
+"    border-radius: 5px;\n"
+"    padding: 5px 10px 5px 10px;\n"
+"}")
+        self.page_init_label.setObjectName("page_init_label")
+        self.layout_page_init_label = QtWidgets.QVBoxLayout(self.page_init_label)
+        self.layout_page_init_label.setContentsMargins(-1, -1, -1, 9)
+        self.layout_page_init_label.setSpacing(35)
+        self.layout_page_init_label.setObjectName("layout_page_init_label")
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.layout_page_init_label.addItem(spacerItem)
+        self.widget_insert_label_area = QtWidgets.QWidget(self.page_init_label)
+        self.widget_insert_label_area.setMinimumSize(QtCore.QSize(450, 150))
+        self.widget_insert_label_area.setMaximumSize(QtCore.QSize(450, 150))
+        self.widget_insert_label_area.setObjectName("widget_insert_label_area")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.widget_insert_label_area)
+        self.verticalLayout_3.setContentsMargins(-1, 25, -1, -1)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.icon_insert_label = QtWidgets.QLabel(self.widget_insert_label_area)
+        self.icon_insert_label.setMinimumSize(QtCore.QSize(60, 60))
+        self.icon_insert_label.setMaximumSize(QtCore.QSize(60, 60))
+        self.icon_insert_label.setText("")
+        self.icon_insert_label.setPixmap(QtGui.QPixmap(":/images/templates/images/insert.svg"))
+        self.icon_insert_label.setScaledContents(True)
+        self.icon_insert_label.setObjectName("icon_insert_label")
+        self.verticalLayout_3.addWidget(self.icon_insert_label, 0, QtCore.Qt.AlignHCenter)
+        self.label_import_labels = QtWidgets.QLabel(self.widget_insert_label_area)
+        self.label_import_labels.setObjectName("label_import_labels")
+        self.verticalLayout_3.addWidget(self.label_import_labels)
+        self.layout_page_init_label.addWidget(self.widget_insert_label_area, 0, QtCore.Qt.AlignHCenter)
+        self.widget_init_label_area = QtWidgets.QWidget(self.page_init_label)
+        self.widget_init_label_area.setMinimumSize(QtCore.QSize(450, 300))
+        self.widget_init_label_area.setMaximumSize(QtCore.QSize(450, 300))
+        self.widget_init_label_area.setObjectName("widget_init_label_area")
+        self.layout_init_label_area = QtWidgets.QVBoxLayout(self.widget_init_label_area)
+        self.layout_init_label_area.setContentsMargins(20, -1, 20, -1)
+        self.layout_init_label_area.setObjectName("layout_init_label_area")
+        self.widget_init_label_header = QtWidgets.QWidget(self.widget_init_label_area)
+        self.widget_init_label_header.setObjectName("widget_init_label_header")
+        self.layout_init_label_header = QtWidgets.QVBoxLayout(self.widget_init_label_header)
+        self.layout_init_label_header.setObjectName("layout_init_label_header")
+        self.icon_label = QtWidgets.QLabel(self.widget_init_label_header)
+        self.icon_label.setMinimumSize(QtCore.QSize(60, 60))
+        self.icon_label.setMaximumSize(QtCore.QSize(60, 60))
+        self.icon_label.setText("")
+        self.icon_label.setPixmap(QtGui.QPixmap(":/images/templates/images/label.svg"))
+        self.icon_label.setScaledContents(True)
+        self.icon_label.setObjectName("icon_label")
+        self.layout_init_label_header.addWidget(self.icon_label, 0, QtCore.Qt.AlignHCenter)
+        self.label_create_label = QtWidgets.QLabel(self.widget_init_label_header)
+        self.label_create_label.setObjectName("label_create_label")
+        self.layout_init_label_header.addWidget(self.label_create_label)
+        self.layout_init_label_area.addWidget(self.widget_init_label_header)
+        self.listWidget_label_list = QtWidgets.QListWidget(self.widget_init_label_area)
+        self.listWidget_label_list.setObjectName("listWidget_label_list")
+        self.layout_init_label_area.addWidget(self.listWidget_label_list)
+        self.widget_add_label = QtWidgets.QWidget(self.widget_init_label_area)
+        self.widget_add_label.setObjectName("widget_add_label")
+        self.layout_add_label = QtWidgets.QHBoxLayout(self.widget_add_label)
+        self.layout_add_label.setContentsMargins(0, -1, 0, -1)
+        self.layout_add_label.setSpacing(20)
+        self.layout_add_label.setObjectName("layout_add_label")
+        self.lineEdit_add_label = QtWidgets.QLineEdit(self.widget_add_label)
+        self.lineEdit_add_label.setMinimumSize(QtCore.QSize(0, 28))
+        self.lineEdit_add_label.setObjectName("lineEdit_add_label")
+        self.layout_add_label.addWidget(self.lineEdit_add_label)
+        self.pushButton_add_label = QtWidgets.QPushButton(self.widget_add_label)
+        self.pushButton_add_label.setObjectName("pushButton_add_label")
+        self.layout_add_label.addWidget(self.pushButton_add_label)
+        self.layout_init_label_area.addWidget(self.widget_add_label)
+        self.layout_page_init_label.addWidget(self.widget_init_label_area, 0, QtCore.Qt.AlignHCenter)
+        self.widget_init_label_button_area = QtWidgets.QWidget(self.page_init_label)
+        self.widget_init_label_button_area.setMinimumSize(QtCore.QSize(450, 50))
+        self.widget_init_label_button_area.setMaximumSize(QtCore.QSize(450, 16777215))
+        self.widget_init_label_button_area.setStyleSheet("QPushButton{\n"
+"    border: 2px solid #3282B8;\n"
+"    background-color: transparent;\n"
+"    color: #3282B8;\n"
+"    border-radius: 5px;\n"
+"    padding: 5px 10px 5px 10px;\n"
+"}\n"
+"QPushButton:hover{\n"
+"    background-color: #3282B8;\n"
+"    color: #FFFFFF;\n"
+"    border-radius: 5px;\n"
+"    padding: 5px 10px 5px 10px;\n"
+"}")
+        self.widget_init_label_button_area.setObjectName("widget_init_label_button_area")
+        self.layout_init_label_button_area = QtWidgets.QHBoxLayout(self.widget_init_label_button_area)
+        self.layout_init_label_button_area.setContentsMargins(0, 0, 0, 0)
+        self.layout_init_label_button_area.setSpacing(50)
+        self.layout_init_label_button_area.setObjectName("layout_init_label_button_area")
+        self.pushButton_continue_labeling = QtWidgets.QPushButton(self.widget_init_label_button_area)
+        self.pushButton_continue_labeling.setObjectName("pushButton_continue_labeling")
+        self.layout_init_label_button_area.addWidget(self.pushButton_continue_labeling)
+        self.pushButton_export_labels = QtWidgets.QPushButton(self.widget_init_label_button_area)
+        self.pushButton_export_labels.setObjectName("pushButton_export_labels")
+        self.layout_init_label_button_area.addWidget(self.pushButton_export_labels)
+        self.layout_page_init_label.addWidget(self.widget_init_label_button_area, 0, QtCore.Qt.AlignHCenter)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.layout_page_init_label.addItem(spacerItem1)
+        self.pages.addWidget(self.page_init_label)
         self.page_labeling = QtWidgets.QWidget()
         self.page_labeling.setObjectName("page_labeling")
         self.layout_page_labeling = QtWidgets.QHBoxLayout(self.page_labeling)
@@ -169,13 +286,13 @@ class Ui_MainWindow(object):
         self.pages.addWidget(self.page_labeling)
         self.verticalLayout.addWidget(self.pages)
         self.widget_bottom = QtWidgets.QWidget(self.centralwidget)
-        self.widget_bottom.setMinimumSize(QtCore.QSize(0, 80))
+        self.widget_bottom.setMinimumSize(QtCore.QSize(0, 20))
         self.widget_bottom.setObjectName("widget_bottom")
         self.verticalLayout.addWidget(self.widget_bottom)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -183,5 +300,10 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Visual Data Labeling"))
         self.label_image_labeling_title.setText(_translate("MainWindow", "Visual Data Labeling"))
         self.label_drop_images.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">Drop images</span></p><p align=\"center\">or </p><p align=\"center\"><span style=\" font-weight:600;\">Click here to select them</span></p></body></html>"))
+        self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Import Labels</span></p></body></html>"))
+        self.label_create_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Create Label</span></p></body></html>"))
+        self.pushButton_add_label.setText(_translate("MainWindow", "Add"))
+        self.pushButton_continue_labeling.setText(_translate("MainWindow", "Continue"))
+        self.pushButton_export_labels.setText(_translate("MainWindow", "Export Labels"))
         self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
 import rsrc_rc

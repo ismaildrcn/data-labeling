@@ -5,9 +5,11 @@ from PyQt5.QtCore import Qt, QRectF, QPointF
 
 
 from templates.ui.mainWindow import Ui_MainWindow as UI
-from mains.listener import Listener
-
 from widgets.graphics_view import CustomGraphicsView
+
+from mains.listener import Listener
+from label.labels import Labels
+
 
 
 
@@ -27,6 +29,7 @@ class Connector(QMainWindow, UI):
 
     def modules(self):
         self.listener = Listener(self)
+        self.labels = Labels(self)
 
     def connection(self):
         self.image_list.itemClicked.connect(self.load_selected_image)
@@ -35,6 +38,7 @@ class Connector(QMainWindow, UI):
     def initialize(self):
         self.setWindowFlags(Qt.FramelessWindowHint)
 
+        self.listWidget_label_list.setSpacing(5)
 
         self.graphicsView = CustomGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName("graphicsView")
@@ -47,6 +51,7 @@ class Connector(QMainWindow, UI):
         # self.image_list.setSpacing(10)
         self.image_list.setIconSize(QPixmap(150, 85).size())  # İkonları büyüt
         self.image_list.setGridSize(QPixmap(155, 90).size())  # Hücreleri genişlet
+        
         
     def import_images(self):
         self.image_path_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
