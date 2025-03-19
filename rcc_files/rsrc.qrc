@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="images">
+    <file>../templates/images/full-screen.svg</file>
+    <file>../templates/images/minus.svg</file>
+    <file>../templates/images/close.svg</file>
+    <file>../templates/images/drop-images.svg</file>
+  </qresource>
+</RCC>
