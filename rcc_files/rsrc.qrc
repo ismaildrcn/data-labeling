@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="images">
+    <file>../templates/images/down.svg</file>
+    <file>../templates/images/delete.svg</file>
+    <file>../templates/images/view.svg</file>
+    <file>../templates/images/unview.svg</file>
     <file>../templates/images/label.svg</file>
     <file>../templates/images/insert.svg</file>
     <file>../templates/images/full-screen.svg</file>

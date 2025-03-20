@@ -53,7 +53,7 @@ QLineEdit{
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>50</height>
+        <height>40</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -97,6 +97,12 @@ QLineEdit{
 }</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QPushButton" name="pushButton_hide_window">
             <property name="minimumSize">
@@ -198,7 +204,7 @@ QLineEdit{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_data_importing">
        <layout class="QHBoxLayout" name="layout_page_data_importing">
@@ -528,29 +534,32 @@ QPushButton:hover{
        </layout>
       </widget>
       <widget class="QWidget" name="page_labeling">
-       <layout class="QHBoxLayout" name="layout_page_labeling">
+       <property name="styleSheet">
+        <string notr="true">QListWidget{
+	background-color: transparent;
+}
+#widget_image_list, #widget_current_label_area{
+	background-color: rgba(50, 130, 184, 64);
+	border-radius: 10px;
+}</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QWidget" name="widget_image_list" native="true">
           <property name="minimumSize">
            <size>
-            <width>350</width>
+            <width>300</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>350</width>
+            <width>300</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">QListWidget{
-	background-color: transparent;
-}
-#widget_image_list{
-	background-color: rgba(50, 130, 184, 64);
-	border-radius: 10px;
-}</string>
+           <string notr="true"/>
           </property>
           <layout class="QVBoxLayout" name="layout_image_list">
            <property name="leftMargin">
@@ -575,7 +584,7 @@ QPushButton:hover{
               </font>
              </property>
              <property name="text">
-              <string>Görseller</string>
+              <string>Images</string>
              </property>
             </widget>
            </item>
@@ -614,6 +623,47 @@ QPushButton:hover{
            <property name="bottomMargin">
             <number>0</number>
            </property>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget_current_label_area" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="topMargin">
+            <number>12</number>
+           </property>
+           <property name="bottomMargin">
+            <number>12</number>
+           </property>
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QLabel" name="label">
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Labels</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="current_label_list"/>
+           </item>
           </layout>
          </widget>
         </item>

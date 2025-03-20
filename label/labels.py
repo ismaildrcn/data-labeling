@@ -1,70 +1,60 @@
-from PyQt5.QtWidgets import QListWidgetItem, QFileDialog
+from PyQt5.QtWidgets import QGraphicsRectItem, QListWidgetItem
+from PyQt5.QtCore import Qt
 
-import ast
+from label.widget import LabelWidget
+
 
 
 class Labels(object):
     def __init__(self, connector=None):
         self._connector = connector
-        self.label_list = []
+        self.label_widget = LabelWidget()
+
+    def add(self, source, coords, rect_obj):
+        widget = LabelWidget().setup(self._connector)
+        widget.label_list.addItems([item[index] for index, item in enumerate(self._connector.configurator.label_list)])
+        widget.label_list.setCurrentIndex(-1)
+
+        item = QListWidgetItem(self._connector.current_label_list)
+        item.setSizeHint(widget.main.sizeHint())
+        self._connector.current_label_list.setItemWidget(item, widget.main)
+        label = Label(source, coords, rect_obj, widget)
+        print(label)
+        widget.delete_label.clicked.connect(lambda: self.delete(label))
+        widget.view_label.clicked.connect(lambda: self.hide(label))
 
 
-    def add(self):
-        """
-            Yeni bir etiket ekler.
+    def hide(self, label):
+        if label.rect_obj:
+            label.rect_obj.setVisible(not label.rect_obj.isVisible())
 
-            Bu method, kullanıcının girdiği metni etiket olarak ekler.
-            Etiket text input alanından alınır ve hem etiket listesine
-            hem de görsel listeye eklenir.
+    def delete(self, label):
+        if label.rect_obj:
+            # Sahneyi al
+            scene = self._connector.scene
+            
+            # Rect'i sahneden sil
+            if label.rect_obj in scene.items():
+                scene.removeItem(label.rect_obj)
+                # Rect'i memory'den temizle
+                label.rect_obj = None
+            
+            # Widget'ı listeden bul ve sil
+            list_widget = self._connector.current_label_list
+            for index in range(list_widget.count()):
+                item = list_widget.item(index)
+                if list_widget.itemWidget(item) == label.widget.main:
+                    # Widget'ı item'dan ayır
+                    list_widget.setItemWidget(item, None)
+                    # Item'ı listeden sil
+                    list_widget.takeItem(index)
+                    # Widget'ı daha sonra sil
+                    label.widget.main.deleteLater()
+                    break
 
-            Returns:
-                None
-        """
-        text = self._connector.lineEdit_add_label.text()
-        if text != '':
-            self.label_list.append({len(self.label_list): text})
-            item = QListWidgetItem(text)
-            self._connector.listWidget_label_list.addItem(item)
-            self._connector.lineEdit_add_label.clear()
-
-    def export_labels(self):
-        """
-            Etiketleri bir dosyaya dışa aktarır.
-
-            Bu method, oluşturulan etiket listesini (.lbl) uzantılı bir dosyaya kaydeder.
-            Kullanıcı bir dosya konumu ve ismi seçmek için dosya kaydetme dialog penceresi açılır.
-            Her etiket, dosyaya ayrı bir satır olarak kaydedilir.
-
-            Returns:
-                None
-        """
-        if not self.label_list:
-            print("No labels to export.")
-            return
-        fname = QFileDialog.getSaveFileName(self._connector, 'Export Labels', '', 'Label Files (*.lbl)')[0]
-        if fname:
-            with open(f"{fname}.lbl", 'w') as f:
-                for label in self.label_list:
-                    f.write(f"{label}\n")
-
-    def import_labels(self):
-        """
-            Etiketleri bir dosyadan içe aktarın ve etiket listesine ekleyin.
-
-            Bu fonksiyon, kullanıcının bir etiket dosyası seçmesi için bir dosya iletişim kutusu açar,
-            dosyanın içeriğini okur ve her etiketi etiket listesine
-            ve QListWidget'a ekler.
-
-            Returns:
-                None
-        """
-        self.label_list.clear()
-        fname = QFileDialog.getOpenFileName(self._connector, 'Insert Labels', '', 'Label Files (*.lbl)')[0]
-        if fname:
-            with open(f"{fname}", 'r') as f:
-                for line in f:
-                    text = ast.literal_eval(line.strip())
-                    if text:
-                        item = QListWidgetItem(text[len(self.label_list)])
-                        self._connector.listWidget_label_list.addItem(item)
-                        self.label_list.append(text)
+class Label(object):
+    def __init__(self, source, coords, rect_obj, widget: LabelWidget):
+        self.source: str = source
+        self.coords: tuple = coords
+        self.rect_obj: QGraphicsRectItem = rect_obj
+        self.widget: LabelWidget = widget

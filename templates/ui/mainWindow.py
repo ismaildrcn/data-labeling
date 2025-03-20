@@ -33,7 +33,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.widget_top = QtWidgets.QWidget(self.centralwidget)
-        self.widget_top.setMinimumSize(QtCore.QSize(0, 50))
+        self.widget_top.setMinimumSize(QtCore.QSize(0, 40))
         self.widget_top.setStyleSheet("#widget_top{\n"
 "    background-color: rgb(15, 76, 117);\n"
 "}")
@@ -59,6 +59,7 @@ class Ui_MainWindow(object):
 "}")
         self.widget_topbar_actions.setObjectName("widget_topbar_actions")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget_topbar_actions)
+        self.horizontalLayout.setContentsMargins(0, -1, 0, -1)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_hide_window = QtWidgets.QPushButton(self.widget_topbar_actions)
         self.pushButton_hide_window.setMinimumSize(QtCore.QSize(25, 25))
@@ -239,19 +240,20 @@ class Ui_MainWindow(object):
         self.layout_page_init_label.addItem(spacerItem1)
         self.pages.addWidget(self.page_init_label)
         self.page_labeling = QtWidgets.QWidget()
-        self.page_labeling.setObjectName("page_labeling")
-        self.layout_page_labeling = QtWidgets.QHBoxLayout(self.page_labeling)
-        self.layout_page_labeling.setObjectName("layout_page_labeling")
-        self.widget_image_list = QtWidgets.QWidget(self.page_labeling)
-        self.widget_image_list.setMinimumSize(QtCore.QSize(350, 0))
-        self.widget_image_list.setMaximumSize(QtCore.QSize(350, 16777215))
-        self.widget_image_list.setStyleSheet("QListWidget{\n"
+        self.page_labeling.setStyleSheet("QListWidget{\n"
 "    background-color: transparent;\n"
 "}\n"
-"#widget_image_list{\n"
+"#widget_image_list, #widget_current_label_area{\n"
 "    background-color: rgba(50, 130, 184, 64);\n"
 "    border-radius: 10px;\n"
 "}")
+        self.page_labeling.setObjectName("page_labeling")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.page_labeling)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.widget_image_list = QtWidgets.QWidget(self.page_labeling)
+        self.widget_image_list.setMinimumSize(QtCore.QSize(300, 0))
+        self.widget_image_list.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.widget_image_list.setStyleSheet("")
         self.widget_image_list.setObjectName("widget_image_list")
         self.layout_image_list = QtWidgets.QVBoxLayout(self.widget_image_list)
         self.layout_image_list.setContentsMargins(9, 12, 9, 12)
@@ -267,7 +269,7 @@ class Ui_MainWindow(object):
         self.image_list = QtWidgets.QListWidget(self.widget_image_list)
         self.image_list.setObjectName("image_list")
         self.layout_image_list.addWidget(self.image_list)
-        self.layout_page_labeling.addWidget(self.widget_image_list)
+        self.horizontalLayout_3.addWidget(self.widget_image_list)
         self.widget_labeling_area = QtWidgets.QWidget(self.page_labeling)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -282,7 +284,26 @@ class Ui_MainWindow(object):
         self.layout_labeling_area.setContentsMargins(0, 0, 0, 0)
         self.layout_labeling_area.setSpacing(0)
         self.layout_labeling_area.setObjectName("layout_labeling_area")
-        self.layout_page_labeling.addWidget(self.widget_labeling_area)
+        self.horizontalLayout_3.addWidget(self.widget_labeling_area)
+        self.widget_current_label_area = QtWidgets.QWidget(self.page_labeling)
+        self.widget_current_label_area.setMinimumSize(QtCore.QSize(250, 200))
+        self.widget_current_label_area.setMaximumSize(QtCore.QSize(250, 16777215))
+        self.widget_current_label_area.setObjectName("widget_current_label_area")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.widget_current_label_area)
+        self.verticalLayout_4.setContentsMargins(-1, 12, -1, 12)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.label = QtWidgets.QLabel(self.widget_current_label_area)
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.verticalLayout_4.addWidget(self.label, 0, QtCore.Qt.AlignHCenter)
+        self.current_label_list = QtWidgets.QListWidget(self.widget_current_label_area)
+        self.current_label_list.setObjectName("current_label_list")
+        self.verticalLayout_4.addWidget(self.current_label_list)
+        self.horizontalLayout_3.addWidget(self.widget_current_label_area)
         self.pages.addWidget(self.page_labeling)
         self.verticalLayout.addWidget(self.pages)
         self.widget_bottom = QtWidgets.QWidget(self.centralwidget)
@@ -292,7 +313,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -305,5 +326,6 @@ class Ui_MainWindow(object):
         self.pushButton_add_label.setText(_translate("MainWindow", "Add"))
         self.pushButton_continue_labeling.setText(_translate("MainWindow", "Continue"))
         self.pushButton_export_labels.setText(_translate("MainWindow", "Export Labels"))
-        self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
+        self.label_image_list_title.setText(_translate("MainWindow", "Images"))
+        self.label.setText(_translate("MainWindow", "Labels"))
 import rsrc_rc
