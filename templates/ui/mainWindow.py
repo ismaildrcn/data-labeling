@@ -36,14 +36,28 @@ class Ui_MainWindow(object):
         self.widget_top.setMinimumSize(QtCore.QSize(0, 40))
         self.widget_top.setStyleSheet("#widget_top{\n"
 "    background-color: rgb(15, 76, 117);\n"
+"}\n"
+"QPushButton{\n"
+"    border:none;\n"
+"    background-color: transparent;\n"
+"    color: #BBE1FA;\n"
 "}")
         self.widget_top.setObjectName("widget_top")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_top)
         self.horizontalLayout_2.setContentsMargins(9, 0, -1, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.widget = QtWidgets.QWidget(self.widget_top)
-        self.widget.setObjectName("widget")
-        self.horizontalLayout_2.addWidget(self.widget, 0, QtCore.Qt.AlignLeft)
+        self.widget_topbar_left_actions = QtWidgets.QWidget(self.widget_top)
+        self.widget_topbar_left_actions.setObjectName("widget_topbar_left_actions")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.widget_topbar_left_actions)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.pushButton_actions = QtWidgets.QPushButton(self.widget_topbar_left_actions)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/templates/images/fire.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_actions.setIcon(icon)
+        self.pushButton_actions.setIconSize(QtCore.QSize(22, 22))
+        self.pushButton_actions.setObjectName("pushButton_actions")
+        self.horizontalLayout_4.addWidget(self.pushButton_actions)
+        self.horizontalLayout_2.addWidget(self.widget_topbar_left_actions, 0, QtCore.Qt.AlignLeft)
         self.label_image_labeling_title = QtWidgets.QLabel(self.widget_top)
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -53,10 +67,7 @@ class Ui_MainWindow(object):
         self.label_image_labeling_title.setObjectName("label_image_labeling_title")
         self.horizontalLayout_2.addWidget(self.label_image_labeling_title, 0, QtCore.Qt.AlignHCenter)
         self.widget_topbar_actions = QtWidgets.QWidget(self.widget_top)
-        self.widget_topbar_actions.setStyleSheet("QPushButton{\n"
-"    border:none;\n"
-"    background-color: transparent;\n"
-"}")
+        self.widget_topbar_actions.setStyleSheet("")
         self.widget_topbar_actions.setObjectName("widget_topbar_actions")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget_topbar_actions)
         self.horizontalLayout.setContentsMargins(0, -1, 0, -1)
@@ -65,9 +76,9 @@ class Ui_MainWindow(object):
         self.pushButton_hide_window.setMinimumSize(QtCore.QSize(25, 25))
         self.pushButton_hide_window.setMaximumSize(QtCore.QSize(25, 25))
         self.pushButton_hide_window.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/images/templates/images/minus.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_hide_window.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/images/templates/images/minus.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_hide_window.setIcon(icon1)
         self.pushButton_hide_window.setIconSize(QtCore.QSize(22, 22))
         self.pushButton_hide_window.setObjectName("pushButton_hide_window")
         self.horizontalLayout.addWidget(self.pushButton_hide_window)
@@ -75,9 +86,9 @@ class Ui_MainWindow(object):
         self.pushButton_fullscreen_window.setMinimumSize(QtCore.QSize(25, 25))
         self.pushButton_fullscreen_window.setMaximumSize(QtCore.QSize(25, 25))
         self.pushButton_fullscreen_window.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/images/templates/images/full-screen.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_fullscreen_window.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/images/templates/images/full-screen.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_fullscreen_window.setIcon(icon2)
         self.pushButton_fullscreen_window.setIconSize(QtCore.QSize(22, 22))
         self.pushButton_fullscreen_window.setObjectName("pushButton_fullscreen_window")
         self.horizontalLayout.addWidget(self.pushButton_fullscreen_window)
@@ -85,9 +96,9 @@ class Ui_MainWindow(object):
         self.pushButton_close_window.setMinimumSize(QtCore.QSize(25, 25))
         self.pushButton_close_window.setMaximumSize(QtCore.QSize(25, 25))
         self.pushButton_close_window.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/images/templates/images/close.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_close_window.setIcon(icon2)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/images/templates/images/close.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_close_window.setIcon(icon3)
         self.pushButton_close_window.setIconSize(QtCore.QSize(22, 22))
         self.pushButton_close_window.setObjectName("pushButton_close_window")
         self.horizontalLayout.addWidget(self.pushButton_close_window)
@@ -319,6 +330,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Visual Data Labeling"))
+        self.pushButton_actions.setText(_translate("MainWindow", "Actions"))
         self.label_image_labeling_title.setText(_translate("MainWindow", "Visual Data Labeling"))
         self.label_drop_images.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">Drop images</span></p><p align=\"center\">or </p><p align=\"center\"><span style=\" font-weight:600;\">Click here to select them</span></p></body></html>"))
         self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Import Labels</span></p></body></html>"))

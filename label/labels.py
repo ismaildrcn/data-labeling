@@ -10,19 +10,27 @@ class Labels(object):
         self._connector = connector
         self.label_widget = LabelWidget()
 
+        self.label_dict = {}
+        
+
     def add(self, source, coords, rect_obj):
         widget = LabelWidget().setup(self._connector)
-        widget.label_list.addItems([item[index] for index, item in enumerate(self._connector.configurator.label_list)])
+        widget.label_list.addItems([item[index] for index, item in enumerate(self._connector.configurator.label_type)])
         widget.label_list.setCurrentIndex(-1)
 
         item = QListWidgetItem(self._connector.current_label_list)
         item.setSizeHint(widget.main.sizeHint())
         self._connector.current_label_list.setItemWidget(item, widget.main)
         label = Label(source, coords, rect_obj, widget)
-        print(label)
+        if source in self.label_dict:
+            self.label_dict[source].append(label)
+        else:
+            self.label_dict[source] = [label]
         widget.delete_label.clicked.connect(lambda: self.delete(label))
         widget.view_label.clicked.connect(lambda: self.hide(label))
+        widget.label_list.currentTextChanged.connect(lambda: self.type_changed(widget.label_list.currentText(), label))
 
+        print(self.label_dict)
 
     def hide(self, label):
         if label.rect_obj:
@@ -51,6 +59,13 @@ class Labels(object):
                     # Widget'ı daha sonra sil
                     label.widget.main.deleteLater()
                     break
+    
+    def type_changed(self, l_type, label):
+        for index, item in enumerate(self._connector.configurator.label_type):
+            if item[index] == l_type:
+                label.type = l_type
+                break
+
 
 class Label(object):
     def __init__(self, source, coords, rect_obj, widget: LabelWidget):
@@ -58,3 +73,4 @@ class Label(object):
         self.coords: tuple = coords
         self.rect_obj: QGraphicsRectItem = rect_obj
         self.widget: LabelWidget = widget
+        self.type: str = ""

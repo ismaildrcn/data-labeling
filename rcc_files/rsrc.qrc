@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="images">
+    <file>../templates/images/import-image.svg</file>
+    <file>../templates/images/database-export.svg</file>
+    <file>../templates/images/database-import.svg</file>
+    <file>../templates/images/fire.svg</file>
     <file>../templates/images/down.svg</file>
     <file>../templates/images/delete.svg</file>
     <file>../templates/images/view.svg</file>

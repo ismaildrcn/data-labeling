@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QListWidgetItem, QFileDialog
 class Configurator(object):
     def __init__(self, connector=None):
         self._connector = connector
-        self.label_list = []
+        self.label_type = []
 
 
     def add(self):
@@ -23,7 +23,7 @@ class Configurator(object):
         """
         text = self._connector.lineEdit_add_label.text()
         if text != '':
-            self.label_list.append({len(self.label_list): text})
+            self.label_type.append({len(self.label_type): text})
             item = QListWidgetItem(text)
             self._connector.listWidget_label_list.addItem(item)
             self._connector.lineEdit_add_label.clear()
@@ -39,13 +39,13 @@ class Configurator(object):
             Returns:
                 None
         """
-        if not self.label_list:
+        if not self.label_type:
             print("No labels to export.")
             return
         fname = QFileDialog.getSaveFileName(self._connector, 'Export Labels', '', 'Label Files (*.lbl)')[0]
         if fname:
             with open(f"{fname}.lbl", 'w') as f:
-                for label in self.label_list:
+                for label in self.label_type:
                     f.write(f"{label}\n")
 
     def import_labels(self):
@@ -59,15 +59,15 @@ class Configurator(object):
             Returns:
                 None
         """
-        self.label_list.clear()
+        self.label_type.clear()
         fname = QFileDialog.getOpenFileName(self._connector, 'Insert Labels', '', 'Label Files (*.lbl)')[0]
         if fname:
             with open(f"{fname}", 'r') as f:
                 for line in f:
                     text = ast.literal_eval(line.strip())
                     if text:
-                        item = QListWidgetItem(text[len(self.label_list)])
+                        item = QListWidgetItem(text[len(self.label_type)])
                         self._connector.listWidget_label_list.addItem(item)
-                        self.label_list.append(text)
+                        self.label_type.append(text)
 
     

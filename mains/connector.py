@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
 from PyQt5.QtCore import Qt, pyqtSlot
 
@@ -54,6 +54,10 @@ class Connector(QMainWindow, UI):
         self.image_list.setViewMode(QListWidget.IconMode)
         self.image_list.setIconSize(QPixmap(125, 70).size())  # İkonları büyüt
         self.image_list.setGridSize(QPixmap(130, 75).size())  # Hücreleri genişlet
+
+        self.init_actions()
+        self.pushButton_actions.clicked.connect(self.show_menu)
+
         
     @pyqtSlot(tuple)
     def created_rect(self, detail):
@@ -106,3 +110,42 @@ class Connector(QMainWindow, UI):
     @current_source.setter
     def current_source(self, source):
         self._current_source = source
+
+
+    def init_actions(self):
+        self.menu = QMenu(self)
+        self.menu.setStyleSheet("""
+            QMenu {
+                border: 1px solid #1B262C;
+                background-color: #0F4C75;
+                color: #BBE1FA;
+                padding: 8px;
+            }
+            QMenu::item {
+                padding: 8px 10px;
+                background-color: transparent;
+            }
+            QMenu::item:selected {
+                background-color: #3282B8;
+            }
+        """)
+
+        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Edit Label", self)
+        # exit_action.triggered.connect(self.close)
+        self.menu.addAction(edit_label)
+
+        import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Import Images", self)
+        # exit_action.triggered.connect(self.close)
+        self.menu.addAction(import_images)
+
+        import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Import Annotations", self)
+        # exit_action.triggered.connect(self.close)
+        self.menu.addAction(import_action)
+        
+        export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Export Annotations", self)
+        # open_action.triggered.connect(self.open_action_triggered)
+        self.menu.addAction(export_action)
+        
+        
+    def show_menu(self):
+        self.menu.exec_(self.pushButton_actions.mapToGlobal(self.pushButton_actions.rect().bottomLeft()))
