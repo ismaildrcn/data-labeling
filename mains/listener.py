@@ -34,7 +34,7 @@ class Listener(QMainWindow):
                         self._connector.configurator.add()
                     case self._connector.pushButton_export_labels:
                         self._connector.configurator.export_labels()
-                    case self._connector.label_import_labels:
+                    case self._connector.label_import_labels | self._connector.icon_insert_label:
                         self._connector.configurator.import_labels()
                     case self._connector.pushButton_continue_labeling:
                         self._connector.pages.setCurrentIndex(2)

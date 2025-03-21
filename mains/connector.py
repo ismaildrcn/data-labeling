@@ -9,7 +9,7 @@ from widgets.graphics_view import CustomGraphicsView
 
 from mains.listener import Listener
 from label.configurator import Configurator
-from label.labels import Labels
+from annotation.annotation import Annotations
 
 
 
@@ -23,16 +23,16 @@ class Connector(QMainWindow, UI):
         self.rect_item = None
         self._current_source = None
         self.setupUi(self)
-        self.initialize()
         self.connection()
         self.pages.setCurrentIndex(0)
         self.modules()
+        self.initialize()
         self.show()
 
     def modules(self):
         self.listener = Listener(self)
         self.configurator = Configurator(self)
-        self.labels = Labels(self)
+        self.annotations = Annotations(self)
 
     def connection(self):
         self.image_list.itemClicked.connect(self.load_selected_image)
@@ -66,12 +66,12 @@ class Connector(QMainWindow, UI):
 
             Bu method, yeni bir dikdörtgen oluşturulduğunda çağrılır ve
             dikdörtgenin koordinatlarını ve QGraphicsRectItem nesnesini alır.
-            Bu bilgileri Labels sınıfına iletir ve etiketleme işlemini başlatır.
+            Bu bilgileri Annotations sınıfına iletir ve etiketleme işlemini başlatır.
 
             Args:
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
-        self.labels.add(self.current_source, detail[0], detail[1])
+        self.annotations.add(self.current_source, detail[0], detail[1])
         
     def import_images(self):
         self.image_path_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
@@ -131,11 +131,11 @@ class Connector(QMainWindow, UI):
         """)
 
         edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Edit Label", self)
-        # exit_action.triggered.connect(self.close)
+        edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
         self.menu.addAction(edit_label)
 
         import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Import Images", self)
-        # exit_action.triggered.connect(self.close)
+        import_images.triggered.connect(lambda: self.pages.setCurrentIndex(0))
         self.menu.addAction(import_images)
 
         import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Import Annotations", self)
@@ -143,7 +143,7 @@ class Connector(QMainWindow, UI):
         self.menu.addAction(import_action)
         
         export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Export Annotations", self)
-        # open_action.triggered.connect(self.open_action_triggered)
+        export_action.triggered.connect(self.annotations.export_annotations)
         self.menu.addAction(export_action)
         
         
