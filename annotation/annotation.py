@@ -61,6 +61,10 @@ class Annotations(object):
                     # Widget'ı daha sonra sil
                     annotation.widget.main.deleteLater()
                     break
+            
+            self.annotation_dict[annotation.source].remove(annotation)
+            if len(self.annotation_dict[annotation.source]) == 0:
+                del self.annotation_dict[annotation.source]
     
     def type_changed(self, l_type, annotation):
         for key, value in self._connector.configurator.label_type.items():

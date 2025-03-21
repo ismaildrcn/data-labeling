@@ -17,7 +17,7 @@ class Listener(QMainWindow):
         match event.type():
             case QEvent.MouseButtonDblClick | QEvent.MouseButtonPress:
                 match source:
-                    case self._connector.label_drop_images:
+                    case self._connector.label_drop_images | self._connector.icon_drop_images:
                         self._connector.import_images()
                     case self._connector.label_image_labeling_title | self._connector.widget_top:
                         self.offset = event.globalPos() - self._connector.frameGeometry().topLeft()
