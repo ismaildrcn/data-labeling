@@ -8,6 +8,7 @@ from templates.ui.mainWindow import Ui_MainWindow as UI
 from widgets.graphics_view import CustomGraphicsView
 
 from mains.listener import Listener
+from mains.source import Source
 from label.configurator import Configurator
 from annotation.annotation import Annotations
 
@@ -21,7 +22,6 @@ class Connector(QMainWindow, UI):
         self.image_path_list = []
         self.start_pos = None
         self.rect_item = None
-        self._current_source = None
         self.setupUi(self)
         self.connection()
         self.pages.setCurrentIndex(0)
@@ -31,6 +31,7 @@ class Connector(QMainWindow, UI):
 
     def modules(self):
         self.listener = Listener(self)
+        self.source = Source()
         self.configurator = Configurator(self)
         self.annotations = Annotations(self)
 
@@ -71,7 +72,7 @@ class Connector(QMainWindow, UI):
             Args:
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
-        self.annotations.add(self.current_source, detail[0], detail[1])
+        self.annotations.add(self.source.current, detail[0], detail[1])
         
     def import_images(self):
         self.image_path_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
@@ -89,8 +90,8 @@ class Connector(QMainWindow, UI):
     
     def load_selected_image(self, item):
         """ Seçilen görseli yükle """
-        self.current_source = item.data(Qt.UserRole)  # Listedeki resim yolunu al
-        self.image_pixmap = QPixmap(self.current_source)
+        self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
+        self.image_pixmap = QPixmap(self.source.current)
 
         self.scene.clear()  # Önceki sahneyi temizle
         pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
@@ -102,15 +103,7 @@ class Connector(QMainWindow, UI):
         self.graphicsView.setTransformationAnchor(QGraphicsView.NoAnchor)
         self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
         self.graphicsView.setRenderHint(QPainter.Antialiasing)
-
-    @property
-    def current_source(self):
-        return self._current_source
-
-    @current_source.setter
-    def current_source(self, source):
-        self._current_source = source
-
+        self.annotations.multi_annotations(self.source)
 
     def init_actions(self):
         self.menu = QMenu(self)
