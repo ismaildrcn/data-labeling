@@ -2,6 +2,8 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget
 from PyQt5.QtCore import QEvent, Qt
 
+from modals.popup.messages import PopupMessages
+
 
 
 class Listener(QMainWindow):
@@ -37,7 +39,7 @@ class Listener(QMainWindow):
                     case self._connector.label_import_labels | self._connector.icon_insert_label:
                         self._connector.configurator.import_labels()
                     case self._connector.pushButton_continue_labeling:
-                        self._connector.pages.setCurrentIndex(2)
+                        self.continue_event_changed()
             case QEvent.KeyPress:
                 if source == self._connector.pushButton_add_label and event.key() in (Qt.Key_Return, Qt.Key_Enter):
                     self._connector.configurator.add()
@@ -51,3 +53,10 @@ class Listener(QMainWindow):
         
         
         return super().eventFilter(source, event)
+    
+    def continue_event_changed(self):
+        if self._connector.configurator.label_type:
+            self._connector.pages.setCurrentIndex(2)
+            self._connector.modals.popup.show(PopupMessages.Info.M100)
+        else:
+            self._connector.modals.popup.show(PopupMessages.Error.M300)

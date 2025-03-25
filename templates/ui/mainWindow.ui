@@ -91,7 +91,7 @@ QPushButton{
              </font>
             </property>
             <property name="text">
-             <string>Actions</string>
+             <string>Eylemler</string>
             </property>
             <property name="icon">
              <iconset resource="../../rcc_files/rsrc.qrc">
@@ -118,7 +118,7 @@ QPushButton{
           </font>
          </property>
          <property name="text">
-          <string>Visual Data Labeling</string>
+          <string>Görsel Veri Etiketleme</string>
          </property>
         </widget>
        </item>
@@ -235,7 +235,7 @@ QPushButton{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_data_importing">
        <layout class="QHBoxLayout" name="layout_page_data_importing">
@@ -291,7 +291,7 @@ QPushButton{
            <item>
             <widget class="QLabel" name="label_drop_images">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drop images&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;or &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Click here to select them&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Resimleri bırakın&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;veya &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Seçmek için buraya tıklayın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -383,7 +383,7 @@ QPushButton{
            <item>
             <widget class="QLabel" name="label_import_labels">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Import Labels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiketleri İçe Aktar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -442,7 +442,7 @@ QPushButton{
               <item>
                <widget class="QLabel" name="label_create_label">
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Create Label&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiket Oluştur&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -477,7 +477,7 @@ QPushButton{
               <item>
                <widget class="QPushButton" name="pushButton_add_label">
                 <property name="text">
-                 <string>Add</string>
+                 <string>Oluştur</string>
                 </property>
                </widget>
               </item>
@@ -541,7 +541,7 @@ QPushButton:hover{
               </size>
              </property>
              <property name="text">
-              <string>Continue</string>
+              <string>Devam et</string>
              </property>
             </widget>
            </item>
@@ -554,7 +554,7 @@ QPushButton:hover{
               </size>
              </property>
              <property name="text">
-              <string>Export Labels</string>
+              <string>Etiketleri Dışa Aktar</string>
              </property>
             </widget>
            </item>

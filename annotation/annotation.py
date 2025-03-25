@@ -122,7 +122,7 @@ class Annotations(object):
             
                 # Scene üzerinde rect oluştur
                 pen = QPen(Qt.red, 2)
-                rect_item = self._connector.scene.addRect(rect, pen)
+                self._connector.scene.addRect(rect, pen)
             
                 # Yeni annotation'ı ekle
                 self.add(annotation)

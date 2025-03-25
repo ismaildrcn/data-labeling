@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>518</width>
-    <height>319</height>
+    <height>335</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,10 +37,13 @@ QLabel{
 	color: #EEEEEE;
 }
 QPushButton{
-	background-color: #00ADB5;
+	border: 1px solid #00ADB5;
 	color: #FFFFFF;
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
+}
+#pushButton_ok{
+	background-color: #00ADB5;
 }</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -140,6 +143,9 @@ QPushButton{
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -173,19 +179,6 @@ QPushButton{
           <number>20</number>
          </property>
          <item>
-          <widget class="QPushButton" name="pushButton_ok">
-           <property name="minimumSize">
-            <size>
-             <width>150</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Ok</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="pushButton_cancel">
            <property name="minimumSize">
             <size>
@@ -195,6 +188,19 @@ QPushButton{
            </property>
            <property name="text">
             <string>Cancel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_ok">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Ok</string>
            </property>
           </widget>
          </item>

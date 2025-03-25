@@ -24,7 +24,7 @@ class PopupMessages(object):
             return "Bilgi"
         
 
-        M100 = "Kayıt başarıyla oluşturuldu."
+        M100 = "Çalışma başarıyla oluşturuldu, etiketlemeye başlayabilirsiniz."
 
     class Warning(BaseEnum):
         @property
@@ -48,7 +48,7 @@ class PopupMessages(object):
             return "Hata"
         
 
-        M300 = ""
+        M300 = "Lütfen devam etmeden önce etiket oluşturmayı veya etiketlerinizi içe aktarmayı deneyin!"
 
     class Action(BaseEnum):
         @property

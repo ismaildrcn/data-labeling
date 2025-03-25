@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(518, 319)
+        Dialog.resize(518, 335)
         self.horizontalLayout = QtWidgets.QHBoxLayout(Dialog)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.widget_main = QtWidgets.QWidget(Dialog)
@@ -32,10 +32,13 @@ class Ui_Dialog(object):
 "    color: #EEEEEE;\n"
 "}\n"
 "QPushButton{\n"
-"    background-color: #00ADB5;\n"
+"    border: 1px solid #00ADB5;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
+"}\n"
+"#pushButton_ok{\n"
+"    background-color: #00ADB5;\n"
 "}")
         self.widget_main.setObjectName("widget_main")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.widget_main)
@@ -91,6 +94,7 @@ class Ui_Dialog(object):
         self.popup_message.setFont(font)
         self.popup_message.setText("")
         self.popup_message.setAlignment(QtCore.Qt.AlignCenter)
+        self.popup_message.setWordWrap(True)
         self.popup_message.setObjectName("popup_message")
         self.horizontalLayout_3.addWidget(self.popup_message)
         self.verticalLayout.addWidget(self.widget_center_area)
@@ -106,14 +110,14 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.setContentsMargins(-1, 20, 9, 20)
         self.horizontalLayout_2.setSpacing(50)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.pushButton_ok = QtWidgets.QPushButton(self.widget_bottom_area)
-        self.pushButton_ok.setMinimumSize(QtCore.QSize(150, 0))
-        self.pushButton_ok.setObjectName("pushButton_ok")
-        self.horizontalLayout_2.addWidget(self.pushButton_ok)
         self.pushButton_cancel = QtWidgets.QPushButton(self.widget_bottom_area)
         self.pushButton_cancel.setMinimumSize(QtCore.QSize(150, 0))
         self.pushButton_cancel.setObjectName("pushButton_cancel")
         self.horizontalLayout_2.addWidget(self.pushButton_cancel)
+        self.pushButton_ok = QtWidgets.QPushButton(self.widget_bottom_area)
+        self.pushButton_ok.setMinimumSize(QtCore.QSize(150, 0))
+        self.pushButton_ok.setObjectName("pushButton_ok")
+        self.horizontalLayout_2.addWidget(self.pushButton_ok)
         self.verticalLayout.addWidget(self.widget_bottom_area, 0, QtCore.Qt.AlignHCenter)
         self.horizontalLayout.addWidget(self.widget_main)
 
@@ -125,5 +129,5 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.popup_type.setText(_translate("Dialog", "Warning"))
         self.popup_code.setText(_translate("Dialog", "101"))
-        self.pushButton_ok.setText(_translate("Dialog", "Ok"))
         self.pushButton_cancel.setText(_translate("Dialog", "Cancel"))
+        self.pushButton_ok.setText(_translate("Dialog", "Ok"))
