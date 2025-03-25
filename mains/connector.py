@@ -97,7 +97,7 @@ class Connector(QMainWindow, UI):
     def load_selected_image(self, item):
         """ Seçilen görseli yükle """
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
-        self.image_pixmap = QPixmap(self.source.current)
+        self.image_pixmap = QPixmap(self.source.current.path())
 
         self.scene.clear()  # Önceki sahneyi temizle
         pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
