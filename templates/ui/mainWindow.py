@@ -331,20 +331,20 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Visual Data Labeling"))
-        self.pushButton_actions.setText(_translate("MainWindow", "Actions"))
-        self.label_image_labeling_title.setText(_translate("MainWindow", "Visual Data Labeling"))
-        self.label_drop_images.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">Drop images</span></p><p align=\"center\">or </p><p align=\"center\"><span style=\" font-weight:600;\">Click here to select them</span></p></body></html>"))
-        self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Import Labels</span></p></body></html>"))
-        self.label_create_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Create Label</span></p></body></html>"))
-        self.pushButton_add_label.setText(_translate("MainWindow", "Add"))
-        self.pushButton_continue_labeling.setText(_translate("MainWindow", "Continue"))
-        self.pushButton_export_labels.setText(_translate("MainWindow", "Export Labels"))
+        self.pushButton_actions.setText(_translate("MainWindow", "Eylemler"))
+        self.label_image_labeling_title.setText(_translate("MainWindow", "Görsel Veri Etiketleme"))
+        self.label_drop_images.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">Resimleri bırakın</span></p><p align=\"center\">veya </p><p align=\"center\"><span style=\" font-weight:600;\">Seçmek için buraya tıklayın</span></p></body></html>"))
+        self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiketleri İçe Aktar</span></p></body></html>"))
+        self.label_create_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiket Oluştur</span></p></body></html>"))
+        self.pushButton_add_label.setText(_translate("MainWindow", "Oluştur"))
+        self.pushButton_continue_labeling.setText(_translate("MainWindow", "Devam et"))
+        self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Dışa Aktar"))
         self.label_image_list_title.setText(_translate("MainWindow", "Images"))
         self.label.setText(_translate("MainWindow", "Labels"))
 import rsrc_rc

@@ -66,14 +66,14 @@ QPushButton{
              <widget class="QLabel" name="popup_icon">
               <property name="minimumSize">
                <size>
-                <width>35</width>
-                <height>35</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>35</width>
-                <height>35</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="text">
