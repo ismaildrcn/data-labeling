@@ -79,12 +79,18 @@ class Connector(QMainWindow, UI):
         
     def import_images(self, drop_list=False):
         if drop_list:
-            self.image_path_list = drop_list
+            for image in drop_list:
+                if image.path().endswith((".png", ".jpg", ".jpeg")):
+                    self.image_path_list.append(image)
         else:
-            self.image_path_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
-        print(self.image_path_list)
+            selected_list = [QUrl(image) for image in QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]]
+
+            self.image_path_list.extend(selected_list)
+            self.image_path_list = list(set(self.image_path_list))
+
         for image in self.image_path_list:
-            self.create_image_list(QUrl(image))
+            image = image if drop_list else QUrl(image)
+            self.create_image_list(image)
         if self.image_path_list:
             self.pages.setCurrentIndex(1)
         
