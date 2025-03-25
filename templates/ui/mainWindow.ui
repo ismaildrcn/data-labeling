@@ -239,7 +239,7 @@ QPushButton{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_data_importing">
        <layout class="QHBoxLayout" name="layout_page_data_importing">
@@ -317,6 +317,7 @@ QPushButton{
 	border: 3px solid #00ADB5;
 }
 QListWidget{
+	border:none;
 	background-color: transparent;
 	color: #BBE1FA;
 }
@@ -589,6 +590,7 @@ QPushButton:hover{
       <widget class="QWidget" name="page_labeling">
        <property name="styleSheet">
         <string notr="true">QListWidget{
+	border:none;
 	background-color: transparent;
 }
 #widget_image_list, #widget_current_label_area{

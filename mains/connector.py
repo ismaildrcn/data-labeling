@@ -1,3 +1,4 @@
+import os
 
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu, QDesktopWidget
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
@@ -80,30 +81,28 @@ class Connector(QMainWindow, UI):
     def import_images(self, drop_list=False):
         if drop_list:
             for image in drop_list:
-                if image.path().endswith((".png", ".jpg", ".jpeg")):
-                    self.image_path_list.append(image)
+                if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self.image_path_list:
+                    self.create_image_list(image)
         else:
-            selected_list = [QUrl(image) for image in QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]]
+            selected_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
+            for image in selected_list:
+                if QUrl.fromLocalFile(image) not in self.image_path_list:
+                    self.create_image_list(QUrl.fromLocalFile(image))
 
-            self.image_path_list.extend(selected_list)
-            self.image_path_list = list(set(self.image_path_list))
-
-        for image in self.image_path_list:
-            image = image if drop_list else QUrl(image)
-            self.create_image_list(image)
         if self.image_path_list:
             self.pages.setCurrentIndex(1)
         
     def create_image_list(self, image: QUrl):
-        item = QListWidgetItem(QIcon(image.path()), None)  # QIcon ile resimleri ekle
+        item = QListWidgetItem(QIcon(image.toLocalFile()), None)  # QIcon ile resimleri ekle
         item.setData(Qt.UserRole, image)  # Görsel yolunu sakla
         self.image_list.addItem(item)
+        self.image_path_list.append(image)
 
     
     def load_selected_image(self, item):
         """ Seçilen görseli yükle """
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
-        self.image_pixmap = QPixmap(self.source.current.path())
+        self.image_pixmap = QPixmap(self.source.current.toLocalFile())
 
         self.scene.clear()  # Önceki sahneyi temizle
         pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle

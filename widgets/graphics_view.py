@@ -10,6 +10,7 @@ class CustomGraphicsView(QGraphicsView):
         self.start_pos = None
         self.rect_item = None
         self.normalized_coords = None
+        self.setStyleSheet("border:none;")
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:

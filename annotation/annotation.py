@@ -126,8 +126,6 @@ class Annotations(object):
             
                 # Yeni annotation'ı ekle
                 self.add(annotation)
-                # Yeni koordinatları yazdır
-                print(f"{source.current} - {annotation.label} - Normalized: {annotation.coords}")
 
 class Annotation(object):
     def __init__(self, source, coords, rect_obj):
