@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="images">
     <file>../templates/images/error.svg</file>
+    <file>../templates/images/fad.ico</file>
     <file>../templates/images/info.svg</file>
     <file>../templates/images/warning.svg</file>
     <file>../templates/images/import-image.svg</file>

@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Visual Data Labeling</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../rcc_files/rsrc.qrc">
+    <normaloff>:/images/templates/images/fad.ico</normaloff>:/images/templates/images/fad.ico</iconset>
+  </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
   </property>
