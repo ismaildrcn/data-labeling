@@ -1,7 +1,7 @@
 
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu, QDesktopWidget
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
-from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtCore import Qt, pyqtSlot, QUrl
 
 
 from templates.ui.mainWindow import Ui_MainWindow as UI
@@ -77,16 +77,19 @@ class Connector(QMainWindow, UI):
         """
         self.annotations.add(self.source.current, detail[0], detail[1])
         
-    def import_images(self):
-        self.image_path_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
-
+    def import_images(self, drop_list=False):
+        if drop_list:
+            self.image_path_list = drop_list
+        else:
+            self.image_path_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
+        print(self.image_path_list)
         for image in self.image_path_list:
-            self.create_image_list(image)
+            self.create_image_list(QUrl(image))
         if self.image_path_list:
             self.pages.setCurrentIndex(1)
         
-    def create_image_list(self, image):
-        item = QListWidgetItem(QIcon(image), None)  # QIcon ile resimleri ekle
+    def create_image_list(self, image: QUrl):
+        item = QListWidgetItem(QIcon(image.path()), None)  # QIcon ile resimleri ekle
         item.setData(Qt.UserRole, image)  # Görsel yolunu sakla
         self.image_list.addItem(item)
 

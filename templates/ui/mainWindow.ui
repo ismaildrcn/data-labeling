@@ -281,6 +281,9 @@ QPushButton{
                <height>60</height>
               </size>
              </property>
+             <property name="acceptDrops">
+              <bool>true</bool>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -294,6 +297,9 @@ QPushButton{
            </item>
            <item>
             <widget class="QLabel" name="label_drop_images">
+             <property name="acceptDrops">
+              <bool>true</bool>
+             </property>
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Resimleri bırakın&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;veya &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Seçmek için buraya tıklayın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
