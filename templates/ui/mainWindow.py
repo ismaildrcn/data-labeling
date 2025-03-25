@@ -19,10 +19,10 @@ class Ui_MainWindow(object):
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("#centralwidget{\n"
-"    background-color: #1B262C;\n"
+"    background-color: #222831;\n"
 "}\n"
 "QLabel{\n"
-"    color: #BBE1FA;\n"
+"    color: #EEEEEE;\n"
 "}\n"
 "QLineEdit{\n"
 "    padding-left: 5px;\n"
@@ -31,16 +31,17 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.widget_top = QtWidgets.QWidget(self.centralwidget)
         self.widget_top.setMinimumSize(QtCore.QSize(0, 40))
         self.widget_top.setStyleSheet("#widget_top{\n"
-"    background-color: rgb(15, 76, 117);\n"
+"    background-color: #393E46;\n"
 "}\n"
 "QPushButton{\n"
 "    border:none;\n"
 "    background-color: transparent;\n"
-"    color: #BBE1FA;\n"
+"    color: #EEEEEE;\n"
 "}")
         self.widget_top.setObjectName("widget_top")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_top)
@@ -51,6 +52,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.widget_topbar_left_actions)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.pushButton_actions = QtWidgets.QPushButton(self.widget_topbar_left_actions)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_actions.setFont(font)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/images/templates/images/fire.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_actions.setIcon(icon)
@@ -118,7 +123,7 @@ class Ui_MainWindow(object):
         self.widget_importing_area.setMaximumSize(QtCore.QSize(450, 300))
         self.widget_importing_area.setStyleSheet("#widget_importing_area{\n"
 "    border-radius:10px;\n"
-"    border: 3px solid #3282B8;\n"
+"    border: 3px solid #00ADB5;\n"
 "}")
         self.widget_importing_area.setObjectName("widget_importing_area")
         self.layout_importing_area = QtWidgets.QVBoxLayout(self.widget_importing_area)
@@ -140,14 +145,14 @@ class Ui_MainWindow(object):
         self.page_init_label = QtWidgets.QWidget()
         self.page_init_label.setStyleSheet("#widget_init_label_area, #widget_insert_label_area{\n"
 "    border-radius:10px;\n"
-"    border: 3px solid #3282B8;\n"
+"    border: 3px solid #00ADB5;\n"
 "}\n"
 "QListWidget{\n"
 "    background-color: transparent;\n"
 "    color: #BBE1FA;\n"
 "}\n"
 "QPushButton{\n"
-"    background-color: #3282B8;\n"
+"    background-color: #00ADB5;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
@@ -223,14 +228,14 @@ class Ui_MainWindow(object):
         self.widget_init_label_button_area.setMinimumSize(QtCore.QSize(450, 50))
         self.widget_init_label_button_area.setMaximumSize(QtCore.QSize(450, 16777215))
         self.widget_init_label_button_area.setStyleSheet("QPushButton{\n"
-"    border: 2px solid #3282B8;\n"
+"    border: 2px solid #00ADB5;\n"
 "    background-color: transparent;\n"
-"    color: #3282B8;\n"
+"    color: #00ADB5;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
 "}\n"
 "QPushButton:hover{\n"
-"    background-color: #3282B8;\n"
+"    background-color: #00ADB5;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
@@ -241,9 +246,11 @@ class Ui_MainWindow(object):
         self.layout_init_label_button_area.setSpacing(50)
         self.layout_init_label_button_area.setObjectName("layout_init_label_button_area")
         self.pushButton_continue_labeling = QtWidgets.QPushButton(self.widget_init_label_button_area)
+        self.pushButton_continue_labeling.setMinimumSize(QtCore.QSize(0, 40))
         self.pushButton_continue_labeling.setObjectName("pushButton_continue_labeling")
         self.layout_init_label_button_area.addWidget(self.pushButton_continue_labeling)
         self.pushButton_export_labels = QtWidgets.QPushButton(self.widget_init_label_button_area)
+        self.pushButton_export_labels.setMinimumSize(QtCore.QSize(0, 40))
         self.pushButton_export_labels.setObjectName("pushButton_export_labels")
         self.layout_init_label_button_area.addWidget(self.pushButton_export_labels)
         self.layout_page_init_label.addWidget(self.widget_init_label_button_area, 0, QtCore.Qt.AlignHCenter)
@@ -255,7 +262,7 @@ class Ui_MainWindow(object):
 "    background-color: transparent;\n"
 "}\n"
 "#widget_image_list, #widget_current_label_area{\n"
-"    background-color: rgba(50, 130, 184, 64);\n"
+"    background-color: rgba(57, 62, 70, 128);\n"
 "    border-radius: 10px;\n"
 "}")
         self.page_labeling.setObjectName("page_labeling")
@@ -324,7 +331,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
