@@ -111,7 +111,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.widget_top)
         self.pages = QtWidgets.QStackedWidget(self.centralwidget)
         self.pages.setStyleSheet("#page_labeling, #page_data_importing, #page_init_label{\n"
-"    background-color: #1B262C;\n"
+"    background-color: #222831;\n"
 "}")
         self.pages.setObjectName("pages")
         self.page_data_importing = QtWidgets.QWidget()

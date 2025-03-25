@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu, QDesktopWidget
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
 from PyQt5.QtCore import Qt, pyqtSlot
 
@@ -11,6 +11,8 @@ from mains.listener import Listener
 from mains.source import Source
 from label.configurator import Configurator
 from annotation.annotation import Annotations
+from modals.modals import Modals
+from modals.popup.messages import PopupMessages
 
 
 
@@ -34,6 +36,7 @@ class Connector(QMainWindow, UI):
         self.source = Source()
         self.configurator = Configurator(self)
         self.annotations = Annotations(self)
+        self.modals = Modals(self)
 
     def connection(self):
         self.image_list.itemClicked.connect(self.load_selected_image)

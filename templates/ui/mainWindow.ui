@@ -231,7 +231,7 @@ QPushButton{
      <widget class="QStackedWidget" name="pages">
       <property name="styleSheet">
        <string notr="true">#page_labeling, #page_data_importing, #page_init_label{
-	background-color: #1B262C;
+	background-color: #222831;
 }</string>
       </property>
       <property name="currentIndex">
