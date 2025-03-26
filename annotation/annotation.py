@@ -1,5 +1,7 @@
 import os
-from typing import overload
+import uuid
+from zipfile import ZipFile
+from typing import Union, overload
 
 from PyQt5.QtWidgets import QGraphicsRectItem, QListWidgetItem, QFileDialog
 from PyQt5.QtCore import Qt, QRectF
@@ -8,6 +10,8 @@ from PyQt5.QtGui import QPen
 from label.widget import LabelWidget
 
 from mains.source import Source
+from modals.popup.messages import PopupMessages
+from modals.popup.utils import Answers
 
 
 class Annotations(object):
@@ -37,12 +41,11 @@ class Annotations(object):
                 self.annotation_dict[args[0]] = [annotation]
         else:
             annotation = args[0]
-            widget.label_list.setCurrentText(annotation.label)
+            widget.label_list.setCurrentIndex(annotation.label)
 
         widget.delete_label.clicked.connect(lambda: self.delete(annotation))
         widget.view_label.clicked.connect(lambda: self.hide(annotation))
         widget.label_list.currentTextChanged.connect(lambda: self.type_changed(widget.label_list.currentText(), annotation))
-        print(self.annotation_dict)
 
     def hide(self, annotation):
         if annotation.rect_obj:
@@ -80,19 +83,28 @@ class Annotations(object):
     def type_changed(self, l_type, annotation):
         for key, value in self._connector.configurator.label_type.items():
             if key == l_type:
-                annotation.label = key
+                annotation.label = value
                 break
-        print(f"{annotation.source} - {annotation.label} - {annotation.coords}")
 
     def export_annotations(self):
-        # Replace the existing line with:
-        save_dir = QFileDialog.getExistingDirectory(self._connector, 'Select Directory to Save Annotations')
-        if save_dir:
-            for image in self.annotation_dict:
-                path = os.path.join(save_dir, image.split(os.path.sep)[-1].split('.')[0]) + '.txt'
-                with open(path, 'w') as f:
-                    for annotation in self.annotation_dict[image]:
-                        f.write(f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n")
+        has_unwrite, available_annotation = self.check_annotation
+        if available_annotation is False:
+            self._connector.show_message(PopupMessages.Warning.M200)
+        else:
+            if has_unwrite:
+                answer = self._connector.show_message(PopupMessages.Action.M400)
+            if has_unwrite is False or answer == Answers.OK:
+                save_dir = QFileDialog.getExistingDirectory(self._connector, 'Çalışmaların Kaydedileceği Klasörü Seçin')
+                if save_dir:
+                    with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + '.zip'), 'w') as archive:
+                        for image in self.annotation_dict:
+                            content = ""
+                            for annotation in self.annotation_dict[image]:
+                                if isinstance(annotation.label, int):
+                                    content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
+                            if content:
+                                archive.writestr(image.toLocalFile().split('/')[-1].split('.')[0] + '.txt', content)
+                    archive.close()
     
     def multi_annotations(self, source: Source):
         if source.previous in self.annotation_dict:
@@ -126,10 +138,22 @@ class Annotations(object):
             
                 # Yeni annotation'ı ekle
                 self.add(annotation)
+    
+    @property
+    def check_annotation(self):
+        available_annotation = False
+        has_unwrite = False
+        for image in self.annotation_dict:
+            for annotation in self.annotation_dict[image]:
+                if annotation.label is None:
+                    has_unwrite = True
+                available_annotation = True
+        return has_unwrite, available_annotation
+
 
 class Annotation(object):
     def __init__(self, source, coords, rect_obj):
         self.source: str = source
         self.coords: tuple = coords
         self.rect_obj: QGraphicsRectItem = rect_obj
-        self.label: str = ""
+        self.label: Union[int, None] = None

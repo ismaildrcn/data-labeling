@@ -41,6 +41,7 @@ class Connector(QMainWindow, UI):
 
     def connection(self):
         self.image_list.itemClicked.connect(self.load_selected_image)
+        self.pushButton_actions.clicked.connect(self.show_menu)
 
 
     def initialize(self):
@@ -61,7 +62,6 @@ class Connector(QMainWindow, UI):
         self.image_list.setGridSize(QPixmap(130, 75).size())  # Hücreleri genişlet
 
         self.init_actions()
-        self.pushButton_actions.clicked.connect(self.show_menu)
 
         
     @pyqtSlot(tuple)
@@ -102,27 +102,28 @@ class Connector(QMainWindow, UI):
     def load_selected_image(self, item):
         """ Seçilen görseli yükle """
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
-        self.image_pixmap = QPixmap(self.source.current.toLocalFile())
+        if self.source.current != self.source.previous:
+            self.image_pixmap = QPixmap(self.source.current.toLocalFile())
 
-        self.scene.clear()  # Önceki sahneyi temizle
-        pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
+            self.scene.clear()  # Önceki sahneyi temizle
+            pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
 
-        self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
+            self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
 
-        self.graphicsView.fitInView(pixmap_item, Qt.KeepAspectRatio)
+            self.graphicsView.fitInView(pixmap_item, Qt.KeepAspectRatio)
 
-        self.graphicsView.setTransformationAnchor(QGraphicsView.NoAnchor)
-        self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
-        self.graphicsView.setRenderHint(QPainter.Antialiasing)
-        self.annotations.multi_annotations(self.source)
+            self.graphicsView.setTransformationAnchor(QGraphicsView.NoAnchor)
+            self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
+            self.graphicsView.setRenderHint(QPainter.Antialiasing)
+            self.annotations.multi_annotations(self.source)
 
     def init_actions(self):
         self.menu = QMenu(self)
         self.menu.setStyleSheet("""
             QMenu {
-                border: 1px solid #1B262C;
-                background-color: #0F4C75;
-                color: #BBE1FA;
+                border: 1px solid #00969d;
+                background-color: #00ADB5;
+                color: #EEEEEE;
                 padding: 8px;
             }
             QMenu::item {
@@ -130,26 +131,29 @@ class Connector(QMainWindow, UI):
                 background-color: transparent;
             }
             QMenu::item:selected {
-                background-color: #3282B8;
+                background-color: #00969d;
             }
         """)
 
-        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Edit Label", self)
+        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Etiketleri Düzenle", self)
         edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
         self.menu.addAction(edit_label)
 
-        import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Import Images", self)
+        import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Görüntüleri İçe Aktar", self)
         import_images.triggered.connect(lambda: self.pages.setCurrentIndex(0))
         self.menu.addAction(import_images)
 
-        import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Import Annotations", self)
+        import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı İçe Aktar", self)
         # exit_action.triggered.connect(self.close)
         self.menu.addAction(import_action)
         
-        export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Export Annotations", self)
+        export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Çalışmayı Dışa Aktar", self)
         export_action.triggered.connect(self.annotations.export_annotations)
         self.menu.addAction(export_action)
         
         
     def show_menu(self):
         self.menu.exec_(self.pushButton_actions.mapToGlobal(self.pushButton_actions.rect().bottomLeft()))
+    
+    def show_message(self, p_code: PopupMessages):
+        return self.modals.popup.show(p_code)

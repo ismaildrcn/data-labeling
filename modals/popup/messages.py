@@ -36,7 +36,7 @@ class PopupMessages(object):
             return "Uyarı"
         
 
-        M200 = ""
+        M200 = "Henüz hiç etiketleme yapmadınız."
     
     class Error(BaseEnum):
         @property
@@ -60,4 +60,4 @@ class PopupMessages(object):
             return "Seç"
         
 
-        M400 = ""
+        M400 = "Etiket türü atanmamış seçimleriniz mevcut. Eğer devam ederseniz sadece atanmış etiketler dışarıya aktarılacaktır. Onaylıyor musunuz?"

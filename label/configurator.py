@@ -49,7 +49,7 @@ class Configurator(object):
             return
         fname = QFileDialog.getSaveFileName(self._connector, 'Export Labels', '', 'Label Files (*.lbl)')[0]
         if fname:
-            with open(f"{fname}.lbl", 'w') as f:
+            with open(fname, 'w') as f:
                 f.write(str(self.label_type))
 
     def import_labels(self):
