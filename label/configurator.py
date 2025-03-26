@@ -2,6 +2,9 @@ import ast
 
 from PyQt5.QtWidgets import QListWidgetItem, QFileDialog
 
+from modals.popup.messages import PopupMessages
+from modals.popup.utils import Answers
+
 
 
 class Configurator(object):
@@ -45,9 +48,9 @@ class Configurator(object):
                 None
         """
         if not self.label_type:
-            print("No labels to export.")
+            self._connector.show_message(PopupMessages.Warning.M201)
             return
-        fname = QFileDialog.getSaveFileName(self._connector, 'Export Labels', '', 'Label Files (*.lbl)')[0]
+        fname = QFileDialog.getSaveFileName(self._connector, 'Etiketleri Dışa Aktar', '', 'Label Files (*.lbl)')[0]
         if fname:
             with open(fname, 'w') as f:
                 f.write(str(self.label_type))
@@ -63,15 +66,21 @@ class Configurator(object):
             Returns:
                 None
         """
-        self.label_type.clear()
-        fname = QFileDialog.getOpenFileName(self._connector, 'Insert Labels', '', 'Label Files (*.lbl)')[0]
-        if fname:
-            with open(f"{fname}", 'r') as f:
-                text = ast.literal_eval(f.readline().strip())
-                if text:
-                    for lbl in text:
-                        item = QListWidgetItem(lbl)
-                        self._connector.listWidget_label_list.addItem(item)
-                self.label_type = text
+        if self.label_type:
+            answer = self._connector.show_message(PopupMessages.Action.M401)
+        else:
+            answer = Answers.OK
+        if answer == Answers.OK:
+            self.label_type.clear()
+            self._connector.listWidget_label_list.clear()
+            fname = QFileDialog.getOpenFileName(self._connector, 'Etiketleri İçe Aktar', '', 'Label Files (*.lbl)')[0]
+            if fname:
+                with open(f"{fname}", 'r') as f:
+                    text = ast.literal_eval(f.readline().strip())
+                    if text:
+                        for lbl in text:
+                            item = QListWidgetItem(lbl)
+                            self._connector.listWidget_label_list.addItem(item)
+                    self.label_type = text
 
     

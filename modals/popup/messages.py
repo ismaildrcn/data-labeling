@@ -37,6 +37,7 @@ class PopupMessages(object):
         
 
         M200 = "Henüz hiç etiketleme yapmadınız."
+        M201 = "Dışarıya aktarılacak etiket bulunamadı."
     
     class Error(BaseEnum):
         @property
@@ -60,4 +61,5 @@ class PopupMessages(object):
             return "Seç"
         
 
-        M400 = "Etiket türü atanmamış seçimleriniz mevcut. Eğer devam ederseniz sadece atanmış etiketler dışarıya aktarılacaktır. Onaylıyor musunuz?"
+        M400 = "Etiket türü atanmamış seçimleriniz mevcut. Eğer devam ederseniz sadece atanmış seçimler dışarıya aktarılacaktır. Onaylıyor musunuz?"
+        M401 = "Etiketlerin içe aktarılmak üzere, eğer daha önceden oluşturduğun etiketlerin varsa bunlar kaldırılacaktır. Onaylıyor musunuz?"
