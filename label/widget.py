@@ -17,10 +17,10 @@ class LabelWidget(QWidget):
         QComboBox{
             border:none;
             background-color: transparent;
-            color: #BBE1FA;
+            color: #EEEEEE;
         }
         QComboBox QAbstractItemView {
-            background: #3282B8;
+            background-color: #00ADB5;
             border: 1px solid #555;
             selection-color: white; /* Seçili öğenin yazı rengi */
             padding: 5px;
