@@ -104,9 +104,11 @@ class Annotations(object):
             if key == l_type:
                 annotation.label = value
                 break
+        _, _, defined_label_count = self.check_annotation
+        self._connector.label_defined_annotation_value.setText(str(defined_label_count))
 
     def export_annotations(self):
-        has_unwrite, available_annotation = self.check_annotation
+        has_unwrite, available_annotation, _ = self.check_annotation
         if available_annotation is False:
             self._connector.show_message(PopupMessages.Warning.M200)
         else:
@@ -163,14 +165,17 @@ class Annotations(object):
     
     @property
     def check_annotation(self):
+        defined_label_count = 0
         available_annotation = False
         has_unwrite = False
         for image in self.annotation_dict:
             for annotation in self.annotation_dict[image]:
                 if annotation.label is None:
                     has_unwrite = True
+                else:
+                    defined_label_count += 1
                 available_annotation = True
-        return has_unwrite, available_annotation
+        return has_unwrite, available_annotation, defined_label_count
     
     @property
     def annotation_count(self):
