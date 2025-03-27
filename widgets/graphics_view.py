@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QGraphicsView
 from PyQt5.QtCore import Qt, QRectF, pyqtSignal
-from PyQt5.QtGui import QPen
+from PyQt5.QtGui import QPen, QWheelEvent, QPainter
+
 
 class CustomGraphicsView(QGraphicsView):
     rect_created_signal = pyqtSignal(tuple)
@@ -11,6 +12,9 @@ class CustomGraphicsView(QGraphicsView):
         self.rect_item = None
         self.normalized_coords = None
         self.setStyleSheet("border:none;")
+        self.setRenderHint(QPainter.Antialiasing, True)
+        self.setTransformationAnchor(QGraphicsView.NoAnchor)
+        self.setResizeAnchor(QGraphicsView.NoAnchor)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -62,3 +66,21 @@ class CustomGraphicsView(QGraphicsView):
             self.start_pos = None
             self.rect_item = None  # Referansı temizle
         super().mouseReleaseEvent(event)
+    
+    def wheelEvent(self, event: QWheelEvent):
+        """Mouse wheel zoom with Ctrl key at cursor position."""
+        if event.modifiers() == Qt.ControlModifier:
+            old_pos = self.mapToScene(event.pos())  # Zoom öncesi mouse sahnedeki pozisyonu
+            
+            # Zoom faktörünü belirle
+            zoom_factor = 1.2 if event.angleDelta().y() > 0 else 1 / 1.2
+            self.scale(zoom_factor, zoom_factor)
+
+            # Yeni sahne konumunu hesapla
+            new_pos = self.mapToScene(event.pos())  
+            delta = new_pos - old_pos  # Farkı hesapla
+            
+            # Viewport'u kaydırarak mouse'un sabit kalmasını sağla
+            self.translate(delta.x(), delta.y())
+        else:
+            super().wheelEvent(event)
