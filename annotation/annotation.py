@@ -108,16 +108,20 @@ class Annotations(object):
         self._connector.label_defined_annotation_value.setText(str(defined_label_count))
 
     def export_annotations(self):
-        has_unwrite, available_annotation, _ = self.check_annotation
-        if available_annotation is False:
-            self._connector.show_message(PopupMessages.Warning.M200)
-        else:
-            if has_unwrite:
-                answer = self._connector.show_message(PopupMessages.Action.M400)
-            if has_unwrite is False or answer == Answers.OK:
-                save_dir = QFileDialog.getExistingDirectory(self._connector, 'Çalışmaların Kaydedileceği Klasörü Seçin')
-                if save_dir:
-                    self.zipper(save_dir)
+        try:
+            has_unwrite, available_annotation, _ = self.check_annotation
+            if available_annotation is False:
+                self._connector.show_message(PopupMessages.Warning.M200)
+            else:
+                if has_unwrite:
+                    answer = self._connector.show_message(PopupMessages.Action.M400)
+                if has_unwrite is False or answer == Answers.OK:
+                    save_dir = QFileDialog.getExistingDirectory(self._connector, 'Çalışmaların Kaydedileceği Klasörü Seçin')
+                    if save_dir:
+                        self.zipper(save_dir)
+                        self._connector.show_message(PopupMessages.Info.M101)
+        except Exception as _:
+            self._connector.show_message(PopupMessages.Error.M301)
     
     def zipper(self, save_dir):
         with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + '.zip'), 'w') as archive:

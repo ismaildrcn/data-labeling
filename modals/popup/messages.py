@@ -24,7 +24,8 @@ class PopupMessages(object):
             return "Bilgi"
         
 
-        M100 = "Çalışma başarıyla oluşturuldu, etiketlemeye başlayabilirsiniz."
+        M100 = "Çalışmanız başarıyla oluşturuldu, etiketlemeye başlayabilirsiniz."
+        M101 = "Çalışmanız başarıyla seçmiş olduğunuz dizine aktarılmıştır."
 
     class Warning(BaseEnum):
         @property
@@ -50,6 +51,7 @@ class PopupMessages(object):
         
 
         M300 = "Lütfen devam etmeden önce etiket oluşturmayı veya etiketlerinizi içe aktarmayı deneyin!"
+        M301 = "Çalışmanız bilgisayara kaydedilirken bir hata oluştu, lütfen yetkili ile paylaşınız."
 
     class Action(BaseEnum):
         @property
