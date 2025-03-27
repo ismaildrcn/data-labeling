@@ -43,6 +43,52 @@ QLineEdit{
 }
 QLineEdit:focus{
 	border: 1px solid #00ADB5;
+}
+
+QScrollBar:vertical {
+	background: transparent; 
+	width: 15px;
+	padding-left: 5px;
+}
+QScrollBar::handle:vertical {
+	background: #596163; 
+	min-height: 20px;
+	border-radius: 5px;
+}
+
+QScrollBar:horizontal {
+	background: transparent; 
+	height: 15px;
+	padding-top: 5px;
+}
+QScrollBar::handle:horizontal {
+	background: #596163; 
+	min-width: 20px;
+	border-radius: 5px;
+}
+
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+	background: #909090;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical, QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+	background: none;
+}
+
+QScrollBar::sub-line:vertical,
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:horizontal,
+QScrollBar::add-line:horizontal {
+    background: none;
+    border: none;
+    height: 0px;
+}
+QScrollBar::up-arrow:vertical,
+QScrollBar::down-arrow:vertical,
+QScrollBar::up-arrow:horizontal,
+QScrollBar::down-arrow:horizontal {
+    background: none;
+    border: none;
+    height: 0px;
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -724,7 +770,14 @@ QPushButton:hover{
                </widget>
               </item>
               <item>
-               <widget class="QListWidget" name="image_list"/>
+               <widget class="QListWidget" name="image_list">
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAsNeeded</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAsNeeded</enum>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

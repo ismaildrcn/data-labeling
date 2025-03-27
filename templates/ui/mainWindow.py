@@ -36,6 +36,52 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:focus{\n"
 "    border: 1px solid #00ADB5;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    background: transparent; \n"
+"    width: 15px;\n"
+"    padding-left: 5px;\n"
+"}\n"
+"QScrollBar::handle:vertical {\n"
+"    background: #596163; \n"
+"    min-height: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"\n"
+"QScrollBar:horizontal {\n"
+"    background: transparent; \n"
+"    height: 15px;\n"
+"    padding-top: 5px;\n"
+"}\n"
+"QScrollBar::handle:horizontal {\n"
+"    background: #596163; \n"
+"    min-width: 20px;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {\n"
+"    background: #909090;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical, QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical,\n"
+"QScrollBar::add-line:vertical,\n"
+"QScrollBar::sub-line:horizontal,\n"
+"QScrollBar::add-line:horizontal {\n"
+"    background: none;\n"
+"    border: none;\n"
+"    height: 0px;\n"
+"}\n"
+"QScrollBar::up-arrow:vertical,\n"
+"QScrollBar::down-arrow:vertical,\n"
+"QScrollBar::up-arrow:horizontal,\n"
+"QScrollBar::down-arrow:horizontal {\n"
+"    background: none;\n"
+"    border: none;\n"
+"    height: 0px;\n"
 "}")
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -324,6 +370,8 @@ class Ui_MainWindow(object):
         self.label_image_list_title.setObjectName("label_image_list_title")
         self.layout_image_list.addWidget(self.label_image_list_title, 0, QtCore.Qt.AlignHCenter)
         self.image_list = QtWidgets.QListWidget(self.widget_image_list)
+        self.image_list.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.image_list.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.image_list.setObjectName("image_list")
         self.layout_image_list.addWidget(self.image_list)
         self.horizontalLayout_3.addWidget(self.widget_image_list)
