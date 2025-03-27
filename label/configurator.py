@@ -50,7 +50,7 @@ class Configurator(object):
         if not self.label_type:
             self._connector.show_message(PopupMessages.Warning.M201)
             return
-        fname = QFileDialog.getSaveFileName(self._connector, 'Etiketleri Dışa Aktar', '', 'Label Files (*.lbl)')[0]
+        fname = QFileDialog.getSaveFileName(self._connector, 'Etiketleri Bilgisayara Aktar', '', 'Label Files (*.lbl)')[0]
         if fname:
             with open(fname, 'w') as f:
                 f.write(str(self.label_type))
@@ -73,7 +73,7 @@ class Configurator(object):
         if answer == Answers.OK:
             self.label_type.clear()
             self._connector.listWidget_label_list.clear()
-            fname = QFileDialog.getOpenFileName(self._connector, 'Etiketleri İçe Aktar', '', 'Label Files (*.lbl)')[0]
+            fname = QFileDialog.getOpenFileName(self._connector, 'Etiketleri Uygulamaya Aktar', '', 'Label Files (*.lbl)')[0]
             if fname:
                 with open(f"{fname}", 'r') as f:
                     text = ast.literal_eval(f.readline().strip())

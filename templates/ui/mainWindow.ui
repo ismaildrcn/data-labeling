@@ -400,7 +400,7 @@ QPushButton{
            <item>
             <widget class="QLabel" name="label_import_labels">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiketleri İçe Aktar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiketleri Uygulamaya Aktar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -624,7 +624,7 @@ QPushButton:hover{
               </size>
              </property>
              <property name="text">
-              <string>Etiketleri Dışa Aktar</string>
+              <string>Etiketleri Bilgisayara Aktar</string>
              </property>
             </widget>
            </item>
@@ -719,7 +719,7 @@ QPushButton:hover{
                  </font>
                 </property>
                 <property name="text">
-                 <string>Images</string>
+                 <string>Görseller</string>
                 </property>
                </widget>
               </item>
@@ -792,7 +792,7 @@ QPushButton:hover{
                  </font>
                 </property>
                 <property name="text">
-                 <string>Labels</string>
+                 <string>Etiketler</string>
                 </property>
                </widget>
               </item>

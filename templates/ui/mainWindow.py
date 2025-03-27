@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainWindow.ui'
+# Form implementation generated from reading ui file '.\mainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -417,15 +417,15 @@ class Ui_MainWindow(object):
         self.pushButton_actions.setText(_translate("MainWindow", "Eylemler"))
         self.label_image_labeling_title.setText(_translate("MainWindow", "Görsel Veri Etiketleme"))
         self.label_drop_images.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">Resimleri bırakın</span></p><p align=\"center\">veya </p><p align=\"center\"><span style=\" font-weight:600;\">Seçmek için buraya tıklayın</span></p></body></html>"))
-        self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiketleri İçe Aktar</span></p></body></html>"))
+        self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiketleri Uygulamaya Aktar</span></p></body></html>"))
         self.label_create_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiket Oluştur</span></p></body></html>"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini İngilizce olmak kaydıyla istediğiniz gibi oluşturabilirsiniz.</span></p></body></html>"))
         self.lineEdit_add_label.setPlaceholderText(_translate("MainWindow", "solder-balling"))
         self.pushButton_add_label.setText(_translate("MainWindow", "Oluştur"))
         self.pushButton_continue_labeling.setText(_translate("MainWindow", "Devam et"))
-        self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Dışa Aktar"))
-        self.label_image_list_title.setText(_translate("MainWindow", "Images"))
-        self.label.setText(_translate("MainWindow", "Labels"))
+        self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Bilgisayara Aktar"))
+        self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
+        self.label.setText(_translate("MainWindow", "Etiketler"))
         self.label_image_title.setText(_translate("MainWindow", "Toplam Görsel:"))
         self.label_total_annotation_title.setText(_translate("MainWindow", "Toplam Etiket:"))
         self.label_defined_annotation_title.setText(_translate("MainWindow", "Tanımlanmış Etiket:"))

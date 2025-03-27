@@ -139,15 +139,15 @@ class Connector(QMainWindow, UI):
         edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
         self.menu.addAction(edit_label)
 
-        import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Görüntüleri İçe Aktar", self)
+        import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Görüntüleri Uygulamaya Aktar", self)
         import_images.triggered.connect(lambda: self.pages.setCurrentIndex(0))
         self.menu.addAction(import_images)
 
-        import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı İçe Aktar", self)
+        import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı Uygulamaya Aktar", self)
         # exit_action.triggered.connect(self.close)
         self.menu.addAction(import_action)
         
-        export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Çalışmayı Dışa Aktar", self)
+        export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Çalışmayı Bilgisayara Aktar", self)
         export_action.triggered.connect(self.annotations.export_annotations)
         self.menu.addAction(export_action)
         
