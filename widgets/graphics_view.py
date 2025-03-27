@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QGraphicsView
 from PyQt5.QtCore import Qt, QRectF, pyqtSignal
-from PyQt5.QtGui import QPen, QWheelEvent, QPainter
+from PyQt5.QtGui import QPen, QWheelEvent, QPainter, QColor
 
 
 class CustomGraphicsView(QGraphicsView):
@@ -11,6 +11,7 @@ class CustomGraphicsView(QGraphicsView):
         self.start_pos = None
         self.rect_item = None
         self.normalized_coords = None
+        self.setMouseTracking(True)
         self.setStyleSheet("border:none;")
         self.setRenderHint(QPainter.Antialiasing, True)
         self.setTransformationAnchor(QGraphicsView.NoAnchor)
@@ -22,16 +23,8 @@ class CustomGraphicsView(QGraphicsView):
             super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
-        if self.start_pos and event.buttons() & Qt.LeftButton:
-            end_pos = self.mapToScene(event.pos())
-            rect = QRectF(self.start_pos, end_pos).normalized()
-
-            # Geçici rect'i sil ve yenisini ekle
-            if self.rect_item:
-                self.scene().removeItem(self.rect_item)
-
-            pen = QPen(Qt.red, 2)
-            self.rect_item = self.scene().addRect(rect, pen)
+        self.viewport().update()  # Her mouse hareketi için yeniden çizim
+        self.rectangle_event(event)
         super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event):
@@ -84,3 +77,30 @@ class CustomGraphicsView(QGraphicsView):
             self.translate(delta.x(), delta.y())
         else:
             super().wheelEvent(event)
+
+    def rectangle_event(self, event):
+        if self.start_pos and event.buttons() & Qt.LeftButton:
+            end_pos = self.mapToScene(event.pos())
+            rect = QRectF(self.start_pos, end_pos).normalized()
+
+            # Geçici rect'i sil ve yenisini ekle
+            if self.rect_item:
+                self.scene().removeItem(self.rect_item)
+
+            pen = QPen(Qt.red, 2)
+            self.rect_item = self.scene().addRect(rect, pen)
+    
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        painter = QPainter(self.viewport())
+        pen = QPen(QColor(57, 62, 70), 1, Qt.SolidLine)
+        painter.setPen(pen)
+        
+        # Mouse pozisyonunu al
+        mouse_pos = self.mapFromGlobal(self.cursor().pos())
+        
+        # Yatay çizgi
+        painter.drawLine(0, mouse_pos.y(), self.width(), mouse_pos.y())
+        
+        # Dikey çizgi
+        painter.drawLine(mouse_pos.x(), 0, mouse_pos.x(), self.height())
