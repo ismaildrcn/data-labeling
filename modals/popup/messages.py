@@ -62,4 +62,4 @@ class PopupMessages(object):
         
 
         M400 = "Etiket türü atanmamış seçimleriniz mevcut. Eğer devam ederseniz sadece atanmış seçimler dışarıya aktarılacaktır. Onaylıyor musunuz?"
-        M401 = "Etiketlerin içe aktarılmak üzere, eğer daha önceden oluşturduğun etiketlerin varsa bunlar kaldırılacaktır. Onaylıyor musunuz?"
+        M401 = "Etiketleriniz içe aktarılmak üzere, eğer daha önceden oluşturulmuş etiketleriniz varsa bunlar kaldırılacaktır. Onaylıyor musunuz?"

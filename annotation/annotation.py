@@ -19,6 +19,7 @@ class Annotations(object):
         self._connector = connector
         self.label_widget = LabelWidget()
 
+        self.annotation_count = 0
         self.annotation_dict = {}
 
     @overload
@@ -35,6 +36,7 @@ class Annotations(object):
 
         if len(args) != 1:    
             annotation = Annotation(args[0], args[1], args[2], item)
+            self.annotation_count += 1
             if args[0] in self.annotation_dict:
                 self.annotation_dict[args[0]].append(annotation)
             else:
@@ -67,8 +69,10 @@ class Annotations(object):
                     annotation.rect_obj = None
                 
                 self.annotation_dict[annotation.source].remove(annotation)
+                self.annotation_count -= 1
                 if len(self.annotation_dict[annotation.source]) == 0:
                     del self.annotation_dict[annotation.source]
+                    
     
     def delete_all_annotation_from_list(self):
         # Widget'ı listeden bul ve sil
@@ -167,6 +171,15 @@ class Annotations(object):
                     has_unwrite = True
                 available_annotation = True
         return has_unwrite, available_annotation
+    
+    @property
+    def annotation_count(self):
+        return self._annotation_count
+    
+    @annotation_count.setter
+    def annotation_count(self, value):
+        self._annotation_count = value
+        self._connector.label_total_annotation_value.setText(str(value))
 
 
 class Annotation(object):

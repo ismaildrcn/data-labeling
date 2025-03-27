@@ -65,6 +65,8 @@ class Listener(QMainWindow):
         if self._connector.configurator.label_type:
             self._connector.pages.setCurrentIndex(2)
             self._connector.modals.popup.show(PopupMessages.Info.M100)
+            self._connector.load_selected_image(self._connector.image_list.item(0))
+            self._connector.label_total_image_value.setText(str(self._connector.image_list.count()))
         else:
             self._connector.modals.popup.show(PopupMessages.Error.M300)
 
