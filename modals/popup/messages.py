@@ -39,6 +39,7 @@ class PopupMessages(object):
 
         M200 = "Henüz hiç etiketleme yapmadınız."
         M201 = "Bilgisayara aktarılacak etiket bulunamadı."
+        M202 = "Bu isimlendirmeye ait zaten bir etiketiniz var, lütfen farklı bir isim girmeyi deneyiniz."
     
     class Error(BaseEnum):
         @property

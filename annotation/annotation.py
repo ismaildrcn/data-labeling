@@ -5,7 +5,7 @@ from typing import Union, overload
 
 from PyQt5.QtWidgets import QGraphicsRectItem, QListWidgetItem, QFileDialog
 from PyQt5.QtCore import Qt, QRectF
-from PyQt5.QtGui import QPen
+from PyQt5.QtGui import QPen, QPixmap
 
 from label.widget import LabelWidget
 
@@ -23,9 +23,11 @@ class Annotations(object):
         self.annotation_dict = {}
 
     @overload
-    def add(annotation) -> None: ...
+    def add(self, annotation) -> None: ...
     @overload
-    def add(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem, label: str = None, without: bool = False) -> None: ...
+    def add(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem) -> None: ...
+    @overload
+    def add(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem, label: str = None) -> None: ...
     def add(self, *args):
         widget = LabelWidget().setup(self._connector)
         widget.label_list.addItems(self._connector.configurator.labels)
@@ -34,8 +36,12 @@ class Annotations(object):
         item.setSizeHint(widget.main.sizeHint())
         self._connector.current_label_list.setItemWidget(item, widget.main)
 
-        if len(args) != 1:    
-            annotation = Annotation(args[0], args[1], args[2], item)
+        if len(args) != 1:
+            if len(args) == 3:
+                annotation = Annotation(args[0], args[1], args[2], item)
+            elif len(args) == 4:
+                annotation = Annotation(args[0], args[1], args[2], item, args[3])
+
             self.annotation_count += 1
             if args[0] in self.annotation_dict:
                 self.annotation_dict[args[0]].append(annotation)
@@ -43,7 +49,8 @@ class Annotations(object):
                 self.annotation_dict[args[0]] = [annotation]
         else:
             annotation = args[0]
-            widget.label_list.setCurrentIndex(annotation.label)
+            if annotation.label is not None:
+                widget.label_list.setCurrentIndex(int(annotation.label))
 
         widget.delete_label.clicked.connect(lambda: self.delete(annotation))
         widget.view_label.clicked.connect(lambda: self.hide(annotation))
@@ -132,40 +139,54 @@ class Annotations(object):
                         content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
                 if content:
                     archive.writestr(image.toLocalFile().split('/')[-1].split('.')[0] + '.txt', content)
+            archive.writestr(str(uuid.uuid4()) + '.lbl', str(self._connector.configurator.label_type))
+            archive.comment = b"Created by Desird for FAD."
         archive.close()
 
     def multi_annotations(self, source: Source):
-        if source.previous in self.annotation_dict:
-            annotations_clear = self.annotation_dict[source.previous].copy()
-            for annotation in annotations_clear:
-                self.delete(annotation, only_front=True)
+        self.multi_delete(source)
         if source.current in self.annotation_dict:
             # Görsel boyutlarını al
             pixmap = self._connector.image_pixmap
-            img_width = pixmap.width()
-            img_height = pixmap.height()
             annotations = self.annotation_dict[source.current].copy()
             for annotation in annotations:
-                # Normalize edilmiş koordinatları al
-                center_x, center_y, width, height = annotation.coords
-                
-                # Gerçek koordinatlara çevir
-                real_width = width * img_width
-                real_height = height * img_height
-                
-                # Merkez koordinatlarını sol üst köşe koordinatlarına çevir
-                real_x = (center_x * img_width) - (real_width / 2)
-                real_y = (center_y * img_height) - (real_height / 2)
+                rect = self.rect_creater_with_coordinate(annotation.coords, pixmap)
 
-                # QRectF ile dikdörtgen oluştur
-                rect = QRectF(real_x, real_y, real_width, real_height)
-            
                 # Scene üzerinde rect oluştur
                 pen = QPen(Qt.red, 2)
                 self._connector.scene.addRect(rect, pen)
             
                 # Yeni annotation'ı ekle
                 self.add(annotation)
+    
+    def multi_delete(self, source: Source):
+        path = False
+        if source.previous in self.annotation_dict:
+            path = source.previous
+        elif len(self.annotation_dict) > 0 and source.previous is None:
+            path = source.current
+        if path:
+            annotations_clear = self.annotation_dict[path].copy()
+            for annotation in annotations_clear:
+                self.delete(annotation, only_front=True)
+    def rect_creater_with_coordinate(self, coordinate: tuple, pixmap: QPixmap) -> QRectF:
+        img_width = pixmap.width()
+        img_height = pixmap.height()
+
+        # Normalize edilmiş koordinatları al
+        center_x, center_y, width, height = coordinate
+                
+        # Gerçek koordinatlara çevir
+        real_width = width * img_width
+        real_height = height * img_height
+        
+        # Merkez koordinatlarını sol üst köşe koordinatlarına çevir
+        real_x = (center_x * img_width) - (real_width / 2)
+        real_y = (center_y * img_height) - (real_height / 2)
+
+        # QRectF ile dikdörtgen oluştur
+        return QRectF(real_x, real_y, real_width, real_height)
+
     
     @property
     def check_annotation(self):
@@ -192,9 +213,9 @@ class Annotations(object):
 
 
 class Annotation(object):
-    def __init__(self, source, coords, rect_obj, item):
+    def __init__(self, source, coords, rect_obj, item, label = None):
         self.source: str = source
         self.coords: tuple = coords
         self.rect_obj: QGraphicsRectItem = rect_obj
-        self.label: Union[int, None] = None
+        self.label: Union[int, None] = label
         self.item: QListWidgetItem = item

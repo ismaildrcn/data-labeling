@@ -1,6 +1,9 @@
 import os
+import tempfile
 
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu, QDesktopWidget
+from typing import Union
+from zipfile import ZipFile
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu, QGraphicsRectItem
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
 from PyQt5.QtCore import Qt, pyqtSlot, QUrl
 
@@ -12,6 +15,7 @@ from mains.listener import Listener
 from mains.source import Source
 from label.configurator import Configurator
 from annotation.annotation import Annotations
+from annotation.annotation import Annotation
 from modals.modals import Modals
 from modals.popup.messages import PopupMessages
 
@@ -79,26 +83,65 @@ class Connector(QMainWindow, UI):
         self.annotations.add(self.source.current, detail[0], detail[1])
         
     def import_images(self, drop_list=False):
+        old_working = False
         if drop_list:
             for image in drop_list:
                 if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self.image_path_list:
                     self.create_image_list(image)
+                elif image.path().endswith(".zip"):
+                    old_working = image
         else:
-            selected_list = QFileDialog.getOpenFileNames(self, "Import Images", "", "Images (*.png *.jpg *.jpeg)")[0]
+            selected_list = QFileDialog.getOpenFileNames(self, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg, *.zip)")[0]
             for image in selected_list:
-                if QUrl.fromLocalFile(image) not in self.image_path_list:
-                    self.create_image_list(QUrl.fromLocalFile(image))
-
+                if image.endswith(".zip"):
+                    old_working = QUrl.fromLocalFile(image)
+                elif QUrl.fromLocalFile(image) not in self.image_path_list:
+                        self.create_image_list(QUrl.fromLocalFile(image))
+        
+        self.import_old_working(old_working)
         if self.image_path_list:
             self.pages.setCurrentIndex(1)
+        old_working = False
         
     def create_image_list(self, image: QUrl):
         item = QListWidgetItem(QIcon(image.toLocalFile()), None)  # QIcon ile resimleri ekle
         item.setData(Qt.UserRole, image)  # Görsel yolunu sakla
         self.image_list.addItem(item)
         self.image_path_list.append(image)
-
     
+    def import_old_working(self, path: Union[QUrl, bool]):
+        if path:
+            with tempfile.TemporaryDirectory() as tmpdir:
+                with ZipFile(path.toLocalFile(), 'r') as archive:
+                    archive.extractall(tmpdir)  # Zip dosyasını çıkar
+                    name_list = archive.namelist()
+                    lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
+                    self.configurator.import_labels(tmpdir + '/' + lbl)
+                    name_list.remove(lbl)
+                    for file in name_list:
+                        file = tmpdir + '/' + file
+                        image = self.check_image_path_list(file)
+                        if image:
+                            with open(file, 'r') as ann_file:
+                                for line in ann_file.readlines():
+                                    line = line.strip().split()
+                                    if len(line) == 5:
+                                        coords = (float(line[1]), float(line[2]), float(line[3]), float(line[4]))
+                                        rect_obj = QGraphicsRectItem()
+                                        self.annotations.add(image, coords, rect_obj, int(line[0]))
+
+                    for item in archive.namelist():
+                        os.remove(tmpdir + '/' + item)
+        
+    def check_image_path_list(self, path: str) -> Union[QUrl, bool]:
+        for image in self.image_path_list:
+            if '.'.join(image.toLocalFile().split("/")[-1].split('.')[:-1]) == path.split("/")[-1].split(".")[0]:
+                return image
+        if path.endswith('.lbl'):
+            return True
+        return False
+                
+        
     def load_selected_image(self, item):
         """ Seçilen görseli yükle """
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al

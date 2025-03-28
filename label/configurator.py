@@ -1,4 +1,5 @@
 import ast
+from typing import overload
 
 from PyQt5.QtWidgets import QListWidgetItem, QFileDialog
 
@@ -15,8 +16,6 @@ class Configurator(object):
     @property
     def labels(self):
         return self.label_type.keys()
-        
-
 
     def add(self):
         """
@@ -30,11 +29,14 @@ class Configurator(object):
                 None
         """
         text = self._connector.lineEdit_add_label.text()
-        if text != '':
-            self.label_type[text] = len(self.label_type)
-            item = QListWidgetItem(text)
-            self._connector.listWidget_label_list.addItem(item)
-            self._connector.lineEdit_add_label.clear()
+        if text in self.label_type.keys():
+            self._connector.show_message(PopupMessages.Warning.M202)
+        else:
+            if text != '':
+                self.label_type[text] = len(self.label_type)
+                item = QListWidgetItem(text)
+                self._connector.listWidget_label_list.addItem(item)
+                self._connector.lineEdit_add_label.clear()
 
     def export_labels(self):
         """
@@ -55,7 +57,11 @@ class Configurator(object):
             with open(fname, 'w') as f:
                 f.write(str(self.label_type))
 
-    def import_labels(self):
+    @overload
+    def import_labels(self) -> None: ...
+    @overload
+    def import_labels(self, file_path: str) -> None: ...
+    def import_labels(self, *args):
         """
             Etiketleri bir dosyadan içe aktarın ve etiket listesine ekleyin.
 
@@ -73,7 +79,10 @@ class Configurator(object):
         if answer == Answers.OK:
             self.label_type.clear()
             self._connector.listWidget_label_list.clear()
-            fname = QFileDialog.getOpenFileName(self._connector, 'Etiketleri Uygulamaya Aktar', '', 'Label Files (*.lbl)')[0]
+            if args:
+                fname = args[0]
+            else:
+                fname = QFileDialog.getOpenFileName(self._connector, 'Etiketleri Uygulamaya Aktar', '', 'Label Files (*.lbl)')[0]
             if fname:
                 with open(f"{fname}", 'r') as f:
                     text = ast.literal_eval(f.readline().strip())

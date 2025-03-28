@@ -2,7 +2,7 @@ from typing import Union
 
 class Source(object):
     def __init__(self):
-        self._current: str = ""
+        self._current: Union[str, None] = None
         self._previous: Union[str, None] = None
 
     @property
