@@ -1,4 +1,3 @@
-
 from PyQt5.QtWidgets import QMainWindow, QWidget
 from PyQt5.QtCore import QEvent, Qt
 
@@ -37,6 +36,10 @@ class Listener(QMainWindow):
                         self._connector.configurator.import_labels()
                     case self._connector.pushButton_continue_labeling:
                         self.continue_event_changed()
+                    case self._connector.pushButton_next_image:
+                        self.next_or_previous_image_eventh_changed(1)
+                    case self._connector.pushButton_previous_image:
+                        self.next_or_previous_image_eventh_changed(-1)
             case QEvent.KeyPress:
                 if source == self._connector.pushButton_add_label and event.key() in (Qt.Key_Return, Qt.Key_Enter):
                     self._connector.configurator.add()
@@ -75,3 +78,19 @@ class Listener(QMainWindow):
             self._connector.showNormal()
         else:
             self._connector.showFullScreen()
+
+    def next_or_previous_image_eventh_changed(self, transaction):
+        current_item = self._connector.image_list.currentItem()
+        if current_item:
+            # Mevcut itemın index'ini al
+            current_index = self._connector.image_list.indexFromItem(current_item).row()
+            total_items = self._connector.image_list.count()
+            
+            # Bir sonraki index'i hesapla
+            next_index = current_index + transaction
+            
+            # Liste sınırları içinde mi kontrol et
+            if  0 <= next_index < total_items:
+                next_item = self._connector.image_list.item(next_index)
+                self._connector.image_list.setCurrentItem(next_item)
+                self._connector.load_selected_image(next_item)

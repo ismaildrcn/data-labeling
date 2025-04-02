@@ -159,6 +159,7 @@ class Connector(QMainWindow, UI):
             self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setRenderHint(QPainter.Antialiasing)
             self.annotations.multi_annotations(self.source)
+            self.label_current_image_name.setText(self.source.current.toLocalFile().split('/')[-1])
 
     def init_actions(self):
         self.menu = QMenu(self)

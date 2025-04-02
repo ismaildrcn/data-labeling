@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="images">
+    <file>../templates/images/left.svg</file>
+    <file>../templates/images/right.svg</file>
     <file>../templates/images/error.svg</file>
     <file>../templates/images/fad.ico</file>
     <file>../templates/images/info.svg</file>

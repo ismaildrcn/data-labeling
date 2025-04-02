@@ -719,12 +719,6 @@ QPushButton:hover{
         <item>
          <widget class="QWidget" name="widget" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <property name="topMargin">
-            <number>9</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
            <item>
             <widget class="QWidget" name="widget_image_list" native="true">
              <property name="minimumSize">
@@ -753,7 +747,7 @@ QPushButton:hover{
                <number>9</number>
               </property>
               <property name="bottomMargin">
-               <number>12</number>
+               <number>9</number>
               </property>
               <item alignment="Qt::AlignHCenter">
                <widget class="QLabel" name="label_image_list_title">
@@ -779,40 +773,140 @@ QPushButton:hover{
                 </property>
                </widget>
               </item>
+              <item alignment="Qt::AlignHCenter">
+               <widget class="QWidget" name="widget_2" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QLabel" name="label_image_title">
+                   <property name="text">
+                    <string>Toplam Görsel:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_total_image_value">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="widget_labeling_area" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QGraphicsView{
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QWidget" name="widget_labeling_area" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QGraphicsView{
 	background-color: transparent;
 }</string>
-             </property>
-             <layout class="QHBoxLayout" name="layout_labeling_area">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-             </layout>
-            </widget>
+               </property>
+               <layout class="QVBoxLayout" name="layout_labeling_area">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+               </layout>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignHCenter">
+              <widget class="QWidget" name="widget_labeling_bottom_area" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+	background-color: transparent;
+}</string>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="pushButton_previous_image">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../rcc_files/rsrc.qrc">
+                    <normaloff>:/images/templates/images/left.svg</normaloff>:/images/templates/images/left.svg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_current_image_name">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_next_image">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../rcc_files/rsrc.qrc">
+                    <normaloff>:/images/templates/images/right.svg</normaloff>:/images/templates/images/right.svg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QWidget" name="widget_current_label_area" native="true">
@@ -833,7 +927,7 @@ QPushButton:hover{
                <number>12</number>
               </property>
               <property name="bottomMargin">
-               <number>12</number>
+               <number>9</number>
               </property>
               <item alignment="Qt::AlignHCenter">
                <widget class="QLabel" name="label">
@@ -859,80 +953,40 @@ QPushButton:hover{
                 </property>
                </widget>
               </item>
+              <item>
+               <layout class="QFormLayout" name="layout_annotation_count">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_total_annotation_title">
+                  <property name="text">
+                   <string>Toplam Etiket:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_total_annotation_value">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_defined_annotation_title">
+                  <property name="text">
+                   <string>Tanımlanmış Etiket:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="label_defined_annotation_value">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
              </layout>
             </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="widget_labeling_bottom_area" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>25</height>
-           </size>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <property name="topMargin">
-            <number>3</number>
-           </property>
-           <property name="bottomMargin">
-            <number>3</number>
-           </property>
-           <item>
-            <layout class="QFormLayout" name="layout_image_count">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_image_title">
-               <property name="text">
-                <string>Toplam Görsel:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLabel" name="label_total_image_value">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QFormLayout" name="layout_annotation_count">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_total_annotation_title">
-               <property name="text">
-                <string>Toplam Etiket:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLabel" name="label_total_annotation_value">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QFormLayout" name="formLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_defined_annotation_title">
-               <property name="text">
-                <string>Tanımlanmış Etiket:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLabel" name="label_defined_annotation_value">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </item>
           </layout>
          </widget>
