@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget
 from PyQt5.QtCore import QEvent, Qt
 
 from modals.popup.messages import PopupMessages
+from modals.popup.utils import Answers
 
 
 
@@ -40,6 +41,8 @@ class Listener(QMainWindow):
                         self.next_or_previous_image_eventh_changed(1)
                     case self._connector.pushButton_previous_image:
                         self.next_or_previous_image_eventh_changed(-1)
+                    case self._connector.pushButton_exit_project:
+                        self.pushButton_exit_project_event_changed()
             case QEvent.KeyPress:
                 if source == self._connector.pushButton_add_label and event.key() in (Qt.Key_Return, Qt.Key_Enter):
                     self._connector.configurator.add()
@@ -68,7 +71,8 @@ class Listener(QMainWindow):
         if self._connector.configurator.label_type:
             self._connector.pages.setCurrentIndex(2)
             self._connector.modals.popup.show(PopupMessages.Info.M100)
-            self._connector.load_selected_image(self._connector.image_list.item(0))
+            if self._connector.image_list.count() > 0:
+                self._connector.load_selected_image(self._connector.image_list.item(0))
             self._connector.label_total_image_value.setText(str(self._connector.image_list.count()))
         else:
             self._connector.modals.popup.show(PopupMessages.Error.M300)
@@ -94,3 +98,8 @@ class Listener(QMainWindow):
                 next_item = self._connector.image_list.item(next_index)
                 self._connector.image_list.setCurrentItem(next_item)
                 self._connector.load_selected_image(next_item)
+    
+    def pushButton_exit_project_event_changed(self):
+        answer = self._connector.show_message(PopupMessages.Action.M402)
+        if answer == Answers.OK:
+            self._connector.clear_project()

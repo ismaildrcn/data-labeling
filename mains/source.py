@@ -21,3 +21,7 @@ class Source(object):
     @previous.setter
     def previous(self, value):
         self._previous = value
+    
+    def clear(self):
+        self.current = None
+        self.previous = None

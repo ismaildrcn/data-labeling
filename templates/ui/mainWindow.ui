@@ -138,6 +138,32 @@ QPushButton{
        <item alignment="Qt::AlignLeft">
         <widget class="QWidget" name="widget_topbar_left_actions" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>12</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushButton_exit_project">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Çalışmadan Çık</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../rcc_files/rsrc.qrc">
+              <normaloff>:/images/templates/images/exit.svg</normaloff>:/images/templates/images/exit.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QPushButton" name="pushButton_actions">
             <property name="font">
@@ -954,11 +980,14 @@ QPushButton:hover{
                </widget>
               </item>
               <item>
-               <layout class="QFormLayout" name="layout_annotation_count">
+               <layout class="QGridLayout" name="gridLayout">
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_total_annotation_title">
                   <property name="text">
                    <string>Toplam Etiket:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -973,6 +1002,9 @@ QPushButton:hover{
                  <widget class="QLabel" name="label_defined_annotation_title">
                   <property name="text">
                    <string>Tanımlanmış Etiket:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>

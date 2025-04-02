@@ -46,6 +46,7 @@ class Connector(QMainWindow, UI):
     def connection(self):
         self.image_list.itemClicked.connect(self.load_selected_image)
         self.pushButton_actions.clicked.connect(self.show_menu)
+        self.pages.currentChanged.connect(self.pages_current_changed)
 
 
     def initialize(self):
@@ -66,6 +67,9 @@ class Connector(QMainWindow, UI):
         self.image_list.setGridSize(QPixmap(130, 75).size())  # Hücreleri genişlet
 
         self.init_actions()
+
+        self.pushButton_exit_project.setVisible(False)
+
 
         
     @pyqtSlot(tuple)
@@ -201,3 +205,19 @@ class Connector(QMainWindow, UI):
     
     def show_message(self, p_code: PopupMessages):
         return self.modals.popup.show(p_code)
+
+    def clear_project(self):
+        self.scene.clear()
+        self.image_pixmap = None
+        self.configurator.label_type.clear()
+        self.listWidget_label_list.clear()
+        self.image_list.clear()
+        self.image_path_list.clear()
+        self.source.clear()
+        self.pages.setCurrentIndex(0)
+    
+    def pages_current_changed(self, index):
+        if index == 2:
+            self.pushButton_exit_project.setVisible(True)
+            return
+        self.pushButton_exit_project.setVisible(False)
