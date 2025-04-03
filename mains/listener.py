@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget
+from PyQt5.QtWidgets import QMainWindow, QWidget, QGraphicsView
 from PyQt5.QtCore import QEvent, Qt
 
 from modals.popup.messages import PopupMessages
@@ -43,13 +43,23 @@ class Listener(QMainWindow):
                         self.next_or_previous_image_eventh_changed(-1)
                     case self._connector.pushButton_exit_project:
                         self.pushButton_exit_project_event_changed()
+                    case self._connector.pushButton_activate_hand:
+                        self.pushButton_activate_hand_event_changed()
+                    case self._connector.pushButton_activate_crosshair:
+                        self.pushButton_activate_crosshair_event_changed()
+                    case self._connector.pushButton_zoom_in:
+                        self._connector.graphicsView.zoom(1)
+                    case self._connector.pushButton_zoom_out:
+                        self._connector.graphicsView.zoom(-1)
+                    case self._connector.pushButton_zoom_fit:
+                        self._connector.reset_zoom()
             case QEvent.KeyPress:
                 if source == self._connector.pushButton_add_label and event.key() in (Qt.Key_Return, Qt.Key_Enter):
                     self._connector.configurator.add()
             case QEvent.MouseMove:
                 match source:
                     case self._connector.label_image_labeling_title | self._connector.widget_top:
-                        if self.offset is not None and event.buttons() == Qt.LeftButton:
+                        if self.offset is not None and event.buttons() == Qt.LeftButton and not self._connector.isFullScreen():
                             self._connector.move(event.globalPos() - self.offset)
             case QEvent.MouseButtonRelease:
                 self.offset = None
@@ -82,6 +92,7 @@ class Listener(QMainWindow):
             self._connector.showNormal()
         else:
             self._connector.showFullScreen()
+            self._connector.reset_zoom()
 
     def next_or_previous_image_eventh_changed(self, transaction):
         current_item = self._connector.image_list.currentItem()
@@ -103,3 +114,17 @@ class Listener(QMainWindow):
         answer = self._connector.show_message(PopupMessages.Action.M402)
         if answer == Answers.OK:
             self._connector.clear_project()
+
+    def pushButton_activate_hand_event_changed(self):
+        if self._connector.pushButton_activate_hand.isChecked():
+            self._connector.graphicsView.setDragMode(QGraphicsView.NoDrag)
+        else:
+            self._connector.graphicsView.setDragMode(QGraphicsView.ScrollHandDrag)
+        self._connector.pushButton_activate_crosshair.setChecked(not self._connector.pushButton_activate_crosshair.isChecked())
+
+    def pushButton_activate_crosshair_event_changed(self):
+        if self._connector.pushButton_activate_crosshair.isChecked():
+            self._connector.graphicsView.setDragMode(QGraphicsView.ScrollHandDrag)
+        else:
+            self._connector.graphicsView.setDragMode(QGraphicsView.NoDrag)
+        self._connector.pushButton_activate_hand.setChecked(not self._connector.pushButton_activate_hand.isChecked())

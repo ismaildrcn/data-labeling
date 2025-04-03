@@ -3,6 +3,9 @@ from PyQt5.QtCore import Qt, QRectF, pyqtSignal, QPointF
 from PyQt5.QtGui import QPen, QWheelEvent, QPainter, QColor
 
 
+SCALE_FACTOR = 1.1
+
+
 class CustomGraphicsView(QGraphicsView):
     rect_created_signal = pyqtSignal(tuple)
 
@@ -11,14 +14,20 @@ class CustomGraphicsView(QGraphicsView):
         self.start_pos = None
         self.rect_item = None
         self.normalized_coords = None
+        self.curpos = None
+        self._zoom = 0
         self.setMouseTracking(True)
         self.setStyleSheet("border:none;")
         self.setRenderHint(QPainter.Antialiasing, True)
         self.setTransformationAnchor(QGraphicsView.NoAnchor)
         self.setResizeAnchor(QGraphicsView.NoAnchor)
+        self.setDragMode(QGraphicsView.NoDrag)
+
 
     def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
+        self.curpos = event.pos()
+        if event.button() == Qt.LeftButton and self.dragMode() == QGraphicsView.NoDrag:
+            self.curpos = event.pos()  # Mouse'un hareketini takip etmek için başlangıç noktasını kaydet
             scene_pos = self.mapToScene(event.pos())
             # Tıklanan noktanın scene içinde olup olmadığını kontrol et
             if self.scene().sceneRect().contains(scene_pos):
@@ -28,12 +37,22 @@ class CustomGraphicsView(QGraphicsView):
             super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
-        self.viewport().update()  # Her mouse hareketi için yeniden çizim
-        self.rectangle_event(event)
-        super().mouseMoveEvent(event)
+        if self.dragMode() == QGraphicsView.ScrollHandDrag and event.buttons() & Qt.LeftButton:
+            if self.curpos is not None:
+                delta = event.pos() - self.curpos
+                self.horizontalScrollBar().setValue(
+                    self.horizontalScrollBar().value() - delta.x())
+                self.verticalScrollBar().setValue(
+                    self.verticalScrollBar().value() - delta.y())
+                self.curpos = event.pos()
+                event.accept()
+        else:
+            self.viewport().update()  # Her mouse hareketi için yeniden çizim
+            self.rectangle_event(event)
+            super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event):
-        if event.button() == Qt.LeftButton and self.start_pos:
+        if event.button() == Qt.LeftButton and self.start_pos and self.dragMode() == QGraphicsView.NoDrag:
             end_pos = self.clamp_position(self.mapToScene(event.pos()))
             if self.start_pos != end_pos:
                 rect = QRectF(self.start_pos, end_pos).normalized()
@@ -85,7 +104,7 @@ class CustomGraphicsView(QGraphicsView):
             super().wheelEvent(event)
 
     def rectangle_event(self, event):
-        if self.start_pos and event.buttons() & Qt.LeftButton:
+        if self.start_pos and event.buttons() & Qt.LeftButton and self.dragMode() == QGraphicsView.NoDrag:
             end_pos = self.clamp_position(self.mapToScene(event.pos()))
             rect = QRectF(self.start_pos, end_pos).normalized()
 
@@ -98,18 +117,19 @@ class CustomGraphicsView(QGraphicsView):
     
     def paintEvent(self, event):
         super().paintEvent(event)
-        painter = QPainter(self.viewport())
-        pen = QPen(QColor(57, 62, 70), 1, Qt.SolidLine)
-        painter.setPen(pen)
-        
-        # Mouse pozisyonunu al
-        mouse_pos = self.mapFromGlobal(self.cursor().pos())
-        
-        # Yatay çizgi
-        painter.drawLine(0, mouse_pos.y(), self.width(), mouse_pos.y())
-        
-        # Dikey çizgi
-        painter.drawLine(mouse_pos.x(), 0, mouse_pos.x(), self.height())
+        if self.dragMode() == QGraphicsView.NoDrag:
+            painter = QPainter(self.viewport())
+            pen = QPen(QColor(57, 62, 70), 1, Qt.SolidLine)
+            painter.setPen(pen)
+            
+            # Mouse pozisyonunu al
+            mouse_pos = self.mapFromGlobal(self.cursor().pos())
+            
+            # Yatay çizgi
+            painter.drawLine(0, mouse_pos.y(), self.width(), mouse_pos.y())
+            
+            # Dikey çizgi
+            painter.drawLine(mouse_pos.x(), 0, mouse_pos.x(), self.height())
 
     def clamp_position(self, pos):
         """Pozisyonu sahne sınırları içinde tutar"""
@@ -117,3 +137,18 @@ class CustomGraphicsView(QGraphicsView):
         x = max(scene_rect.left(), min(pos.x(), scene_rect.right()))
         y = max(scene_rect.top(), min(pos.y(), scene_rect.bottom()))
         return QPointF(x, y)
+
+    def zoom(self, step):
+        self._zoom = self._zoom + step
+        if self._zoom >= 0:
+            if step > 0:
+                factor = SCALE_FACTOR ** step
+            else:
+                factor = 1 / SCALE_FACTOR ** abs(step)
+            self.scale(factor, factor)
+        else:
+            self.scale(1, 1)
+            self._zoom = 0
+    
+    def reset(self):
+        self._zoom = 0

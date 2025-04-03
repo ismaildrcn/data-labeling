@@ -221,3 +221,8 @@ class Connector(QMainWindow, UI):
             self.pushButton_exit_project.setVisible(True)
             return
         self.pushButton_exit_project.setVisible(False)
+
+    def reset_zoom(self):
+        self.graphicsView.reset()
+        self.graphicsView.resetTransform()
+        self.graphicsView.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
