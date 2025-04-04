@@ -421,32 +421,47 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.setSpacing(15)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.pushButton_zoom_in = QtWidgets.QPushButton(self.widget_3)
-        self.pushButton_zoom_in.setMinimumSize(QtCore.QSize(30, 30))
-        self.pushButton_zoom_in.setMaximumSize(QtCore.QSize(30, 30))
+        self.pushButton_zoom_in.setMinimumSize(QtCore.QSize(22, 22))
+        self.pushButton_zoom_in.setMaximumSize(QtCore.QSize(22, 22))
+        self.pushButton_zoom_in.setStyleSheet("QPushButton {\n"
+"    background-repeat: no-repeat;\n"
+"    border-image: url(:/images/templates/images/zoom-in.svg);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    border-image: url(:/images/templates/images/zoom-in-colorful.svg);\n"
+"}")
         self.pushButton_zoom_in.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/images/templates/images/zoom-in.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_zoom_in.setIcon(icon6)
         self.pushButton_zoom_in.setIconSize(QtCore.QSize(20, 20))
         self.pushButton_zoom_in.setObjectName("pushButton_zoom_in")
         self.horizontalLayout_7.addWidget(self.pushButton_zoom_in)
         self.pushButton_zoom_out = QtWidgets.QPushButton(self.widget_3)
-        self.pushButton_zoom_out.setMinimumSize(QtCore.QSize(30, 30))
-        self.pushButton_zoom_out.setMaximumSize(QtCore.QSize(30, 30))
+        self.pushButton_zoom_out.setMinimumSize(QtCore.QSize(22, 22))
+        self.pushButton_zoom_out.setMaximumSize(QtCore.QSize(22, 22))
+        self.pushButton_zoom_out.setStyleSheet("QPushButton {\n"
+"    background-repeat: no-repeat;\n"
+"    border-image: url(:/images/templates/images/zoom-out.svg);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    border-image: url(:/images/templates/images/zoom-out-colorful.svg);\n"
+"}")
         self.pushButton_zoom_out.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/images/templates/images/zoom-out.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_zoom_out.setIcon(icon7)
         self.pushButton_zoom_out.setIconSize(QtCore.QSize(20, 20))
         self.pushButton_zoom_out.setObjectName("pushButton_zoom_out")
         self.horizontalLayout_7.addWidget(self.pushButton_zoom_out)
         self.pushButton_zoom_fit = QtWidgets.QPushButton(self.widget_3)
-        self.pushButton_zoom_fit.setMinimumSize(QtCore.QSize(30, 30))
-        self.pushButton_zoom_fit.setMaximumSize(QtCore.QSize(30, 30))
+        self.pushButton_zoom_fit.setMinimumSize(QtCore.QSize(22, 22))
+        self.pushButton_zoom_fit.setMaximumSize(QtCore.QSize(22, 22))
+        self.pushButton_zoom_fit.setStyleSheet("QPushButton {\n"
+"    background-repeat: no-repeat;\n"
+"    border-image: url(:/images/templates/images/zoom-fit.svg);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    border-image: url(:/images/templates/images/zoom-fit-colorful.svg);\n"
+"}")
         self.pushButton_zoom_fit.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(":/images/templates/images/zoom-fit.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_zoom_fit.setIcon(icon8)
         self.pushButton_zoom_fit.setIconSize(QtCore.QSize(20, 20))
         self.pushButton_zoom_fit.setObjectName("pushButton_zoom_fit")
         self.horizontalLayout_7.addWidget(self.pushButton_zoom_fit)
@@ -456,23 +471,32 @@ class Ui_MainWindow(object):
         self.line_2.setObjectName("line_2")
         self.horizontalLayout_7.addWidget(self.line_2)
         self.pushButton_activate_hand = QtWidgets.QPushButton(self.widget_3)
-        self.pushButton_activate_hand.setMinimumSize(QtCore.QSize(30, 30))
-        self.pushButton_activate_hand.setMaximumSize(QtCore.QSize(30, 30))
+        self.pushButton_activate_hand.setMinimumSize(QtCore.QSize(22, 22))
+        self.pushButton_activate_hand.setMaximumSize(QtCore.QSize(22, 22))
+        self.pushButton_activate_hand.setStyleSheet("QPushButton {\n"
+"    background-repeat: no-repeat;\n"
+"    border-image: url(:/images/templates/images/hand.svg);\n"
+"}\n"
+"\n"
+"QPushButton:hover, QPushButton:checked {\n"
+"    border-image: url(:/images/templates/images/hand-colorful.svg);\n"
+"}")
         self.pushButton_activate_hand.setText("")
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(":/images/templates/images/hand.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_activate_hand.setIcon(icon9)
         self.pushButton_activate_hand.setIconSize(QtCore.QSize(20, 20))
         self.pushButton_activate_hand.setCheckable(True)
         self.pushButton_activate_hand.setObjectName("pushButton_activate_hand")
         self.horizontalLayout_7.addWidget(self.pushButton_activate_hand)
         self.pushButton_activate_crosshair = QtWidgets.QPushButton(self.widget_3)
-        self.pushButton_activate_crosshair.setMinimumSize(QtCore.QSize(30, 30))
-        self.pushButton_activate_crosshair.setMaximumSize(QtCore.QSize(30, 30))
+        self.pushButton_activate_crosshair.setMinimumSize(QtCore.QSize(22, 22))
+        self.pushButton_activate_crosshair.setMaximumSize(QtCore.QSize(22, 22))
+        self.pushButton_activate_crosshair.setStyleSheet("QPushButton {\n"
+"    border-image: url(:/images/templates/images/cross-hair.svg);\n"
+"}\n"
+"\n"
+"QPushButton:hover, QPushButton:checked {\n"
+"    border-image: url(:/images/templates/images/cross-hair-colorful.svg);\n"
+"}")
         self.pushButton_activate_crosshair.setText("")
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap(":/images/templates/images/cross-hair.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_activate_crosshair.setIcon(icon10)
         self.pushButton_activate_crosshair.setIconSize(QtCore.QSize(20, 20))
         self.pushButton_activate_crosshair.setCheckable(True)
         self.pushButton_activate_crosshair.setChecked(True)
@@ -507,10 +531,18 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setContentsMargins(-1, 3, -1, 3)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.pushButton_previous_image = QtWidgets.QPushButton(self.widget_labeling_bottom_area)
+        self.pushButton_previous_image.setMinimumSize(QtCore.QSize(25, 25))
+        self.pushButton_previous_image.setStyleSheet("QPushButton {\n"
+"    background-repeat: no-repeat;\n"
+"    border-image: url(:/images/templates/images/left.svg);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgba(57, 62, 70, 64);\n"
+"    border-radius:5px;\n"
+"    border-image: url(:/images/templates/images/left-colorful.svg);\n"
+"}")
         self.pushButton_previous_image.setText("")
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap(":/images/templates/images/left.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_previous_image.setIcon(icon11)
         self.pushButton_previous_image.setIconSize(QtCore.QSize(20, 20))
         self.pushButton_previous_image.setObjectName("pushButton_previous_image")
         self.horizontalLayout_5.addWidget(self.pushButton_previous_image)
@@ -524,11 +556,24 @@ class Ui_MainWindow(object):
         self.label_current_image_name.setObjectName("label_current_image_name")
         self.horizontalLayout_5.addWidget(self.label_current_image_name)
         self.pushButton_next_image = QtWidgets.QPushButton(self.widget_labeling_bottom_area)
+        self.pushButton_next_image.setMinimumSize(QtCore.QSize(25, 25))
+        self.pushButton_next_image.setStyleSheet("QPushButton {\n"
+"    background-repeat: no-repeat;\n"
+"    border-image: url(:/images/templates/images/right.svg);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgba(57, 62, 70, 64);\n"
+"    border-radius:5px;\n"
+"    border-image: url(:/images/templates/images/right-colorful.svg);\n"
+"}")
         self.pushButton_next_image.setText("")
-        icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap(":/images/templates/images/right.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_next_image.setIcon(icon12)
+        icon = QtGui.QIcon.fromTheme("dark")
+        self.pushButton_next_image.setIcon(icon)
         self.pushButton_next_image.setIconSize(QtCore.QSize(20, 20))
+        self.pushButton_next_image.setAutoDefault(False)
+        self.pushButton_next_image.setDefault(False)
+        self.pushButton_next_image.setFlat(False)
         self.pushButton_next_image.setObjectName("pushButton_next_image")
         self.horizontalLayout_5.addWidget(self.pushButton_next_image)
         self.verticalLayout_5.addWidget(self.widget_labeling_bottom_area, 0, QtCore.Qt.AlignHCenter)
@@ -586,7 +631,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Visual Data Labeling"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Görsel Veri Etiketleme - FAD"))
         self.pushButton_exit_project.setText(_translate("MainWindow", "Çalışmadan Çık"))
         self.pushButton_actions.setText(_translate("MainWindow", "Eylemler"))
         self.label_image_labeling_title.setText(_translate("MainWindow", "Görsel Veri Etiketleme"))

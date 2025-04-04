@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Visual Data Labeling</string>
+   <string>Görsel Veri Etiketleme - FAD</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../rcc_files/rsrc.qrc">
@@ -863,25 +863,31 @@ QPushButton:checked{
                  <widget class="QPushButton" name="pushButton_zoom_in">
                   <property name="minimumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="toolTip">
                    <string>Yakınlaş</string>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/zoom-in.svg);
+}
+
+QPushButton:hover {
+    border-image: url(:/images/templates/images/zoom-in-colorful.svg);
+}</string>
+                  </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../rcc_files/rsrc.qrc">
-                    <normaloff>:/images/templates/images/zoom-in.svg</normaloff>:/images/templates/images/zoom-in.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -895,25 +901,31 @@ QPushButton:checked{
                  <widget class="QPushButton" name="pushButton_zoom_out">
                   <property name="minimumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="toolTip">
                    <string>Uzaklaş</string>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/zoom-out.svg);
+}
+
+QPushButton:hover {
+    border-image: url(:/images/templates/images/zoom-out-colorful.svg);
+}</string>
+                  </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../rcc_files/rsrc.qrc">
-                    <normaloff>:/images/templates/images/zoom-out.svg</normaloff>:/images/templates/images/zoom-out.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -927,25 +939,31 @@ QPushButton:checked{
                  <widget class="QPushButton" name="pushButton_zoom_fit">
                   <property name="minimumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="toolTip">
                    <string>Sığdır</string>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/zoom-fit.svg);
+}
+
+QPushButton:hover {
+    border-image: url(:/images/templates/images/zoom-fit-colorful.svg);
+}</string>
+                  </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../rcc_files/rsrc.qrc">
-                    <normaloff>:/images/templates/images/zoom-fit.svg</normaloff>:/images/templates/images/zoom-fit.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -966,25 +984,31 @@ QPushButton:checked{
                  <widget class="QPushButton" name="pushButton_activate_hand">
                   <property name="minimumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="toolTip">
                    <string>Eller Serbest</string>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/hand.svg);
+}
+
+QPushButton:hover, QPushButton:checked {
+    border-image: url(:/images/templates/images/hand-colorful.svg);
+}</string>
+                  </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../rcc_files/rsrc.qrc">
-                    <normaloff>:/images/templates/images/hand.svg</normaloff>:/images/templates/images/hand.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1001,25 +1025,30 @@ QPushButton:checked{
                  <widget class="QPushButton" name="pushButton_activate_crosshair">
                   <property name="minimumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>22</width>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="toolTip">
                    <string>Seçim Yap</string>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    border-image: url(:/images/templates/images/cross-hair.svg);
+}
+
+QPushButton:hover, QPushButton:checked {
+    border-image: url(:/images/templates/images/cross-hair-colorful.svg);
+}</string>
+                  </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../rcc_files/rsrc.qrc">
-                    <normaloff>:/images/templates/images/cross-hair.svg</normaloff>:/images/templates/images/cross-hair.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1096,12 +1125,26 @@ QPushButton:checked{
                 </property>
                 <item>
                  <widget class="QPushButton" name="pushButton_previous_image">
+                  <property name="minimumSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/left.svg);
+}
+
+QPushButton:hover {
+	background-color: rgba(57, 62, 70, 64);
+	border-radius:5px;
+    border-image: url(:/images/templates/images/left-colorful.svg);
+}</string>
+                  </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../rcc_files/rsrc.qrc">
-                    <normaloff>:/images/templates/images/left.svg</normaloff>:/images/templates/images/left.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1126,18 +1169,44 @@ QPushButton:checked{
                 </item>
                 <item>
                  <widget class="QPushButton" name="pushButton_next_image">
+                  <property name="minimumSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/right.svg);
+}
+
+QPushButton:hover {
+	background-color: rgba(57, 62, 70, 64);
+	border-radius:5px;
+    border-image: url(:/images/templates/images/right-colorful.svg);
+}</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../rcc_files/rsrc.qrc">
-                    <normaloff>:/images/templates/images/right.svg</normaloff>:/images/templates/images/right.svg</iconset>
+                   <iconset theme="dark"/>
                   </property>
                   <property name="iconSize">
                    <size>
                     <width>20</width>
                     <height>20</height>
                    </size>
+                  </property>
+                  <property name="autoDefault">
+                   <bool>false</bool>
+                  </property>
+                  <property name="default">
+                   <bool>false</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
                   </property>
                  </widget>
                 </item>

@@ -1,5 +1,12 @@
 <RCC>
   <qresource prefix="images">
+    <file>../templates/images/cross-hair-colorful.svg</file>
+    <file>../templates/images/hand-colorful.svg</file>
+    <file>../templates/images/zoom-fit-colorful.svg</file>
+    <file>../templates/images/zoom-in-colorful.svg</file>
+    <file>../templates/images/zoom-out-colorful.svg</file>
+    <file>../templates/images/left-colorful.svg</file>
+    <file>../templates/images/right-colorful.svg</file>
     <file>../templates/images/hand.svg</file>
     <file>../templates/images/cross-hair.svg</file>
     <file>../templates/images/zoom-fit.svg</file>
