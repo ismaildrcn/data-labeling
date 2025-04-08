@@ -50,6 +50,7 @@ class Annotations(object):
                 self.annotation_dict[args[0]] = [annotation]
         else:
             annotation = args[0]
+            annotation.item = item
             if annotation.label is not None:
                 widget.label_list.setCurrentIndex(int(annotation.label))
 
@@ -80,8 +81,10 @@ class Annotations(object):
                 self.annotation_count -= 1
                 if len(self.annotation_dict[annotation.source]) == 0:
                     del self.annotation_dict[annotation.source]
-                    self._connector.image_handler.images[annotation.source].set_status(ImageStatus.UNANNOTATED)
-                    
+            _, _, defined_label_count = self.check_annotation
+            self._connector.label_defined_annotation_value.setText(str(defined_label_count))
+            self._connector.image_handler.check_annotation_in_current_source(annotation.source)
+
     
     def delete_all_annotation_from_list(self):
         # Widget'ı listeden bul ve sil
@@ -112,6 +115,7 @@ class Annotations(object):
         for key, value in self._connector.configurator.label_type.items():
             if key == l_type:
                 annotation.label = value
+                self._connector.image_handler.check_annotation_in_current_source(annotation.source)
                 break
         _, _, defined_label_count = self.check_annotation
         self._connector.label_defined_annotation_value.setText(str(defined_label_count))
@@ -142,7 +146,7 @@ class Annotations(object):
                 if content:
                     archive.writestr(image.toLocalFile().split('/')[-1].split('.')[0] + '.txt', content)
             archive.writestr(str(uuid.uuid4()) + '.lbl', str(self._connector.configurator.label_type))
-            archive.comment = b"Created by Desird for FAD."
+            archive.comment = b"***REMOVED***"
         archive.close()
 
     def multi_annotations(self, source: Source):
@@ -153,10 +157,9 @@ class Annotations(object):
             annotations = self.annotation_dict[source.current].copy()
             for annotation in annotations:
                 rect = self.rect_creater_with_coordinate(annotation.coords, pixmap)
-
                 # Scene üzerinde rect oluştur
                 pen = QPen(Qt.red, 2)
-                self._connector.scene.addRect(rect, pen)
+                annotation.rect_obj = self._connector.scene.addRect(rect, pen)
             
                 # Yeni annotation'ı ekle
                 self.add(annotation)

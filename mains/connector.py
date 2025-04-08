@@ -26,7 +26,6 @@ from images.handler import ImageHandler
 class Connector(QMainWindow, UI):
     def __init__(self):
         super().__init__()
-        self.image_path_list = []
         self.start_pos = None
         self.rect_item = None
         self.setupUi(self)
@@ -110,7 +109,7 @@ class Connector(QMainWindow, UI):
             self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setRenderHint(QPainter.Antialiasing)
             self.annotations.multi_annotations(self.source)
-            self.label_current_image_name.setText(self.source.current.toLocalFile().split('/')[-1])
+            self.label_current_image_name.setText(f"{self.image_table.currentRow() + 1} - {self.source.current.toLocalFile().split('/')[-1]}")
 
     def init_actions(self):
         self.menu = QMenu(self)
@@ -159,7 +158,7 @@ class Connector(QMainWindow, UI):
         self.configurator.label_type.clear()
         self.listWidget_label_list.clear()
         self.image_table.clear()
-        self.image_core.image_path_list.clear()
+        self.image_handler.images.clear()
         self.source.clear()
         self.pages.setCurrentIndex(0)
     

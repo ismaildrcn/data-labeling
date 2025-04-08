@@ -80,6 +80,10 @@ class ImageHandler:
         return False
 
     def check_annotation_in_current_source(self, source: QUrl) -> bool:
+        state = ImageStatus.ANNOTATED
         if source in self._connector.annotations.annotation_dict:
-            self.images[source].set_status(ImageStatus.ANNOTATED)
-        return False
+            for annotation in self._connector.annotations.annotation_dict[source]:
+                if annotation.label == None:
+                    state = ImageStatus.UNANNOTATED
+                    break
+        self.images[source].set_status(state)
