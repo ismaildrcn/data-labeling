@@ -12,6 +12,7 @@ from label.widget import LabelWidget
 from mains.source import Source
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
+from images.utils import ImageStatus
 
 
 class Annotations(object):
@@ -79,6 +80,7 @@ class Annotations(object):
                 self.annotation_count -= 1
                 if len(self.annotation_dict[annotation.source]) == 0:
                     del self.annotation_dict[annotation.source]
+                    self._connector.image_handler.images[annotation.source].set_status(ImageStatus.UNANNOTATED)
                     
     
     def delete_all_annotation_from_list(self):

@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="images">
+    <file>../templates/images/tick-double.svg</file>
     <file>../templates/images/cross-hair-colorful.svg</file>
     <file>../templates/images/hand-colorful.svg</file>
     <file>../templates/images/zoom-fit-colorful.svg</file>

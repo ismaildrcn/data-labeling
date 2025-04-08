@@ -38,6 +38,22 @@ class Ui_MainWindow(object):
 "    border: 1px solid #00ADB5;\n"
 "}\n"
 "\n"
+"QHeaderView{\n"
+"    background-color: transparent;\n"
+"    color: #EEEEEE;\n"
+"}\n"
+"QHeaderView:section:horizontal{\n"
+"    background-color: transparent;\n"
+"    border:none;\n"
+"    padding-bottom: 5px;\n"
+"    border-bottom: 2px solid #00ADB5;\n"
+"}\n"
+"QHeaderView:section:vertical{\n"
+"    background-color: transparent;\n"
+"    border:none;\n"
+"    padding-bottom: 5px;\n"
+"    border-right: 2px solid #00ADB5;\n"
+"    }\n"
 "QScrollBar:vertical {\n"
 "    background: transparent; \n"
 "    width: 15px;\n"
@@ -348,10 +364,20 @@ class Ui_MainWindow(object):
         self.layout_page_init_label.addItem(spacerItem1)
         self.pages.addWidget(self.page_init_label)
         self.page_labeling = QtWidgets.QWidget()
-        self.page_labeling.setStyleSheet("QListWidget{\n"
+        self.page_labeling.setStyleSheet("QListWidget, QTableWidget{\n"
 "    border:none;\n"
 "    background-color: transparent;\n"
+"    color: #EEEEEE;\n"
 "}\n"
+"\n"
+"QTableWidget::item:selected, QTableWidget::item:hover{\n"
+"    background-color: #272B32;\n"
+"    color: #EEEEEE;\n"
+"}\n"
+"QTableWidget QTableCornerButton::section {\n"
+"        background-color: transparent;\n"
+"    border-bottom: 2px solid #00ADB5;\n"
+"    }\n"
 "#widget_image_list, #widget_current_label_area{\n"
 "    background-color: rgba(57, 62, 70, 128);\n"
 "    border-radius: 10px;\n"
@@ -388,11 +414,28 @@ class Ui_MainWindow(object):
         self.label_image_list_title.setFont(font)
         self.label_image_list_title.setObjectName("label_image_list_title")
         self.layout_image_list.addWidget(self.label_image_list_title, 0, QtCore.Qt.AlignHCenter)
-        self.image_list = QtWidgets.QListWidget(self.widget_image_list)
-        self.image_list.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.image_list.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.image_list.setObjectName("image_list")
-        self.layout_image_list.addWidget(self.image_list)
+        self.image_table = QtWidgets.QTableWidget(self.widget_image_list)
+        self.image_table.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.image_table.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.image_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.image_table.setAlternatingRowColors(False)
+        self.image_table.setShowGrid(False)
+        self.image_table.setObjectName("image_table")
+        self.image_table.setColumnCount(2)
+        self.image_table.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.image_table.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.image_table.setHorizontalHeaderItem(1, item)
+        self.image_table.horizontalHeader().setVisible(True)
+        self.image_table.horizontalHeader().setCascadingSectionResizes(False)
+        self.image_table.horizontalHeader().setDefaultSectionSize(50)
+        self.image_table.horizontalHeader().setHighlightSections(True)
+        self.image_table.horizontalHeader().setMinimumSectionSize(0)
+        self.image_table.horizontalHeader().setSortIndicatorShown(False)
+        self.image_table.horizontalHeader().setStretchLastSection(True)
+        self.image_table.verticalHeader().setVisible(True)
+        self.layout_image_list.addWidget(self.image_table)
         self.widget_2 = QtWidgets.QWidget(self.widget_image_list)
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.widget_2)
@@ -644,6 +687,11 @@ class Ui_MainWindow(object):
         self.pushButton_continue_labeling.setText(_translate("MainWindow", "Devam et"))
         self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Bilgisayara Aktar"))
         self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
+        self.image_table.setSortingEnabled(False)
+        item = self.image_table.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "Durum"))
+        item = self.image_table.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "Görsel"))
         self.label_image_title.setText(_translate("MainWindow", "Toplam Görsel:"))
         self.pushButton_zoom_in.setToolTip(_translate("MainWindow", "Yakınlaş"))
         self.pushButton_zoom_out.setToolTip(_translate("MainWindow", "Uzaklaş"))

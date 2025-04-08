@@ -45,6 +45,22 @@ QLineEdit:focus{
 	border: 1px solid #00ADB5;
 }
 
+QHeaderView{
+	background-color: transparent;
+	color: #EEEEEE;
+}
+QHeaderView:section:horizontal{
+	background-color: transparent;
+	border:none;
+	padding-bottom: 5px;
+	border-bottom: 2px solid #00ADB5;
+}
+QHeaderView:section:vertical{
+	background-color: transparent;
+	border:none;
+	padding-bottom: 5px;
+	border-right: 2px solid #00ADB5;
+	}
 QScrollBar:vertical {
 	background: transparent; 
 	width: 15px;
@@ -720,10 +736,20 @@ QPushButton:hover{
       </widget>
       <widget class="QWidget" name="page_labeling">
        <property name="styleSheet">
-        <string notr="true">QListWidget{
+        <string notr="true">QListWidget, QTableWidget{
 	border:none;
 	background-color: transparent;
+	color: #EEEEEE;
 }
+
+QTableWidget::item:selected, QTableWidget::item:hover{
+	background-color: #272B32;
+	color: #EEEEEE;
+}
+QTableWidget QTableCornerButton::section {
+        background-color: transparent;
+	border-bottom: 2px solid #00ADB5;
+    }
 #widget_image_list, #widget_current_label_area{
 	background-color: rgba(57, 62, 70, 128);
 	border-radius: 10px;
@@ -798,13 +824,59 @@ QPushButton:checked{
                </widget>
               </item>
               <item>
-               <widget class="QListWidget" name="image_list">
+               <widget class="QTableWidget" name="image_table">
                 <property name="verticalScrollBarPolicy">
                  <enum>Qt::ScrollBarAsNeeded</enum>
                 </property>
                 <property name="horizontalScrollBarPolicy">
                  <enum>Qt::ScrollBarAsNeeded</enum>
                 </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>false</bool>
+                </property>
+                <property name="showGrid">
+                 <bool>false</bool>
+                </property>
+                <property name="sortingEnabled">
+                 <bool>false</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="horizontalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderDefaultSectionSize">
+                 <number>50</number>
+                </attribute>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="horizontalHeaderMinimumSectionSize">
+                 <number>0</number>
+                </attribute>
+                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>true</bool>
+                </attribute>
+                <column>
+                 <property name="text">
+                  <string>Durum</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Görsel</string>
+                 </property>
+                </column>
                </widget>
               </item>
               <item alignment="Qt::AlignHCenter">
@@ -1191,7 +1263,8 @@ QPushButton:hover {
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset theme="dark"/>
+                   <iconset theme="dark">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="iconSize">
                    <size>

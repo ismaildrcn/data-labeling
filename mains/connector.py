@@ -3,9 +3,10 @@ import tempfile
 
 from typing import Union
 from zipfile import ZipFile
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QListWidget, QGraphicsScene, QGraphicsView, QAction, QMenu, QGraphicsRectItem
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QAbstractItemView, QTableWidgetItem, QGraphicsScene, QGraphicsView, QAction, QMenu, QGraphicsRectItem, QLabel, QWidget, QHBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
-from PyQt5.QtCore import Qt, pyqtSlot, QUrl
+from PyQt5.QtCore import Qt, pyqtSlot, QUrl, QSize
+from PyQt5.QtSvg import QSvgWidget
 
 
 from templates.ui.mainWindow import Ui_MainWindow as UI
@@ -15,10 +16,9 @@ from mains.listener import Listener
 from mains.source import Source
 from label.configurator import Configurator
 from annotation.annotation import Annotations
-from annotation.annotation import Annotation
 from modals.modals import Modals
 from modals.popup.messages import PopupMessages
-
+from images.handler import ImageHandler
 
 
 
@@ -42,9 +42,10 @@ class Connector(QMainWindow, UI):
         self.configurator = Configurator(self)
         self.annotations = Annotations(self)
         self.modals = Modals(self)
+        self.image_handler = ImageHandler(self)
 
     def connection(self):
-        self.image_list.itemClicked.connect(self.load_selected_image)
+        self.image_table.itemClicked.connect(self.load_selected_image)
         self.pushButton_actions.clicked.connect(self.show_menu)
         self.pages.currentChanged.connect(self.pages_current_changed)
 
@@ -62,9 +63,13 @@ class Connector(QMainWindow, UI):
         self.scene = QGraphicsScene()
         self.graphicsView.setScene(self.scene)
 
-        self.image_list.setViewMode(QListWidget.IconMode)
-        self.image_list.setIconSize(QPixmap(125, 70).size())  # İkonları büyüt
-        self.image_list.setGridSize(QPixmap(130, 75).size())  # Hücreleri genişlet
+        self.image_table.setColumnWidth(0, 50)
+        self.image_table.setColumnWidth(1, 150)
+        self.image_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.image_table.horizontalHeader().setDefaultAlignment(Qt.AlignCenter)
+
+        self.image_table.setIconSize(QSize(16, 16))  # Icon boyutunu ayarla
+
 
         self.init_actions()
 
@@ -85,66 +90,8 @@ class Connector(QMainWindow, UI):
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
         self.annotations.add(self.source.current, detail[0], detail[1])
-        
-    def import_images(self, drop_list=False):
-        old_working = False
-        if drop_list:
-            for image in drop_list:
-                if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self.image_path_list:
-                    self.create_image_list(image)
-                elif image.path().endswith(".zip"):
-                    old_working = image
-        else:
-            selected_list = QFileDialog.getOpenFileNames(self, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg, *.zip)")[0]
-            for image in selected_list:
-                if image.endswith(".zip"):
-                    old_working = QUrl.fromLocalFile(image)
-                elif QUrl.fromLocalFile(image) not in self.image_path_list:
-                        self.create_image_list(QUrl.fromLocalFile(image))
-        
-        self.import_old_working(old_working)
-        if self.image_path_list:
-            self.pages.setCurrentIndex(1)
-        old_working = False
-        
-    def create_image_list(self, image: QUrl):
-        item = QListWidgetItem(QIcon(image.toLocalFile()), None)  # QIcon ile resimleri ekle
-        item.setData(Qt.UserRole, image)  # Görsel yolunu sakla
-        self.image_list.addItem(item)
-        self.image_path_list.append(image)
-    
-    def import_old_working(self, path: Union[QUrl, bool]):
-        if path:
-            with tempfile.TemporaryDirectory() as tmpdir:
-                with ZipFile(path.toLocalFile(), 'r') as archive:
-                    archive.extractall(tmpdir)  # Zip dosyasını çıkar
-                    name_list = archive.namelist()
-                    lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
-                    self.configurator.import_labels(tmpdir + '/' + lbl)
-                    name_list.remove(lbl)
-                    for file in name_list:
-                        file = tmpdir + '/' + file
-                        image = self.check_image_path_list(file)
-                        if image:
-                            with open(file, 'r') as ann_file:
-                                for line in ann_file.readlines():
-                                    line = line.strip().split()
-                                    if len(line) == 5:
-                                        coords = (float(line[1]), float(line[2]), float(line[3]), float(line[4]))
-                                        rect_obj = QGraphicsRectItem()
-                                        self.annotations.add(image, coords, rect_obj, int(line[0]))
+        self.image_handler.check_annotation_in_current_source(self.source.current)
 
-                    for item in archive.namelist():
-                        os.remove(tmpdir + '/' + item)
-        
-    def check_image_path_list(self, path: str) -> Union[QUrl, bool]:
-        for image in self.image_path_list:
-            if '.'.join(image.toLocalFile().split("/")[-1].split('.')[:-1]) == path.split("/")[-1].split(".")[0]:
-                return image
-        if path.endswith('.lbl'):
-            return True
-        return False
-                
         
     def load_selected_image(self, item):
         """ Seçilen görseli yükle """
@@ -211,8 +158,8 @@ class Connector(QMainWindow, UI):
         self.image_pixmap = None
         self.configurator.label_type.clear()
         self.listWidget_label_list.clear()
-        self.image_list.clear()
-        self.image_path_list.clear()
+        self.image_table.clear()
+        self.image_core.image_path_list.clear()
         self.source.clear()
         self.pages.setCurrentIndex(0)
     

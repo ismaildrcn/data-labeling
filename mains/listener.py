@@ -13,14 +13,13 @@ class Listener(QMainWindow):
 
         for widget in self._connector.findChildren(QWidget):
             widget.installEventFilter(self)
-
     
     def eventFilter(self, source, event):
         match event.type():
             case QEvent.MouseButtonDblClick | QEvent.MouseButtonPress:
                 match source:
                     case self._connector.label_drop_images | self._connector.icon_drop_images:
-                        self._connector.import_images()
+                        self._connector.image_handler.insert()
                     case self._connector.label_image_labeling_title | self._connector.widget_top:
                         self.offset = event.globalPos() - self._connector.frameGeometry().topLeft()
                     case self._connector.pushButton_close_window:
@@ -71,7 +70,7 @@ class Listener(QMainWindow):
             case QEvent.Drop:
                 if source in (self._connector.icon_drop_images, self._connector.label_drop_images):
                     urls = event.mimeData().urls()
-                    self._connector.import_images(urls)
+                    self._connector.image_handler.insert(urls)
                 
         
         
@@ -81,9 +80,9 @@ class Listener(QMainWindow):
         if self._connector.configurator.label_type:
             self._connector.pages.setCurrentIndex(2)
             self._connector.modals.popup.show(PopupMessages.Info.M100)
-            if self._connector.image_list.count() > 0:
-                self._connector.load_selected_image(self._connector.image_list.item(0))
-            self._connector.label_total_image_value.setText(str(self._connector.image_list.count()))
+            if self._connector.image_table.rowCount() > 0:
+                self._connector.load_selected_image(self._connector.image_table.item(0, 1))
+            self._connector.label_total_image_value.setText(str(self._connector.image_table.rowCount()))
         else:
             self._connector.modals.popup.show(PopupMessages.Error.M300)
 
@@ -95,19 +94,19 @@ class Listener(QMainWindow):
             self._connector.reset_zoom()
 
     def next_or_previous_image_eventh_changed(self, transaction):
-        current_item = self._connector.image_list.currentItem()
+        current_item = self._connector.image_table.currentItem()
         if current_item:
             # Mevcut itemın index'ini al
-            current_index = self._connector.image_list.indexFromItem(current_item).row()
-            total_items = self._connector.image_list.count()
+            current_index = self._connector.image_table.indexFromItem(current_item).row()
+            total_items = self._connector.image_table.rowCount()
             
             # Bir sonraki index'i hesapla
             next_index = current_index + transaction
             
             # Liste sınırları içinde mi kontrol et
             if  0 <= next_index < total_items:
-                next_item = self._connector.image_list.item(next_index)
-                self._connector.image_list.setCurrentItem(next_item)
+                next_item = self._connector.image_table.item(next_index, 1)
+                self._connector.image_table.setCurrentItem(next_item)
                 self._connector.load_selected_image(next_item)
     
     def pushButton_exit_project_event_changed(self):
