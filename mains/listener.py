@@ -94,7 +94,7 @@ class Listener(QMainWindow):
             self._connector.reset_zoom()
 
     def next_or_previous_image_eventh_changed(self, transaction):
-        current_item = self._connector.image_table.currentItem()
+        current_item = self._connector.image_table.item(self._connector.image_table.currentRow(), 1)
         if current_item:
             # Mevcut itemın index'ini al
             current_index = self._connector.image_table.indexFromItem(current_item).row()

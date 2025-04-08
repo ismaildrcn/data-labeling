@@ -1,12 +1,7 @@
-import os
-import tempfile
-
-from typing import Union
-from zipfile import ZipFile
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QAbstractItemView, QTableWidgetItem, QGraphicsScene, QGraphicsView, QAction, QMenu, QGraphicsRectItem, QLabel, QWidget, QHBoxLayout
+from typing import overload
+from PyQt5.QtCore import Qt, pyqtSlot, QSize
 from PyQt5.QtGui import QIcon, QPixmap, QPainter
-from PyQt5.QtCore import Qt, pyqtSlot, QUrl, QSize
-from PyQt5.QtSvg import QSvgWidget
+from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem
 
 
 from templates.ui.mainWindow import Ui_MainWindow as UI
@@ -44,7 +39,7 @@ class Connector(QMainWindow, UI):
         self.image_handler = ImageHandler(self)
 
     def connection(self):
-        self.image_table.itemClicked.connect(self.load_selected_image)
+        self.image_table.cellClicked.connect(self.load_selected_image)
         self.pushButton_actions.clicked.connect(self.show_menu)
         self.pages.currentChanged.connect(self.pages_current_changed)
 
@@ -91,9 +86,16 @@ class Connector(QMainWindow, UI):
         self.annotations.add(self.source.current, detail[0], detail[1])
         self.image_handler.check_annotation_in_current_source(self.source.current)
 
-        
-    def load_selected_image(self, item):
-        """ Seçilen görseli yükle """
+    @overload
+    def load_selected_image(self, item: QTableWidgetItem) -> None: ...
+    @overload
+    def load_selected_image(self, row, column) -> None: ...  
+    def load_selected_image(self, *args) -> None:
+        if len(args) == 1:
+            item = args[0]
+        else:
+            item = self.image_table.item(args[0], 1)
+        """ Seçilen görseli yükle"""
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
         if self.source.current != self.source.previous:
             self.image_pixmap = QPixmap(self.source.current.toLocalFile())

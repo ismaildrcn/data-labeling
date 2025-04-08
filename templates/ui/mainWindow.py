@@ -419,6 +419,7 @@ class Ui_MainWindow(object):
         self.image_table.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.image_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.image_table.setAlternatingRowColors(False)
+        self.image_table.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.image_table.setShowGrid(False)
         self.image_table.setObjectName("image_table")
         self.image_table.setColumnCount(2)
