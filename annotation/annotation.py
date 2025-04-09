@@ -12,7 +12,6 @@ from label.widget import LabelWidget
 from mains.source import Source
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
-from images.utils import ImageStatus
 
 
 class Annotations(object):
@@ -21,7 +20,6 @@ class Annotations(object):
         self.label_widget = LabelWidget()
 
         self.annotation_count = 0
-        self.annotation_dict = {}
 
     @overload
     def add(self, annotation) -> None: ...
@@ -44,10 +42,7 @@ class Annotations(object):
                 annotation = Annotation(args[0], args[1], args[2], item, args[3])
 
             self.annotation_count += 1
-            if args[0] in self.annotation_dict:
-                self.annotation_dict[args[0]].append(annotation)
-            else:
-                self.annotation_dict[args[0]] = [annotation]
+            self._connector.image_handler.add_annotation(annotation)
         else:
             annotation = args[0]
             annotation.item = item
@@ -76,11 +71,8 @@ class Annotations(object):
                     scene.removeItem(annotation.rect_obj)
                     # Rect'i memory'den temizle
                     annotation.rect_obj = None
-                
-                self.annotation_dict[annotation.source].remove(annotation)
+                self._connector.image_handler.remove_annotation(annotation)
                 self.annotation_count -= 1
-                if len(self.annotation_dict[annotation.source]) == 0:
-                    del self.annotation_dict[annotation.source]
             _, _, defined_label_count = self.check_annotation
             self._connector.label_defined_annotation_value.setText(str(defined_label_count))
             self._connector.image_handler.check_annotation_in_current_source(annotation.source)
@@ -138,9 +130,9 @@ class Annotations(object):
     
     def zipper(self, save_dir):
         with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + '.zip'), 'w') as archive:
-            for image in self.annotation_dict:
+            for image in self._connector.image_handler.images:
                 content = ""
-                for annotation in self.annotation_dict[image]:
+                for annotation in self._connector.image_handler.get_annotation(image):
                     if isinstance(annotation.label, int):
                         content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
                 if content:
@@ -151,10 +143,10 @@ class Annotations(object):
 
     def multi_annotations(self, source: Source):
         self.multi_delete(source)
-        if source.current in self.annotation_dict:
+        if self._connector.image_handler.get_annotation(source.current):
             # Görsel boyutlarını al
             pixmap = self._connector.image_pixmap
-            annotations = self.annotation_dict[source.current].copy()
+            annotations = self._connector.image_handler.get_annotation(source.current).copy()
             for annotation in annotations:
                 rect = self.rect_creater_with_coordinate(annotation.coords, pixmap)
                 # Scene üzerinde rect oluştur
@@ -166,12 +158,12 @@ class Annotations(object):
     
     def multi_delete(self, source: Source):
         path = False
-        if source.previous in self.annotation_dict:
+        if self._connector.image_handler.get_annotation(source.previous):
             path = source.previous
-        elif len(self.annotation_dict) > 0 and source.previous is None:
+        elif self._connector.image_handler.count > 0 and source.previous is None:
             path = source.current
         if path:
-            annotations_clear = self.annotation_dict[path].copy()
+            annotations_clear = self._connector.image_handler.get_annotation(path).copy()
             for annotation in annotations_clear:
                 self.delete(annotation, only_front=True)
     def rect_creater_with_coordinate(self, coordinate: tuple, pixmap: QPixmap) -> QRectF:
@@ -198,8 +190,8 @@ class Annotations(object):
         defined_label_count = 0
         available_annotation = False
         has_unwrite = False
-        for image in self.annotation_dict:
-            for annotation in self.annotation_dict[image]:
+        for image in self._connector.image_handler.images:
+            for annotation in self._connector.image_handler.get_annotation(image):
                 if annotation.label is None:
                     has_unwrite = True
                 else:

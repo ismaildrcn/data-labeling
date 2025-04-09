@@ -1,12 +1,13 @@
 import os
 import tempfile
 
-from typing import Union
+from typing import Union, overload
 from zipfile import ZipFile
 
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem
 
+from annotation.annotation import Annotation
 from images.core import ImageCore
 from images.utils import ImageStatus
 
@@ -14,7 +15,7 @@ from images.utils import ImageStatus
 class ImageHandler:
     def __init__(self, connector=None):
         self._connector = connector
-        self.images = {}
+        self._images = {}
 
     def insert(self, drop_list=False):
         old_working = False
@@ -23,7 +24,7 @@ class ImageHandler:
         else:
             old_working = self.insert_from_file_dialog(old_working)
         self.insert_old_working(old_working)
-        if self.images:
+        if self._images:
             self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
             _, _, defined_ann = self._connector.annotations.check_annotation
@@ -32,8 +33,8 @@ class ImageHandler:
     
     def insert_from_drag_drop(self, old_working, drop_list):
         for image in drop_list:
-            if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self.images:
-                self.images[image] = ImageCore(self._connector, image)
+            if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self._images:
+                self._images[image] = ImageCore(self._connector, image)
             elif image.path().endswith(".zip"):
                 old_working = image
         return old_working
@@ -43,8 +44,8 @@ class ImageHandler:
         for image in selected_list:
             if image.endswith(".zip"):
                 old_working = QUrl.fromLocalFile(image)
-            elif QUrl.fromLocalFile(image) not in self.images:
-                self.images[QUrl.fromLocalFile(image)] = ImageCore(self._connector, QUrl.fromLocalFile(image))
+            elif QUrl.fromLocalFile(image) not in self._images:
+                self._images[QUrl.fromLocalFile(image)] = ImageCore(self._connector, QUrl.fromLocalFile(image))
         return old_working
     
     def insert_old_working(self, path: Union[QUrl, bool]):
@@ -75,7 +76,7 @@ class ImageHandler:
                             self.check_annotation_in_current_source(image)
         
     def check_image_path_list(self, path: str) -> Union[QUrl, bool]:
-        for image in self.images:
+        for image in self._images:
             if '.'.join(image.toLocalFile().split("/")[-1].split('.')[:-1]) == path.split("/")[-1].split(".")[0]:
                 return image
         if path.endswith('.lbl'):
@@ -84,11 +85,44 @@ class ImageHandler:
 
     def check_annotation_in_current_source(self, source: QUrl) -> bool:
         state = ImageStatus.ANNOTATED
-        if source in self._connector.annotations.annotation_dict:
-            for annotation in self._connector.annotations.annotation_dict[source]:
+        annotations = self.get_annotation(source)
+        if annotations:
+            for annotation in annotations:
                 if annotation.label == None:
                     state = ImageStatus.UNANNOTATED
                     break
         else:
             state = ImageStatus.UNANNOTATED
-        self.images[source].set_status(state)
+        self._images[source].set_status(state)
+    
+    @property
+    def count(self) -> int:
+        return len(self._images)
+    
+    @property
+    def images(self):
+        return self._images
+    
+    @overload
+    def add_annotation(self, annotation: Annotation) -> None: ...
+    @overload
+    def add_annotation(self, annotations: list[Annotation]) -> None: ...
+    def add_annotation(self, *args):
+        if args and isinstance(args[0], list):
+            for annotation in args[0]:
+                self._images[annotation.source].add_annotation(annotation)
+        else:
+            self._images[args[0].source].add_annotation(args[0])
+    
+    def get_annotation(self, source: QUrl) -> list:
+        if source in self._images:
+            return self._images[source]._annotations
+        return []
+    
+    def remove_annotation(self, annotation: Annotation):
+        self._images[annotation.source].remove_annotation(annotation)
+    
+    def annotation_count(self, source: QUrl) -> int:
+        if source in self._images:
+            return len(self._images[source]._annotations)
+        return 0
