@@ -26,6 +26,8 @@ class ImageHandler:
         if self.images:
             self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
+            _, _, defined_ann = self._connector.annotations.check_annotation
+            self._connector.label_defined_annotation_value.setText(str(defined_ann))
         old_working = False
     
     def insert_from_drag_drop(self, old_working, drop_list):
