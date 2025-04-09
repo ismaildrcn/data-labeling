@@ -89,7 +89,7 @@ class Connector(QMainWindow, UI):
     @overload
     def load_selected_image(self, item: QTableWidgetItem) -> None: ...
     @overload
-    def load_selected_image(self, row, column) -> None: ...  
+    def load_selected_image(self, row: int, column: int) -> None: ...  
     def load_selected_image(self, *args) -> None:
         if len(args) == 1:
             item = args[0]
@@ -160,7 +160,9 @@ class Connector(QMainWindow, UI):
         self.configurator.label_type.clear()
         self.listWidget_label_list.clear()
         self.image_table.clear()
+        self.image_table.setRowCount(0)
         self.image_handler.images.clear()
+        self.annotations.annotation_dict.clear()
         self.source.clear()
         self.pages.setCurrentIndex(0)
     
