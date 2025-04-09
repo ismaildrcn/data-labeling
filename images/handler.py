@@ -19,7 +19,7 @@ class ImageHandler:
     def insert(self, drop_list=False):
         old_working = False
         if drop_list:
-            self.insert_from_drag_drop(old_working, drop_list)
+            old_working = self.insert_from_drag_drop(old_working, drop_list)
         else:
             old_working = self.insert_from_file_dialog(old_working)
         self.insert_old_working(old_working)

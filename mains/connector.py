@@ -157,10 +157,11 @@ class Connector(QMainWindow, UI):
     def clear_project(self):
         self.scene.clear()
         self.image_pixmap = None
+        self.annotations.annotation_count = 0
         self.configurator.label_type.clear()
         self.listWidget_label_list.clear()
         self.current_label_list.clear()
-        self.image_table.clear()
+        self.image_table.clearContents()
         self.image_table.setRowCount(0)
         self.image_handler.images.clear()
         self.annotations.annotation_dict.clear()
