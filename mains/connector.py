@@ -159,6 +159,7 @@ class Connector(QMainWindow, UI):
         self.image_pixmap = None
         self.configurator.label_type.clear()
         self.listWidget_label_list.clear()
+        self.current_label_list.clear()
         self.image_table.clear()
         self.image_table.setRowCount(0)
         self.image_handler.images.clear()

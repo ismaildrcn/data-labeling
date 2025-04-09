@@ -70,6 +70,7 @@ class ImageHandler:
                             coords = (float(line[1]), float(line[2]), float(line[3]), float(line[4]))
                             rect_obj = QGraphicsRectItem()
                             self._connector.annotations.add(image, coords, rect_obj, int(line[0]))
+                            self.check_annotation_in_current_source(image)
         
     def check_image_path_list(self, path: str) -> Union[QUrl, bool]:
         for image in self.images:
@@ -86,4 +87,6 @@ class ImageHandler:
                 if annotation.label == None:
                     state = ImageStatus.UNANNOTATED
                     break
+        else:
+            state = ImageStatus.UNANNOTATED
         self.images[source].set_status(state)
