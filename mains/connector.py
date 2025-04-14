@@ -144,7 +144,7 @@ class Connector(QMainWindow, UI):
         self.menu.addAction(import_action)
         
         export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Çalışmayı Bilgisayara Aktar", self)
-        export_action.triggered.connect(self.annotations.export_annotations)
+        export_action.triggered.connect(self.image_handler.export)
         self.menu.addAction(export_action)
         
         
