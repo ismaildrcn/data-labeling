@@ -10,7 +10,6 @@ from widgets.graphics_view import CustomGraphicsView
 from mains.listener import Listener
 from mains.source import Source
 from label.configurator import Configurator
-from annotation.annotation import Annotations
 from modals.modals import Modals
 from modals.popup.messages import PopupMessages
 from images.handler import ImageHandler
@@ -34,7 +33,6 @@ class Connector(QMainWindow, UI):
         self.listener = Listener(self)
         self.source = Source()
         self.configurator = Configurator(self)
-        self.annotations = Annotations(self)
         self.modals = Modals(self)
         self.image_handler = ImageHandler(self)
 
@@ -83,7 +81,7 @@ class Connector(QMainWindow, UI):
             Args:
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
-        self.annotations.add(self.source.current, detail[0], detail[1])
+        self.image_handler.add_annotation(self.source.current, detail[0], detail[1])
         self.image_handler.check_annotation_in_current_source(self.source.current)
 
     @overload
@@ -110,7 +108,7 @@ class Connector(QMainWindow, UI):
             self.graphicsView.setTransformationAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setRenderHint(QPainter.Antialiasing)
-            self.annotations.multi_annotations(self.source)
+            self.image_handler.add_multi_annotation(self.source)
             self.label_current_image_name.setText(f"{self.image_table.currentRow() + 1} - {self.source.current.toLocalFile().split('/')[-1]}")
 
     def init_actions(self):
@@ -157,7 +155,7 @@ class Connector(QMainWindow, UI):
     def clear_project(self):
         self.scene.clear()
         self.image_pixmap = None
-        self.annotations.annotation_count = 0
+        self.image_handler.annotation_count = 0
         self.configurator.label_type.clear()
         self.listWidget_label_list.clear()
         self.current_label_list.clear()
