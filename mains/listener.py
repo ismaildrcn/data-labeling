@@ -19,7 +19,7 @@ class Listener(QMainWindow):
             case QEvent.MouseButtonDblClick | QEvent.MouseButtonPress:
                 match source:
                     case self._connector.label_drop_images | self._connector.icon_drop_images:
-                        self._connector.image_handler.insert()
+                        self._connector.image_handler.insert_image()
                     case self._connector.label_image_labeling_title | self._connector.widget_top:
                         self.offset = event.globalPos() - self._connector.frameGeometry().topLeft()
                     case self._connector.pushButton_close_window:
@@ -52,6 +52,10 @@ class Listener(QMainWindow):
                         self._connector.graphicsView.zoom(-1)
                     case self._connector.pushButton_zoom_fit:
                         self._connector.reset_zoom()
+                    case self._connector.icon_drop_project | self._connector.label_drop_project:
+                        self._connector.image_handler.insert_project()
+
+                    
             case QEvent.KeyPress:
                 if source == self._connector.pushButton_add_label and event.key() in (Qt.Key_Return, Qt.Key_Enter):
                     self._connector.configurator.add()
@@ -63,14 +67,17 @@ class Listener(QMainWindow):
             case QEvent.MouseButtonRelease:
                 self.offset = None
             case QEvent.DragEnter:
-                if source in (self._connector.icon_drop_images, self._connector.label_drop_images):
+                if source in (self._connector.icon_drop_images, self._connector.label_drop_images, self._connector.icon_drop_project, self._connector.label_drop_project):
                     """Sadece dosya sürüklenirse kabul et"""
                     if event.mimeData().hasUrls():
                         event.acceptProposedAction()
             case QEvent.Drop:
                 if source in (self._connector.icon_drop_images, self._connector.label_drop_images):
                     urls = event.mimeData().urls()
-                    self._connector.image_handler.insert(urls)
+                    self._connector.image_handler.insert_image(urls)
+                elif source in (self._connector.label_drop_project, self._connector.label_drop_project):
+                    urls = event.mimeData().urls()
+                    self._connector.image_handler.insert_project(urls)
                 
         
         

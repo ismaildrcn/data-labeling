@@ -1,5 +1,4 @@
 import os
-import tempfile
 
 from typing import Union, overload
 import uuid
@@ -11,7 +10,7 @@ from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
 
 from images.annotation import Annotation
 from images.core import ImageCore
-from images.utils import ImageStatus
+from images.utils import ImageStatus, TEMPDIR
 from label.widget import LabelWidget
 from mains.source import Source
 from modals.popup.messages import PopupMessages
@@ -174,49 +173,68 @@ class ImageHandler:
         return QRectF(real_x, real_y, real_width, real_height)
 
 
-    def insert(self, drop_list=False):
-        old_working = False
+    def insert_image(self, drop_list=False):
         if drop_list:
-            old_working = self.insert_from_drag_drop(old_working, drop_list)
+            self.insert_from_drag_drop(drop_list)
         else:
-            old_working = self.insert_from_file_dialog(old_working)
-        self.insert_old_working(old_working)
+            self.insert_from_file_dialog()
         if self._images:
             self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
             _, _, defined_ann = self.check_annotation
             self._connector.label_defined_annotation_value.setText(str(defined_ann))
-        old_working = False
     
-    def insert_from_drag_drop(self, old_working, drop_list):
+    def insert_from_drag_drop(self, drop_list):
         for image in drop_list:
             if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self._images:
                 self._images[image] = ImageCore(self._connector, image)
-            elif image.path().endswith(".zip"):
-                old_working = image
-        return old_working
 
-    def insert_from_file_dialog(self, old_working: bool):
-        selected_list = QFileDialog.getOpenFileNames(self._connector, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg, *.zip)")[0]
+    def insert_from_file_dialog(self):
+        selected_list = QFileDialog.getOpenFileNames(self._connector, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg)")[0]
         for image in selected_list:
-            if image.endswith(".zip"):
-                old_working = QUrl.fromLocalFile(image)
-            elif QUrl.fromLocalFile(image) not in self._images:
+            if QUrl.fromLocalFile(image) not in self._images:
                 self._images[QUrl.fromLocalFile(image)] = ImageCore(self._connector, QUrl.fromLocalFile(image))
-        return old_working
     
-    def insert_old_working(self, path: Union[QUrl, bool]):
+    def insert_project_from_drag_drop(self, drop_list):
+        for archive in drop_list:
+            if archive.toLocalFile().endswith('.zip'):
+                return archive
+    
+    def insert_project_from_file_dialog(self):
+        selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", "Images (*.zip)")[0]
+        if QUrl.fromLocalFile(selected_file).path().endswith('.zip'):
+            return QUrl.fromLocalFile(selected_file)
+
+    def insert_project(self, drop_list = False):
+        if drop_list:
+            path = self.insert_project_from_drag_drop(drop_list)
+        else:
+            path = self.insert_project_from_file_dialog()
         if path:
-            with tempfile.TemporaryDirectory() as tmpdir:
-                with ZipFile(path.toLocalFile(), 'r') as archive:
-                    archive.extractall(tmpdir)  # Zip dosyasını çıkar
-                    name_list = archive.namelist()
-                    lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
-                    self._connector.configurator.import_labels(tmpdir + '/' + lbl)
-                    name_list.remove(lbl)
-                    self.create_annotations_for_included_past_works(tmpdir, name_list)
-                    for item in archive.namelist():
-                        os.remove(tmpdir + '/' + item)
+            with ZipFile(path.toLocalFile(), 'r') as archive:
+                archive.extractall(TEMPDIR)  # Zip dosyasını çıkar
+                name_list = archive.namelist()
+                lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
+                self._connector.configurator.import_labels(os.path.join(TEMPDIR, lbl))
+                name_list.remove(lbl)
+
+                images = list(filter(lambda x: x.endswith(('.png', '.jpg', '.jpeg')), name_list))
+                for image in images:
+                    image_path = os.path.join(TEMPDIR, image)
+                    if os.path.exists(image_path):
+                        self._images[QUrl.fromLocalFile(image_path)] = ImageCore(self._connector, QUrl.fromLocalFile(image_path))
+                        name_list.remove(image)
+
+                self.create_annotations_for_included_past_works(TEMPDIR, name_list)
+            self._connector.pages.setCurrentIndex(2)
+            self._connector.load_selected_image(0, 1)
+            _, _, defined_label_count = self.check_annotation
+            self._connector.label_defined_annotation_value.setText(str(defined_label_count))
+    
+    def clear_tempdir(self):
+        if os.path.exists(TEMPDIR):
+            for image in os.listdir(TEMPDIR):
+                os.remove(os.path.join(TEMPDIR, image))
 
     def create_annotations_for_included_past_works(self, tmpdir, name_list):
         for file in name_list:
@@ -229,7 +247,7 @@ class ImageHandler:
                         if len(line) == 5:
                             coords = (float(line[1]), float(line[2]), float(line[3]), float(line[4]))
                             rect_obj = QGraphicsRectItem()
-                            self.add(image, coords, rect_obj, int(line[0]))
+                            self.add_annotation(image, coords, rect_obj, int(line[0]))
                             self.check_annotation_in_current_source(image)
         
     def check_image_path_list(self, path: str) -> Union[QUrl, bool]:

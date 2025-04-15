@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1298</width>
-    <height>753</height>
+    <height>720</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -332,33 +332,52 @@ QPushButton{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_data_importing">
-       <layout class="QHBoxLayout" name="layout_page_data_importing">
+       <property name="styleSheet">
+        <string notr="true">#widget_importing_area, #widget_import_project{
+	border-radius:5px;
+	border: 3px solid #00ADB5;
+}</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <property name="spacing">
+         <number>35</number>
+        </property>
         <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item alignment="Qt::AlignHCenter">
          <widget class="QWidget" name="widget_importing_area" native="true">
           <property name="minimumSize">
            <size>
             <width>450</width>
-            <height>300</height>
+            <height>250</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>450</width>
-            <height>300</height>
+            <height>250</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">#widget_importing_area{
-	border-radius:5px;
-	border: 3px solid #00ADB5;
-}</string>
+           <string notr="true"/>
           </property>
           <layout class="QVBoxLayout" name="layout_importing_area">
            <property name="topMargin">
-            <number>50</number>
+            <number>40</number>
            </property>
            <item alignment="Qt::AlignHCenter">
             <widget class="QLabel" name="icon_drop_images">
@@ -405,6 +424,78 @@ QPushButton{
            </item>
           </layout>
          </widget>
+        </item>
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QWidget" name="widget_import_project" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>450</width>
+            <height>250</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>250</height>
+           </size>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <property name="topMargin">
+            <number>40</number>
+           </property>
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QLabel" name="icon_drop_project">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="acceptDrops">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/import-project.svg</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_drop_project">
+             <property name="acceptDrops">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Geçmiş proje arşiv dosyasını bırakın &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;veya &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Seçmek için buraya tıklayın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -895,7 +986,7 @@ QPushButton:checked{
                     <bool>false</bool>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>false</bool>
@@ -916,7 +1007,7 @@ QPushButton:checked{
                     <bool>true</bool>
                    </attribute>
                    <attribute name="verticalHeaderVisible">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </attribute>
                    <column>
                     <property name="text">

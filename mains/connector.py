@@ -164,6 +164,7 @@ class Connector(QMainWindow, UI):
         self.image_handler.images.clear()
         self.source.clear()
         self.pages.setCurrentIndex(0)
+        self.image_handler.clear_tempdir()
     
     def pages_current_changed(self, index):
         if index == 2:

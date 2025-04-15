@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="images">
+    <file>../templates/images/import-project.svg</file>
     <file>../templates/images/label-colorful.svg</file>
     <file>../templates/images/image.svg</file>
     <file>../templates/images/tick-double.svg</file>

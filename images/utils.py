@@ -1,5 +1,8 @@
+import tempfile
 from enum import Enum
 
+
+TEMPDIR = tempfile.TemporaryDirectory().name
 
 
 class ImageStatus(Enum):
