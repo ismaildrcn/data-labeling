@@ -54,6 +54,7 @@ class PopupMessages(object):
 
         M300 = "Lütfen devam etmeden önce etiket oluşturmayı veya etiketlerinizi içe aktarmayı deneyin!"
         M301 = "Çalışmanız bilgisayara kaydedilirken bir hata oluştu, lütfen yetkili ile paylaşınız."
+        M302 = "Seçmiş olduğunuz dosya bu uygulama ile uyumlu değil, lütfen uygulamayı kullanarak dışarıya çıkarttığınız dosyaları kullanmayı deneyiniz."
 
     class Action(BaseEnum):
         @property

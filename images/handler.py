@@ -197,12 +197,12 @@ class ImageHandler:
     
     def insert_project_from_drag_drop(self, drop_list):
         for archive in drop_list:
-            if archive.toLocalFile().endswith('.zip'):
+            if archive.toLocalFile().endswith('.anns'):
                 return archive
     
     def insert_project_from_file_dialog(self):
-        selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", "Images (*.zip)")[0]
-        if QUrl.fromLocalFile(selected_file).path().endswith('.zip'):
+        selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", "Images (*.anns)")[0]
+        if QUrl.fromLocalFile(selected_file).path().endswith('.anns'):
             return QUrl.fromLocalFile(selected_file)
 
     def insert_project(self, drop_list = False):
@@ -212,6 +212,9 @@ class ImageHandler:
             path = self.insert_project_from_file_dialog()
         if path:
             with ZipFile(path.toLocalFile(), 'r') as archive:
+                if archive.comment != b"***REMOVED***":
+                    self._connector.show_message(PopupMessages.Error.M302)  # Add appropriate error message
+                    return
                 archive.extractall(TEMPDIR)  # Zip dosyasını çıkar
                 name_list = archive.namelist()
                 lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
@@ -312,7 +315,7 @@ class ImageHandler:
             image_name = os.path.basename(image_path)
             base_name = os.path.splitext(image_name)[0]
             return image_path, image_name, base_name
-        with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + '.zip'), 'w') as archive:
+        with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + '.anns'), 'w') as archive:
             exists_error = False
             for image in self.images:
                 try:
