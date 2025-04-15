@@ -332,7 +332,7 @@ QPushButton{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_data_importing">
        <property name="styleSheet">
@@ -781,7 +781,7 @@ QPushButton:hover{
           </property>
           <layout class="QHBoxLayout" name="layout_init_label_button_area">
            <property name="spacing">
-            <number>50</number>
+            <number>20</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -810,6 +810,24 @@ QPushButton:hover{
              </property>
              <property name="text">
               <string>Devam et</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_clear_labels">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Temizle</string>
              </property>
             </widget>
            </item>

@@ -169,6 +169,7 @@ class Connector(QMainWindow, UI):
     def pages_current_changed(self, index):
         if index == 2:
             self.pushButton_exit_project.setVisible(True)
+            self.label_total_image_value.setText(str(self.image_handler.count))
             return
         self.pushButton_exit_project.setVisible(False)
 
