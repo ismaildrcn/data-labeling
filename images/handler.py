@@ -288,14 +288,35 @@ class ImageHandler:
             Nots:
             - ZIP dosyası bir UUID kullanılarak adlandırılır ve belirtilen dizine kaydedilir.
         """
+        def get_image_name(image):
+            # Get local file path from QUrl
+            image_path = image.toLocalFile()
+            image_name = os.path.basename(image_path)
+            base_name = os.path.splitext(image_name)[0]
+            return image_path, image_name, base_name
         with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + '.zip'), 'w') as archive:
+            exists_error = False
             for image in self.images:
-                content = ""
-                for annotation in self.get_annotation(image):
-                    if isinstance(annotation.label, int):
-                        content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
-                if content:
-                    archive.writestr(image.toLocalFile().split('/')[-1].split('.')[0] + '.txt', content)
+                try:
+                    # Get local file path from QUrl
+                    image_path, image_name, base_name = get_image_name(image)
+                    
+                    # Add the original image file to archive
+                    archive.write(image_path, image_name)
+                except Exception:
+                    exists_error = True
+                    continue
+            if exists_error:
+                self._connector.show_message(PopupMessages.Warning.M203)
+            for image in self.images:
+                image_path, image_name, base_name = get_image_name(image)
+                if os.path.exists(image_path):
+                    content = ""
+                    for annotation in self.get_annotation(image):
+                        if isinstance(annotation.label, int):
+                            content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
+                    if content:
+                        archive.writestr(f'{base_name}.txt', content)
             archive.writestr(str(uuid.uuid4()) + '.lbl', str(self._connector.configurator.label_type))
             archive.comment = b"***REMOVED***"
         archive.close()
