@@ -158,7 +158,7 @@ class Connector(QMainWindow, UI):
         self.scene.clear()
         self.image_pixmap = None
         self.image_handler.annotation_count = 0
-        self.configurator.clear()
+        self.configurator.reset()
         self.current_label_list.clear()
         self.image_table.clearContents()
         self.image_table.setRowCount(0)

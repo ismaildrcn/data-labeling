@@ -54,6 +54,8 @@ class Listener(QMainWindow):
                         self._connector.reset_zoom()
                     case self._connector.icon_drop_project | self._connector.label_drop_project:
                         self._connector.image_handler.insert_project()
+                    case self._connector.pushButton_clear_labels:
+                        self._connector.configurator.clear()
 
                     
             case QEvent.KeyPress:

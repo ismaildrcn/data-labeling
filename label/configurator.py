@@ -13,18 +13,31 @@ class Configurator(object):
     def __init__(self, connector=None):
         self._connector = connector
         self.label_type = {}
-        self.clear()
+        self.reset()
     
     @property
     def labels(self):
         return self.label_type.keys()
 
-    def clear(self):
-        self.label_type = LABEL_TYPES
+    def reset(self):
+        self.label_type = LABEL_TYPES.copy()
         self._connector.listWidget_label_list.clear()
         for lbl in self.label_type.keys():
             item = QListWidgetItem(lbl)
             self._connector.listWidget_label_list.addItem(item)
+
+    def clear(self):
+        """
+            Etiket listesini temizler.
+
+            Bu method, etiket listesini sıfırlar ve etiket listesi
+            widget'ını temizler.
+
+            Returns:
+                None
+        """
+        self.label_type = {}
+        self._connector.listWidget_label_list.clear()
 
     def add(self):
         """

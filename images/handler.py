@@ -197,16 +197,6 @@ class ImageHandler:
         for image in selected_list:
             if QUrl.fromLocalFile(image) not in self._images:
                 self._images[QUrl.fromLocalFile(image)] = ImageCore(self._connector, QUrl.fromLocalFile(image))
-    
-    def insert_project_from_drag_drop(self, drop_list):
-        for archive in drop_list:
-            if archive.toLocalFile().endswith(ARCHIVE_EXTENSION):
-                return archive
-    
-    def insert_project_from_file_dialog(self):
-        selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", f"ANNS File (*{ARCHIVE_EXTENSION})")[0]
-        if QUrl.fromLocalFile(selected_file).path().endswith(ARCHIVE_EXTENSION):
-            return QUrl.fromLocalFile(selected_file)
 
     def insert_project(self, drop_list = False):
         if drop_list:
@@ -236,6 +226,16 @@ class ImageHandler:
             self._connector.load_selected_image(0, 1)
             _, _, defined_label_count = self.check_annotation
             self._connector.label_defined_annotation_value.setText(str(defined_label_count))
+    
+    def insert_project_from_drag_drop(self, drop_list):
+        for archive in drop_list:
+            if archive.toLocalFile().endswith(ARCHIVE_EXTENSION):
+                return archive
+    
+    def insert_project_from_file_dialog(self):
+        selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", f"ANNS File (*{ARCHIVE_EXTENSION})")[0]
+        if QUrl.fromLocalFile(selected_file).path().endswith(ARCHIVE_EXTENSION):
+            return QUrl.fromLocalFile(selected_file)
     
     def clear_tempdir(self):
         if os.path.exists(TEMPDIR):
@@ -295,7 +295,7 @@ class ImageHandler:
                 if has_unwrite:
                     answer = self._connector.show_message(PopupMessages.Action.M400)
                 if has_unwrite is False or answer == Answers.OK:
-                    save_dir = QFileDialog.getExistingDirectory(self._connector, 'Çalışmaların Kaydedileceği Klasörü Seçin')
+                    save_dir = QFileDialog.getExistingDirectory(self._connector, 'Çalışmanın Kaydedileceği Klasörü Seçin')
                     if save_dir:
                         self.zipper(save_dir)
                         self._connector.show_message(PopupMessages.Info.M101)
