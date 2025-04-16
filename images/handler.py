@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
 
 from images.annotation import Annotation
 from images.core import ImageCore
-from images.utils import ImageStatus, TEMPDIR
+from images.utils import ImageStatus, TEMPDIR, ARCHIVE_EXTENSION
 from label.widget import LabelWidget
 from mains.source import Source
 from modals.popup.messages import PopupMessages
@@ -31,7 +31,10 @@ class ImageHandler:
     def add_annotation(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem, label: str = None) -> None: ...
     def add_annotation(self, *args):
         widget = LabelWidget().setup(self._connector)
-        widget.label_list.addItems(self._connector.configurator.labels)
+        for item in self._connector.configurator.labels:
+            widget.label_list.addItem(item)
+            widget.label_list.setItemData(widget.label_list.count() - 1, item, Qt.ToolTipRole)
+
         widget.label_list.setCurrentIndex(-1)
         item = QListWidgetItem(self._connector.current_label_list)
         item.setSizeHint(widget.main.sizeHint())
@@ -197,12 +200,12 @@ class ImageHandler:
     
     def insert_project_from_drag_drop(self, drop_list):
         for archive in drop_list:
-            if archive.toLocalFile().endswith('.anns'):
+            if archive.toLocalFile().endswith(ARCHIVE_EXTENSION):
                 return archive
     
     def insert_project_from_file_dialog(self):
-        selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", "Images (*.anns)")[0]
-        if QUrl.fromLocalFile(selected_file).path().endswith('.anns'):
+        selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", f"ANNS File (*{ARCHIVE_EXTENSION})")[0]
+        if QUrl.fromLocalFile(selected_file).path().endswith(ARCHIVE_EXTENSION):
             return QUrl.fromLocalFile(selected_file)
 
     def insert_project(self, drop_list = False):
@@ -315,7 +318,7 @@ class ImageHandler:
             image_name = os.path.basename(image_path)
             base_name = os.path.splitext(image_name)[0]
             return image_path, image_name, base_name
-        with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + '.anns'), 'w') as archive:
+        with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + ARCHIVE_EXTENSION), 'w') as archive:
             exists_error = False
             for image in self.images:
                 try:

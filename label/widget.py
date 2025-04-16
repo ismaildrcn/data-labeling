@@ -44,6 +44,7 @@ class LabelWidget(QWidget):
         self.label_list.setEditable(True)
         self.label_list.lineEdit().setPlaceholderText("Etiket Seç")
         self.label_list.lineEdit().setReadOnly(True)
+        self.label_list.setMaximumSize(QSize(125, 25))
         self.horizontalLayout_2.addWidget(self.label_list)
         self.widget_2 = QWidget(self.main)
         self.widget_2.setObjectName("widget_2")

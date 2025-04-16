@@ -3,6 +3,7 @@ from enum import Enum
 
 
 TEMPDIR = tempfile.TemporaryDirectory().name
+ARCHIVE_EXTENSION = ".anns"
 
 
 class ImageStatus(Enum):

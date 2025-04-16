@@ -1,8 +1,7 @@
 from typing import overload
-from PyQt5.QtCore import Qt, pyqtSlot, QSize
-from PyQt5.QtGui import QIcon, QPixmap, QPainter
+from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression
+from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem
-
 
 from templates.ui.mainWindow import Ui_MainWindow as UI
 from widgets.graphics_view import CustomGraphicsView
@@ -62,6 +61,9 @@ class Connector(QMainWindow, UI):
 
         self.image_table.setIconSize(QSize(16, 16))  # Icon boyutunu ayarla
 
+        regex = QRegularExpression("^[a-z]*$")
+        validator = QRegularExpressionValidator(regex)
+        self.lineEdit_add_label.setValidator(validator)
 
         self.init_actions()
 
@@ -156,8 +158,7 @@ class Connector(QMainWindow, UI):
         self.scene.clear()
         self.image_pixmap = None
         self.image_handler.annotation_count = 0
-        self.configurator.label_type.clear()
-        self.listWidget_label_list.clear()
+        self.configurator.clear()
         self.current_label_list.clear()
         self.image_table.clearContents()
         self.image_table.setRowCount(0)

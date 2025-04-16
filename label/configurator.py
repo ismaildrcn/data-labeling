@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QListWidgetItem, QFileDialog
 
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
+from label.utils import LABEL_TYPES
 
 
 
@@ -12,10 +13,18 @@ class Configurator(object):
     def __init__(self, connector=None):
         self._connector = connector
         self.label_type = {}
+        self.clear()
     
     @property
     def labels(self):
         return self.label_type.keys()
+
+    def clear(self):
+        self.label_type = LABEL_TYPES
+        self._connector.listWidget_label_list.clear()
+        for lbl in self.label_type.keys():
+            item = QListWidgetItem(lbl)
+            self._connector.listWidget_label_list.addItem(item)
 
     def add(self):
         """
