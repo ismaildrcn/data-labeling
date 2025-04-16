@@ -20,6 +20,15 @@ class Configurator(object):
         return self.label_type.keys()
 
     def reset(self):
+        """
+            Etiket listesini varsayılan etiketlerle sıfırlar.
+
+            Bu method, etiket listesini varsayılan etiketlerle doldurur
+            ve etiket listesi widget'ını günceller.
+
+            Returns:
+                None
+        """
         self.label_type = LABEL_TYPES.copy()
         self._connector.listWidget_label_list.clear()
         for lbl in self.label_type.keys():
