@@ -1,3 +1,8 @@
+default:
+  before_script:
+    - $env:Path = "C:\Python\" + ";" + "C:\Python\Scripts\" + ";" + $env:Path
+    - python --version
+
 stages:
   - build
   - release
@@ -5,20 +10,17 @@ stages:
 build:
   stage: build
   tags:
-    - windows  # Runner register ederken verdiğin tag
-  before_script:
-    - python --version  # kontrol için
-    - python -m pip install --upgrade pip
+    - windows
   script:
+    - python -m pip install --upgrade pip
     - echo Uygulama test ediliyor...
-    # - python main.py  # İstersen basit bir test
+    # - python main.py
 
 release:
   stage: release
   tags:
     - windows
   script:
-    - python --version  # kontrol için
     - python -m pip install -r requirements.txt
     - python -m pip install pyinstaller
     - python -m PyInstaller main.spec
