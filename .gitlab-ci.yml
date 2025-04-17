@@ -49,50 +49,59 @@ publish:
         "Content-Type" = "application/json"
       }
 
+      # GitLab API için gerekli tüm alanları içeren body
       $body = @{
         name = "Release $env:CI_COMMIT_TAG"
         tag_name = "$env:CI_COMMIT_TAG"
-        ref = "$env:CI_COMMIT_TAG"  # Bu alan gerekli
+        ref = "$env:CI_COMMIT_REF_NAME"          # Branch veya tag adı
         description = "Bu sürüm $env:CI_COMMIT_TAG etiketiyle oluşturuldu."
+        released_at = (Get-Date).ToString("o")   # ISO 8601 format
         assets = @{
           links = @(
             @{
-              name = "Görsel_Veri_Etiketleme_CATCH"  # URL-safe isim
-              url = "$env:CI_PROJECT_URL/-/jobs/$RELEASE_JOB_ID/artifacts/download"  # URL'i basitleştirdik
-              link_type = "package"  # Link tipini belirttik
+              name = "Görsel_Veri_Etiketleme_CATCH"
+              url = "$env:CI_PROJECT_URL/-/jobs/$RELEASE_JOB_ID/artifacts/raw/dist/main.exe"
+              link_type = "other"
             }
           )
         }
       }
 
+      Write-Host "Preparing request..."
+      Write-Host "Project ID: $env:CI_PROJECT_ID"
+      Write-Host "Tag: $env:CI_COMMIT_TAG"
+      Write-Host "Ref: $env:CI_COMMIT_REF_NAME"
+
       $jsonBody = $body | ConvertTo-Json -Depth 10 -Compress
-      Write-Host "JSON Body: $jsonBody"
+      Write-Host "Request Body: $jsonBody"
 
       $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/releases"
-      Write-Host "Sending API request to: $apiUrl"
+      Write-Host "API URL: $apiUrl"
 
       try {
+        Write-Host "Sending request to GitLab API..."
         $response = Invoke-RestMethod `
           -Uri $apiUrl `
           -Method Post `
           -Headers $headers `
           -Body $jsonBody `
-          -ContentType "application/json"
+          -ContentType "application/json" `
+          -Verbose
         
-        Write-Host "Release created successfully"
-        Write-Host "Release URL: $($response.url)"
+        Write-Host "Release created successfully!"
+        Write-Host "Release URL: $($response._links.self)"
       }
       catch {
         Write-Host "Release creation failed!"
         Write-Host "Error Message: $($_.Exception.Message)"
-        Write-Host "Response Status Code: $($_.Exception.Response.StatusCode.Value__)"
-        Write-Host "Response Status Description: $($_.Exception.Response.StatusDescription)"
+        Write-Host "Status Code: $($_.Exception.Response.StatusCode.Value__)"
         
-        # Detaylı hata mesajını almaya çalışalım
-        $errorDetails = $_.ErrorDetails.Message
-        if ($errorDetails) {
-          Write-Host "Error Details: $errorDetails"
-        }
+        # Response body'yi okumaya çalışalım
+        $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+        $reader.BaseStream.Position = 0
+        $reader.DiscardBufferedData()
+        $responseBody = $reader.ReadToEnd()
+        Write-Host "Response Body: $responseBody"
         
         throw
       }
