@@ -28,6 +28,7 @@ release:
   artifacts:
     paths:
       - dist/
+  
 
 publish:
   stage: publish
@@ -37,8 +38,11 @@ publish:
     - if: $CI_COMMIT_TAG
   script:
     - |
-      $headers = @{ "PRIVATE-TOKEN" = "$env:GITLAB_API_TOKEN" }
+      $headers = @{
+        "PRIVATE-TOKEN" = "$env:GITLAB_API_TOKEN"
+      }
 
+      # İstek gövdesini JSON formatında oluşturuyoruz
       $body = @{
         name = "Release $env:CI_COMMIT_TAG"
         tag_name = "$env:CI_COMMIT_TAG"
@@ -55,12 +59,19 @@ publish:
 
       $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/releases"
 
+      # API isteğini gönderiyoruz ve hata detaylarını yazdırıyoruz
+      Write-Host "Sending API request to: $apiUrl"
+      Write-Host "Request Body: $body"
+
       try {
-        Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $body -ContentType "application/json"
+        $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $body -ContentType "application/json"
         Write-Host "Release created successfully"
       }
       catch {
         Write-Host "Release creation failed!"
-        Write-Host "Error: $($_.Exception.Message)"
+        Write-Host "Error Message: $($_.Exception.Message)"
+        Write-Host "Response Status Code: $($_.Exception.Response.StatusCode.Value__)"
+        Write-Host "Response Status Description: $($_.Exception.Response.StatusDescription)"
+        Write-Host "Response Body: $($_.Exception.Response.GetResponseStream())"
         throw
       }
