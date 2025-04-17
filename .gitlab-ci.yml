@@ -44,5 +44,5 @@ publish:
     ref: "$CI_COMMIT_TAG"
     assets:
       links:
-        - name: "Windows Uygulaması (ZIP)"
+        - name: "Görsel Veri Etiketleme - CATCH"
           url: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download"

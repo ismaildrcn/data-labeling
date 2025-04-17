@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='Görsel Veri Etiketleme - FAD',
+    name='Görsel Veri Etiketleme - CATCH',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
