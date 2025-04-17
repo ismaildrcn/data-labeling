@@ -2,8 +2,11 @@ stages:
   - build
   - release
 
+.variables_template: &python310_env
+
 build:
   stage: build
+  <<: *python310_env
   tags:
     - windows  # Runner register ederken verdiğin tag
   before_script:
@@ -17,9 +20,11 @@ build:
 
 release:
   stage: release
+  <<: *python310_env
   tags:
     - windows
   script:
+    - $env:Path = "C:\Python\" + ";" + "C:\Python\Scripts\" + ";" + $env:Path
     - python --version  # kontrol için
     - python -m pip install -r requirements.txt
     - python -m pip install pyinstaller
