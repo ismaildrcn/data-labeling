@@ -1,22 +1,21 @@
-image: python:3.10
-
 stages:
   - build
   - release
 
-before_script:
-  - apt-get update && apt-get install -y libgl1-mesa-glx libglib2.0-0 libxkbcommon-x11-0 x11-xserver-utils
-  - pip install -r requirements.txt
-
 build:
   stage: build
+  tags:
+    - windows  # Runner register ederken verdiğin tag
   script:
-    - echo "Uygulama derleniyor..."
-    - python main.py  # test amaçlı
+    - echo Uygulama test ediliyor...
+    - python main.py  # İstersen basit bir test
 
 release:
   stage: release
+  tags:
+    - windows
   script:
+    - pip install -r requirements.txt
     - pip install pyinstaller
     - python -m PyInstaller main.spec
   artifacts:
