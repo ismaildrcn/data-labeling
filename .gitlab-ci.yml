@@ -38,6 +38,9 @@ publish:
   script:
     - echo "Creating release from tag $CI_COMMIT_TAG"
     - |
+      # Project path'ini URL-encode edelim
+      $projectPath = [System.Web.HttpUtility]::UrlEncode("software/fad/src/data-labeling")
+      
       $headers = @{
         "PRIVATE-TOKEN" = "$env:GITLAB_API_TOKEN"
       }
@@ -56,12 +59,19 @@ publish:
         }
       } | ConvertTo-Json
 
+      Write-Host "Project Path: $projectPath"
       Write-Host "API URL: $env:CI_API_V4_URL"
       Write-Host "Project URL: $env:CI_PROJECT_URL"
-      Write-Host "Project ID: $env:CI_PROJECT_ID"
       
-      Invoke-RestMethod -Uri "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/releases" `
-                       -Method Post `
-                       -Headers $headers `
-                       -Body $body `
-                       -ContentType "application/json"
+      $apiUrl = "$env:CI_API_V4_URL/projects/$projectPath/releases"
+      Write-Host "Full API URL: $apiUrl"
+      
+      try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $body -ContentType "application/json"
+        Write-Host "Release created successfully"
+      }
+      catch {
+        Write-Host "Error Details: $($_.Exception.Message)"
+        Write-Host "Response: $($_.ErrorDetails.Message)"
+        throw
+      }
