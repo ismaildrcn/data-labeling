@@ -18,7 +18,7 @@ release:
   stage: release
   script:
     - pip install pyinstaller
-    - pyinstaller --onefile main.py
+    - python -m PyInstaller main.spec
   artifacts:
     paths:
       - dist/
