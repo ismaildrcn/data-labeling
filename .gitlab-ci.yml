@@ -25,10 +25,12 @@ release:
     - python -m pip install -r requirements.txt
     - python -m pip install pyinstaller
     - python -m PyInstaller main.spec
+    # Release job ID'sini bir dosyaya kaydedelim
+    - $env:CI_JOB_ID | Out-File -FilePath "job_id.txt"
   artifacts:
     paths:
       - dist/
-  
+      - job_id.txt  # Job ID'yi içeren dosyayı da artifacts olarak ekleyelim
 
 publish:
   stage: publish
@@ -38,11 +40,14 @@ publish:
     - if: $CI_COMMIT_TAG
   script:
     - |
+      # Release job'unun ID'sini okutalım
+      $RELEASE_JOB_ID = Get-Content -Path "job_id.txt"
+      Write-Host "Release job ID: $RELEASE_JOB_ID"
+      
       $headers = @{
         "PRIVATE-TOKEN" = "$env:GITLAB_API_TOKEN"
       }
 
-      # İstek gövdesini JSON formatında oluşturuyoruz
       $body = @{
         name = "Release $env:CI_COMMIT_TAG"
         tag_name = "$env:CI_COMMIT_TAG"
@@ -51,7 +56,8 @@ publish:
           links = @(
             @{
               name = "Görsel Veri Etiketleme - CATCH"
-              url = "$env:CI_PROJECT_URL/-/jobs/$env:CI_JOB_ID/artifacts/download?file_type=archive"
+              # Release job'unun ID'sini kullanıyoruz
+              url = "$env:CI_PROJECT_URL/-/jobs/$RELEASE_JOB_ID/artifacts/download?file_type=archive"
             }
           )
         }
@@ -59,7 +65,6 @@ publish:
 
       $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/releases"
 
-      # API isteğini gönderiyoruz ve hata detaylarını yazdırıyoruz
       Write-Host "Sending API request to: $apiUrl"
       Write-Host "Request Body: $body"
 
@@ -72,6 +77,6 @@ publish:
         Write-Host "Error Message: $($_.Exception.Message)"
         Write-Host "Response Status Code: $($_.Exception.Response.StatusCode.Value__)"
         Write-Host "Response Status Description: $($_.Exception.Response.StatusDescription)"
-        Write-Host "Response Body: $($_.Exception.Response.GetResponseStream())"
+        Write-Host "Response Body: $($_.ErrorDetails.Message)"
         throw
       }
