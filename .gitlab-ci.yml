@@ -6,6 +6,11 @@ build:
   stage: build
   tags:
     - windows  # Runner register ederken verdiğin tag
+  before_script:
+    # 3.10'un path'ini en üste al
+    - $env:Path = "C:\Python\" + ";" + "C:\Python\Scripts\" + ";" + $env:Path
+    - python --version  # kontrol için
+    - pip install --upgrade pip
   script:
     - echo Uygulama test ediliyor...
     # - python main.py  # İstersen basit bir test
