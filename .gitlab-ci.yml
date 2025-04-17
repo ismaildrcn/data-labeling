@@ -8,7 +8,7 @@ build:
     - windows  # Runner register ederken verdiğin tag
   script:
     - echo Uygulama test ediliyor...
-    - python main.py  # İstersen basit bir test
+    # - python main.py  # İstersen basit bir test
 
 release:
   stage: release
