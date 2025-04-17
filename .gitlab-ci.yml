@@ -1,0 +1,24 @@
+image: python:3.10
+
+stages:
+  - build
+  - release
+
+before_script:
+  - apt-get update && apt-get install -y libgl1-mesa-glx libglib2.0-0 libxkbcommon-x11-0 x11-xserver-utils
+  - pip install -r requirements.txt
+
+build:
+  stage: build
+  script:
+    - echo "Uygulama derleniyor..."
+    - python main.py  # test amaçlı
+
+release:
+  stage: release
+  script:
+    - pip install pyinstaller
+    - pyinstaller --onefile main.py
+  artifacts:
+    paths:
+      - dist/
