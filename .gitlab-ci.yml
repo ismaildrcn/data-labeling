@@ -10,7 +10,7 @@ build:
     # 3.10'un path'ini en üste al
     - $env:Path = "C:\Python\" + ";" + "C:\Python\Scripts\" + ";" + $env:Path
     - python --version  # kontrol için
-    - python.exe -m pip install --upgrade pip
+    - python -m pip install --upgrade pip
   script:
     - echo Uygulama test ediliyor...
     # - python main.py  # İstersen basit bir test
@@ -20,9 +20,9 @@ release:
   tags:
     - windows
   script:
-    - python.exe -m pip install -r requirements.txt
-    - python.exe -m pip install pyinstaller
-    - python.exe -m PyInstaller main.spec
+    - python -m pip install -r requirements.txt
+    - python -m pip install pyinstaller
+    - python -m PyInstaller main.spec
   artifacts:
     paths:
       - dist/
