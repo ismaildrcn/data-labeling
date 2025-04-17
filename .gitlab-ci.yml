@@ -51,7 +51,7 @@ publish:
           links = @(
             @{
               name = "Görsel Veri Etiketleme - CATCH"
-              url = "$env:CI_PROJECT_URL/-/jobs/$env:CI_JOB_ID/artifacts/download"
+              url = "$env:CI_PROJECT_URL/-/jobs/$env:CI_JOB_ID/artifacts/download?file_type=archive"
             }
           )
         }
