@@ -25,7 +25,6 @@ release:
     - python -m pip install -r requirements.txt
     - python -m pip install pyinstaller
     - python -m PyInstaller main.spec
-    - Copy-Item "dist\Görsel Veri Etiketleme - FAD.exe" -Destination "."
   artifacts:
     paths:
       - dist/
@@ -45,5 +44,5 @@ publish:
     ref: "$CI_COMMIT_TAG"
     assets:
       links:
-        - name: "Windows Uygulaması (.exe)"
-          url: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/file/Görsel%20Veri%20Etiketleme%20-%20FAD.exe"
+        - name: "Windows Uygulaması (ZIP)"
+          url: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download"
