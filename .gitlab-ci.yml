@@ -31,16 +31,30 @@ release:
 
 publish:
   stage: publish
-  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  tags:
+    - windows             # Windows runner'ı kullanacağız
   rules:
-    - if: $CI_COMMIT_TAG                  # Sadece tag'li commit'lerde çalışır
+    - if: $CI_COMMIT_TAG
   script:
     - echo "Creating release from tag $CI_COMMIT_TAG"
-  release:
-    name: 'Release $CI_COMMIT_TAG'
-    description: 'Release created from tag $CI_COMMIT_TAG'
-    tag_name: $CI_COMMIT_TAG
-    assets:
-      links:
-        - name: 'Windows Application'
-          url: '${CI_PROJECT_URL}/-/jobs/${CI_JOB_ID}/artifacts/download'
+    # PowerShell ile GitLab API'yi kullanarak release oluşturacağız
+    - >
+      $headers = @{
+        "PRIVATE-TOKEN" = "$env:GITLAB_API_TOKEN"
+      }
+    - >
+      $body = @{
+        name = "Release $CI_COMMIT_TAG"
+        tag_name = "$CI_COMMIT_TAG"
+        description = "Release created from tag $CI_COMMIT_TAG"
+        assets = @{
+          links = @(
+            @{
+              name = "Windows Application"
+              url = "${CI_PROJECT_URL}/-/jobs/${CI_JOB_ID}/artifacts/download"
+            }
+          )
+        }
+      } | ConvertTo-Json
+    - >
+      Invoke-RestMethod -Uri "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/releases" -Method Post -Headers $headers -Body $body -ContentType "application/json"
