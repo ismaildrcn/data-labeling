@@ -54,31 +54,24 @@ publish:
     - job: release
       artifacts: true
 
-  variables:
-    # Windows shell executor için PATH'i genişletiyoruz.
-    # GitLab Runner, hem script hem de release bloğunda bu PATH'i kullanacak.
-    PATH: "C:\\GitLab-Runner;%PATH%"
+  before_script:
+    # release-cli.exe'nin bulunduğu dizini PATH'e ekle
+    - |
+      $runnerDir = "C:\GitLab-Runner"
+      $env:Path = "$runnerDir;" + $env:Path
+      Write-Host ">> PATH includes: $runnerDir"
 
   script:
     - |
-      # Test: release-cli komutunun erişilebilirliğini kontrol edelim:
-      release-cli.exe --version
-
+      # Artifaktlardan bilgileri oku
       $jobId       = Get-Content job_id.txt
       $previousTag = Get-Content previous_tag.txt
       $commitList  = Get-Content commit_list.txt
 
-      Write-Host "Ready to release $env:CI_COMMIT_TAG..."
+      # Burada release-cli'yi doğrudan çağırıyoruz:
+      release-cli.exe create `
+        --name "Release $env:CI_COMMIT_TAG" `
+        --tag-name "$env:CI_COMMIT_TAG" `
+        --description "Changes since $previousTag:`n$commitList" `
+        --assets-link "name=Application_Executable,url=$CI_PROJECT_URL/-/jobs/$jobId/artifacts/download,link_type=package"
 
-  release:
-    name: "Release $CI_COMMIT_TAG"
-    tag_name: "$CI_COMMIT_TAG"
-    description: |
-      Changes since previous tag ($previousTag):
-
-      $commitList
-    assets:
-      links:
-        - name: "Application_Executable"
-          url: "$CI_PROJECT_URL/-/jobs/$jobId/artifacts/download"
-          link_type: "package"
