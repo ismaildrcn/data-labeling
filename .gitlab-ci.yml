@@ -61,9 +61,9 @@ publish:
       $previousTag = Get-Content previous_tag.txt
       $commitList  = Get-Content commit_list.txt
 
-      $description = "Changes since $previousTag:`n$commitList"
+      $description = "Changes since $($previousTag):`n$commitList"
 
-      & release-cli.exe create `
+      & "$env:Path\release-cli.exe" create `
         --name "Release $env:CI_COMMIT_TAG" `
         --tag-name "$env:CI_COMMIT_TAG" `
         --description "$description" `
