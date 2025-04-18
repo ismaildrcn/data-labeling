@@ -91,7 +91,7 @@ publish:
           link_type = "package"
         }
       )
-      $assetLink = $assetObj | ConvertTo-Json -Compress
+      $assetLink = ConvertTo-Json -InputObject $assetObj -Compress -Depth 10
 
       Write-Host "Asset Link: $assetLink"
 
