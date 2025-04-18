@@ -25,83 +25,50 @@ release:
     - python -m pip install -r requirements.txt
     - python -m pip install pyinstaller
     - python -m PyInstaller main.spec
-    # Release job ID'sini bir dosyaya kaydedelim
-    - $env:CI_JOB_ID | Out-File -FilePath "job_id.txt"
+    # Save current job ID and git info
+    - |
+      $env:CI_JOB_ID | Out-File -FilePath "job_id.txt"
+      
+      # Get previous tag
+      $previousTag = git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>$null
+      if (-not $previousTag) { $previousTag = "no previous tag" }
+      $previousTag | Out-File -FilePath "previous_tag.txt"
+      
+      # Get commit list
+      $commitList = git log --oneline "$previousTag..$env:CI_COMMIT_TAG" --format="%h %s"
+      $commitList | Out-File -FilePath "commit_list.txt"
   artifacts:
     paths:
       - dist/
-      - job_id.txt  # Job ID'yi içeren dosyayı da artifacts olarak ekleyelim
+      - job_id.txt
+      - previous_tag.txt
+      - commit_list.txt
 
 publish:
   stage: publish
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
   tags:
     - windows
   rules:
     - if: $CI_COMMIT_TAG
+  needs:
+    - job: release
+      artifacts: true
   script:
     - |
-      # Release job'unun ID'sini okutalım
-      $RELEASE_JOB_ID = Get-Content -Path "job_id.txt"
-      Write-Host "Release job ID: $RELEASE_JOB_ID"
-      
-      $headers = @{
-        "PRIVATE-TOKEN" = "$env:GITLAB_API_TOKEN"
-        "Content-Type" = "application/json"
-      }
+      $jobId = Get-Content job_id.txt
+      $previousTag = Get-Content previous_tag.txt
+      $commitList = Get-Content commit_list.txt
+  release:
+    name: 'Release $CI_COMMIT_TAG'
+    tag_name: '$CI_COMMIT_TAG'
+    description: |
+      Release $CI_COMMIT_TAG
 
-      # GitLab API için gerekli tüm alanları içeren body
-      $body = @{
-        name = "Release $env:CI_COMMIT_TAG"
-        tag_name = "$env:CI_COMMIT_TAG"
-        ref = "$env:CI_COMMIT_REF_NAME"          # Branch veya tag adı
-        description = "Bu sürüm $env:CI_COMMIT_TAG etiketiyle oluşturuldu."
-        released_at = (Get-Date).ToString("o")   # ISO 8601 format
-        assets = @{
-          links = @(
-            @{
-              name = "Görsel_Veri_Etiketleme_CATCH"
-              url = "$env:CI_PROJECT_URL/-/jobs/$RELEASE_JOB_ID/artifacts/raw/dist/main.exe"
-              link_type = "other"
-            }
-          )
-        }
-      }
-
-      Write-Host "Preparing request..."
-      Write-Host "Project ID: $env:CI_PROJECT_ID"
-      Write-Host "Tag: $env:CI_COMMIT_TAG"
-      Write-Host "Ref: $env:CI_COMMIT_REF_NAME"
-
-      $jsonBody = $body | ConvertTo-Json -Depth 10 -Compress
-      Write-Host "Request Body: $jsonBody"
-
-      $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/releases"
-      Write-Host "API URL: $apiUrl"
-
-      try {
-        Write-Host "Sending request to GitLab API..."
-        $response = Invoke-RestMethod `
-          -Uri $apiUrl `
-          -Method Post `
-          -Headers $headers `
-          -Body $jsonBody `
-          -ContentType "application/json" `
-          -Verbose
-        
-        Write-Host "Release created successfully!"
-        Write-Host "Release URL: $($response._links.self)"
-      }
-      catch {
-        Write-Host "Release creation failed!"
-        Write-Host "Error Message: $($_.Exception.Message)"
-        Write-Host "Status Code: $($_.Exception.Response.StatusCode.Value__)"
-        
-        # Response body'yi okumaya çalışalım
-        $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
-        $reader.BaseStream.Position = 0
-        $reader.DiscardBufferedData()
-        $responseBody = $reader.ReadToEnd()
-        Write-Host "Response Body: $responseBody"
-        
-        throw
-      }
+      Changes since $previousTag:
+      $commitList
+    assets:
+      links:
+        - name: 'Görsel_Veri_Etiketleme_CATCH.exe'
+          url: '$CI_PROJECT_URL/-/jobs/$jobId/artifacts/raw/dist/main.exe'
+          link_type: 'package'
