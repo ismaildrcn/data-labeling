@@ -42,7 +42,25 @@ build_application:
     - windows
   script:
     - python -m PyInstaller main.spec
+
+    # asset.json oluşturuluyor
+    - |
+      $json = @{
+        name       = "artifact.zip"
+        url        = "$env:CI_PROJECT_URL/-/jobs/$env:CI_JOB_ID/artifacts/download"
+        filepath   = "/artifact.zip"
+        link_type  = "other"
+      } | ConvertTo-Json -Compress
+      Set-Content -Path "asset.json" -Value $json
+
+    # artifact arşivleniyor
+    - Compress-Archive -Path dist\* -DestinationPath artifact.zip
+  artifacts:
+    paths:
+      - artifact.zip
+      - asset.json
   needs: [install_dependencies]
+
 
 
 release_job:
@@ -51,12 +69,12 @@ release_job:
   stage: release
   script:
     - echo "Release $env:CI_COMMIT_TAG"
-    - C:\GitLab-Runner\release-cli.exe create `
-      --name "Release $env:CI_COMMIT_TAG" `
-      --tag-name "$env:CI_COMMIT_TAG" `
-      --description "Automated release for $env:CI_COMMIT_TAG" `
-      --assets-link '{""name"":""artifact.zip"",""url"":""'"$env:CI_PROJECT_URL"'/-/jobs/'"$env:CI_JOB_ID"'/artifacts/download"",""filepath"":""/artifact.zip"",""link_type"":""other""}'
-
+    - Get-Content asset.json
+    - C:\GitLab-Runner\release-cli.exe create \
+      --name "Release $env:CI_COMMIT_TAG" \
+      --tag-name "$env:CI_COMMIT_TAG" \
+      --description "Automated release for $env:CI_COMMIT_TAG" \
+      --assets-link (Get-Content asset.json -Raw)
   rules:
     - if: '$CI_COMMIT_TAG'
       when: always
