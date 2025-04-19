@@ -4,27 +4,43 @@ default:
     - python --version
 
 stages:
+  - prepare
+  - install
   - build
   - release
-  - publish
 
-build:
-  stage: build
+update_pip:
+  stage: prepare
   tags:
     - windows
   script:
     - python -m pip install --upgrade pip
-    - echo Uygulama test ediliyor...
-    # - python main.py
+    - python -m pip install --upgrade setuptools wheel
 
-release:
-  stage: release
+install_dependencies:
+  stage: install
   tags:
     - windows
   script:
     - python -m pip install -r requirements.txt
-    - python -m pip install pyinstaller
+    - python -m pip install pyinstaller 
+  needs: [update_pip]
+
+
+build_application:
+  stage: build
+  tags:
+    - windows
+  script:
     - python -m PyInstaller main.spec
+  needs: [install_dependencies]
+
+
+create_release:
+  stage: release
+  tags:
+    - windows
+  script:
     - |
       $env:CI_JOB_ID | Out-File -FilePath "job_id.txt"
       $previousTag = git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>$null
@@ -34,43 +50,77 @@ release:
       $commitList | Out-File -FilePath "commit_list.txt"
   artifacts:
     paths:
-      - dist/
       - job_id.txt
       - previous_tag.txt
       - commit_list.txt
+  release:
+    name: "Release $CI_COMMIT_TAG"
+    tag_name: "$CI_COMMIT_TAG"
+    description: "Automated release for $CI_COMMIT_TAG"
 
-publish:
-  stage: publish
-  tags:
-    - windows
-  rules:
-    - if: $CI_COMMIT_TAG
-  needs:
-    - job: release
-      artifacts: true
+# build:
+#   stage: build
+#   tags:
+#     - windows
+#   script:
+#     - python -m pip install --upgrade pip
+#     - echo Uygulama test ediliyor...
+#     # - python main.py
 
-  before_script:
-    - |
-      $runnerDir = "C:\GitLab-Runner"
-      $env:Path = "$runnerDir;" + $env:Path
-      Write-Host ">> PATH includes: $runnerDir"
+# release:
+#   stage: release
+#   tags:
+#     - windows
+#   script:
+#     - python -m pip install -r requirements.txt
+#     - python -m pip install pyinstaller
+#     - python -m PyInstaller main.spec
+#     - |
+#       $env:CI_JOB_ID | Out-File -FilePath "job_id.txt"
+#       $previousTag = git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>$null
+#       if (-not $previousTag) { $previousTag = "no previous tag" }
+#       $previousTag | Out-File -FilePath "previous_tag.txt"
+#       $commitList = git log --oneline "$previousTag..$env:CI_COMMIT_TAG" --format="%h %s"
+#       $commitList | Out-File -FilePath "commit_list.txt"
+#   artifacts:
+#     paths:
+#       - dist/
+#       - job_id.txt
+#       - previous_tag.txt
+#       - commit_list.txt
 
-  script:
-    - |
-      $jobId       = Get-Content job_id.txt
-      $previousTag = Get-Content previous_tag.txt
-      $commitList  = Get-Content commit_list.txt
+# publish:
+#   stage: publish
+#   tags:
+#     - windows
+#   rules:
+#     - if: $CI_COMMIT_TAG
+#   needs:
+#     - job: release
+#       artifacts: true
 
-      $description = "Changes since $($previousTag):`n$commitList"
+#   before_script:
+#     - |
+#       $runnerDir = "C:\GitLab-Runner"
+#       $env:Path = "$runnerDir;" + $env:Path
+#       Write-Host ">> PATH includes: $runnerDir"
 
-      $assetJson = @{
-        name = "Application_Executable"
-        url = "$env:CI_PROJECT_URL/-/jobs/$jobId/artifacts/download"
-        link_type = "package"
-      } | ConvertTo-Json -Compress
+#   script:
+#     - |
+#       $jobId       = Get-Content job_id.txt
+#       $previousTag = Get-Content previous_tag.txt
+#       $commitList  = Get-Content commit_list.txt
 
-      & "C:\GitLab-Runner\release-cli.exe" create `
-        --name "Release $env:CI_COMMIT_TAG" `
-        --tag-name "$env:CI_COMMIT_TAG" `
-        --description "$description" `
-        --assets-link $assetJson
+#       $description = "Changes since $($previousTag):`n$commitList"
+
+#       $assetJson = @{
+#         name = "Application_Executable"
+#         url = "$env:CI_PROJECT_URL/-/jobs/$jobId/artifacts/download"
+#         link_type = "package"
+#       } | ConvertTo-Json -Compress
+
+#       & "C:\GitLab-Runner\release-cli.exe" create `
+#         --name "Release $env:CI_COMMIT_TAG" `
+#         --tag-name "$env:CI_COMMIT_TAG" `
+#         --description "$description" `
+#         --assets-link $assetJson
