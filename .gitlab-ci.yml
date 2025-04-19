@@ -16,6 +16,10 @@ update_pip:
   script:
     - python -m pip install --upgrade pip
     - python -m pip install --upgrade setuptools wheel
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: always
+    - when: never
 
 install_dependencies:
   stage: install
@@ -25,6 +29,10 @@ install_dependencies:
     - python -m pip install -r requirements.txt
     - python -m pip install pyinstaller 
   needs: [update_pip]
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: always
+    - when: never
 
 
 build_application:
@@ -47,6 +55,11 @@ create_release:
   artifacts:
     paths:
       - release/
+  needs: [build_application]
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: always
+    - when: never
 
 # build:
 #   stage: build
