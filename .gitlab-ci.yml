@@ -44,7 +44,7 @@ build_application:
     - python -m PyInstaller main.spec
   needs: [install_dependencies]
 
-job:
+print_tag:
   script:
     - echo "This is tag: $CI_COMMIT_TAG"
   rules:
