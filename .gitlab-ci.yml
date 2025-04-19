@@ -49,7 +49,7 @@ build_application:
       $json = @{
         name       = "Gorsel Veri Etiketleme - CATCH"
         url        = "$env:CI_PROJECT_URL/-/jobs/$env:CI_JOB_ID/artifacts/download"
-        filepath   = "/dist/Gorsel%20Veri%20Etiketleme%20-%20CATCH.exe"
+        filepath   = "/artifact.zip"
         link_type  = "other"
       } | ConvertTo-Json
       $json = $json.Replace('"', '\"')
