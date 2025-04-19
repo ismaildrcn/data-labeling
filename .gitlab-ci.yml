@@ -45,10 +45,11 @@ build_application:
 
     # asset.json oluşturuluyor
     - |
+      $exePath = "/dist/Gorsel%20Veri%20Etiketleme%20-%20CATCH.exe"
       $json = @{
         name       = "Gorsel Veri Etiketleme - CATCH"
         url        = "$env:CI_PROJECT_URL/-/jobs/$env:CI_JOB_ID/artifacts/download"
-        filepath   = "/artifact.zip"
+        filepath   = $exePath
         link_type  = "other"
       } | ConvertTo-Json
       $json = $json.Replace('"', '\"')
@@ -58,7 +59,7 @@ build_application:
     - Compress-Archive -Path dist\* -DestinationPath artifact.zip
   artifacts:
     paths:
-      - artifact.zip
+      - dist/
       - asset.json
   needs: [install_dependencies]
 
