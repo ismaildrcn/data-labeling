@@ -42,17 +42,11 @@ create_release:
     - windows
   script:
     - |
-      $env:CI_JOB_ID | Out-File -FilePath "job_id.txt"
-      $previousTag = git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>$null
-      if (-not $previousTag) { $previousTag = "no previous tag" }
-      $previousTag | Out-File -FilePath "previous_tag.txt"
-      $commitList = git log --oneline "$previousTag..$env:CI_COMMIT_TAG" --format="%h %s"
-      $commitList | Out-File -FilePath "commit_list.txt"
+      - echo "Release dosyası oluşturuluyor"
+      - mkdir release
   artifacts:
     paths:
-      - job_id.txt
-      - previous_tag.txt
-      - commit_list.txt
+      - release/
   release:
     name: "Release $CI_COMMIT_TAG"
     tag_name: "$CI_COMMIT_TAG"
