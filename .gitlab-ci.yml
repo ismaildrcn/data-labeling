@@ -41,7 +41,6 @@ create_release:
   tags:
     - windows
   script:
-    - |
       - echo "Release dosyası oluşturuluyor"
       - mkdir release
   artifacts:
