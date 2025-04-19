@@ -17,7 +17,7 @@ update_pip:
     - python -m pip install --upgrade pip
     - python -m pip install --upgrade setuptools wheel
   rules:
-    - if: '$env:CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_TAG'
       when: always
     - when: never
 
@@ -30,7 +30,7 @@ install_dependencies:
     - python -m pip install pyinstaller 
   needs: [update_pip]
   rules:
-    - if: '$env:CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_TAG'
       when: always
     - when: never
   needs: [update_pip]
@@ -46,7 +46,7 @@ build_application:
     # asset.json oluşturuluyor
     - |
       $json = @{
-        name       = "Görsel Veri Etiketleme - CATCH"
+        name       = "Gorsel Veri Etiketleme - CATCH"
         url        = "$env:CI_PROJECT_URL/-/jobs/$env:CI_JOB_ID/artifacts/download"
         filepath   = "/artifact.zip"
         link_type  = "other"
@@ -80,7 +80,7 @@ release_job:
         --assets-link "$link" `
         --ref "$env:CI_COMMIT_SHA"
   rules:
-    - if: '$env:CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_TAG'
       when: always
     - when: never
   tags:
