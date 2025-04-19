@@ -32,8 +32,8 @@ class ImageHandler:
     def add_annotation(self, *args):
         widget = LabelWidget().setup(self._connector)
         for item in self._connector.configurator.labels:
-            widget.label_list.addItem(item)
-            widget.label_list.setItemData(widget.label_list.count() - 1, item, Qt.ToolTipRole)
+            widget.label_list.addItem(f"{item[1]} - {item[0]}")
+            widget.label_list.setItemData(widget.label_list.count() - 1, item[0], Qt.ToolTipRole)
 
         widget.label_list.setCurrentIndex(-1)
         item = QListWidgetItem(self._connector.current_label_list)

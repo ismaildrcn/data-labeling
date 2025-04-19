@@ -17,7 +17,7 @@ class Configurator(object):
     
     @property
     def labels(self):
-        return self.label_type.keys()
+        return [[key, value + 1] for key, value in self.label_type.items()]
 
     def reset(self):
         """
@@ -45,8 +45,11 @@ class Configurator(object):
             Returns:
                 None
         """
-        self.label_type = {}
-        self._connector.listWidget_label_list.clear()
+        if self.label_type:
+            answer = self._connector.show_message(PopupMessages.Action.M403)
+            if answer is Answers.OK:
+                self.label_type = {}
+                self._connector.listWidget_label_list.clear()
 
     def add(self):
         """
