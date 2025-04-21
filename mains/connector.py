@@ -13,6 +13,8 @@ from modals.modals import Modals
 from modals.popup.messages import PopupMessages
 from images.handler import ImageHandler
 
+from database.crud import Database
+
 
 
 
@@ -34,6 +36,7 @@ class Connector(QMainWindow, UI):
         self.configurator = Configurator(self)
         self.modals = Modals(self)
         self.image_handler = ImageHandler(self)
+        self.database = Database()
 
     def connection(self):
         self.image_table.cellClicked.connect(self.load_selected_image)
