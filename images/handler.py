@@ -16,6 +16,8 @@ from mains.source import Source
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
 
+from database.utils import Tables
+
 
 class ImageHandler:
     def __init__(self, connector=None):
@@ -108,9 +110,9 @@ class ImageHandler:
                 list_widget.takeItem(list_widget.row(item))
     
     def type_changed(self, l_type, annotation):
-        for key, value in self._connector.configurator.label_type.items():
-            if key == l_type:
-                annotation.label = value
+        for item in self._connector.configurator.label_type:
+            if item.name == l_type:
+                annotation.label = item.unquie_id
                 self.check_annotation_in_current_source(annotation.source)
                 break
         _, _, defined_label_count = self.check_annotation
@@ -191,12 +193,14 @@ class ImageHandler:
         for image in drop_list:
             if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self._images:
                 self._images[image] = ImageCore(self._connector, image)
+                self._connector.database.image.add(image.toLocalFile())
 
     def insert_from_file_dialog(self):
         selected_list = QFileDialog.getOpenFileNames(self._connector, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg)")[0]
         for image in selected_list:
             if QUrl.fromLocalFile(image) not in self._images:
                 self._images[QUrl.fromLocalFile(image)] = ImageCore(self._connector, QUrl.fromLocalFile(image))
+                self._connector.database.image.add(image)
 
     def insert_project(self, drop_list = False):
         if drop_list:

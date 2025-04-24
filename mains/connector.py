@@ -13,7 +13,8 @@ from modals.modals import Modals
 from modals.popup.messages import PopupMessages
 from images.handler import ImageHandler
 
-from database.crud import Database
+from database.process import DatabaseProcess
+from database.utils import Tables
 
 
 
@@ -33,10 +34,10 @@ class Connector(QMainWindow, UI):
     def modules(self):
         self.listener = Listener(self)
         self.source = Source()
+        self.database = DatabaseProcess()
         self.configurator = Configurator(self)
         self.modals = Modals(self)
         self.image_handler = ImageHandler(self)
-        self.database = Database()
 
     def connection(self):
         self.image_table.cellClicked.connect(self.load_selected_image)
@@ -71,6 +72,8 @@ class Connector(QMainWindow, UI):
         self.init_actions()
 
         self.pushButton_exit_project.setVisible(False)
+
+        self.database.setting.update("use_default_labels", True)
 
 
         
@@ -162,6 +165,7 @@ class Connector(QMainWindow, UI):
         self.image_pixmap = None
         self.image_handler.annotation_count = 0
         self.configurator.reset()
+        
         self.current_label_list.clear()
         self.image_table.clearContents()
         self.image_table.setRowCount(0)

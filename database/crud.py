@@ -1,25 +1,49 @@
-from database.models import Image
-from database.models import Annotation
+class CRUD:
+    @staticmethod
+    def add():
+        """
+        Adds a new item to the database.
 
-from database import session
-from database.utils import Tables
+        Args:
+            *args: The arguments for the item to add.
 
-class Database:
-    def __init__(self):
+        Returns:
+            int: The ID of the newly added item.
+        """
         pass
 
-    def add(self, *args) -> int:
-        if args[0] == Tables.IMAGE:
-            new_item = Image(url=args[1])
-        elif args[0] == Tables.ANNOTATION:
-            new_item = Annotation(image_id=args[1], label=args[2], x=args[3][0], y=args[3][1], width=args[3][2], height=args[3][3])
-        session.add(new_item)
-        session.commit()
-        return new_item.id
+    @staticmethod
+    def get():
+        """
+        Retrieves all items from the database.
 
-    def get(self, *args):
-        if args[0] == Tables.IMAGE:
-            items = session.query(Image).all()
-        elif args[0] == Tables.ANNOTATION:
-            items = session.query(Annotation).filter(Annotation.image_id == args[1]).all()
-        return items
+        Returns:
+            list: A list of all items.
+        """
+        pass
+
+    @staticmethod
+    def update():
+        """
+        Updates an existing item in the database.
+
+        Args:
+            *args: The arguments for the item to update.
+
+        Returns:
+            None
+        """
+        pass
+
+    @staticmethod
+    def delete():
+        """
+        Deletes an item from the database.
+
+        Args:
+            *args: The arguments for the item to delete.
+
+        Returns:
+            None
+        """
+        pass

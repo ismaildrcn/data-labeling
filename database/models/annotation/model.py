@@ -1,18 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Boolean
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 
-
-Base = declarative_base()
-
-
-
-class Image(Base):
-    __tablename__ = 'images'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    url = Column(String, nullable=False)
-
-    annotations = relationship("Annotation", back_populates="image")
+from database import Base
 
 
 class Annotation(Base):
@@ -29,12 +18,3 @@ class Annotation(Base):
 
     image = relationship("Image", back_populates="annotations")
     label = relationship("Label", back_populates="annotations")
-
-
-class Label(Base):
-    __tablename__ = 'labels'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
-    is_default = Column(Boolean, nullable=False, default=False)
-
-    annotations = relationship("Annotation", back_populates="label")
