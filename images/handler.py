@@ -214,7 +214,7 @@ class ImageHandler:
                 self._connector.configurator.import_labels(os.path.join(TEMPDIR, lbl))
                 name_list.remove(lbl)
 
-                images = list(filter(lambda x: x.endswith(('.png', '.jpg', '.jpeg')), name_list))
+                images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
                 for image in images:
                     image_path = os.path.join(TEMPDIR, image)
                     if os.path.exists(image_path):
