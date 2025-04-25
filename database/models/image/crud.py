@@ -32,3 +32,7 @@ class ImageCRUD(CRUD):
         if image:
             session.delete(image)
             session.commit()
+
+    @staticmethod
+    def filter(url: str) -> Image:
+        return session.query(Image).filter(Image.url == url).first()

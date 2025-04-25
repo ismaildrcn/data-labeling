@@ -44,10 +44,18 @@ class ImageHandler:
 
         if len(args) != 1:
             if len(args) == 3:
-                annotation = Annotation(args[0], args[1], args[2], item)
+                annotation = Annotation(source=args[0], coords=args[1], rect_obj=args[2], item=item)
             elif len(args) == 4:
-                annotation = Annotation(args[0], args[1], args[2], item, args[3])
+                annotation = Annotation(source=args[0], coords=args[1], rect_obj=args[2], item=item, label=args[3])
 
+            image_id = self._connector.database.image.filter(args[0].toLocalFile()).id
+            db_item = self._connector.database.annotation.add(
+                image_id, 
+                annotation.label,
+                self._connector.database.annotation.count(image_id) + 1,
+                annotation.coords
+            )
+            annotation.db_item = db_item
             self.annotation_count += 1
             self.add_annotation_to_list(annotation)
         else:
@@ -111,8 +119,9 @@ class ImageHandler:
     
     def type_changed(self, l_type, annotation):
         for item in self._connector.configurator.label_type:
-            if item.name == l_type:
+            if item.name == l_type.split()[-1]:
                 annotation.label = item.unquie_id
+                self._connector.database.annotation.update(db_item=annotation.db_item, label_id=annotation.label)
                 self.check_annotation_in_current_source(annotation.source)
                 break
         _, _, defined_label_count = self.check_annotation

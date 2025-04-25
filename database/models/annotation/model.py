@@ -8,7 +8,8 @@ class Annotation(Base):
     __tablename__ = 'annotations'
     id = Column(Integer, primary_key=True, autoincrement=True)
     image_id = Column(Integer, ForeignKey('images.id'), nullable=False)
-    label_id = Column(Integer, ForeignKey('labels.id'), nullable=False)
+    label_id = Column(Integer, ForeignKey('labels.id'), nullable=True)
+    annotation_id = Column(Integer, nullable=False)
 
     label = Column(Integer, nullable=False)
     x = Column(Float, nullable=False)
