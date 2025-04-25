@@ -49,8 +49,12 @@ class AnnotationCRUD(CRUD):
             return db_item
         else: 
             return None
-
-        
+    
+    @staticmethod
+    def filter(**kwargs) -> list[Annotation]:
+        image_id = kwargs.get("image_id")
+        return session.query(Annotation).filter(Annotation.image_id == image_id).filter(Annotation.label_id == None).all()
+ 
     @staticmethod
     def count(image_id: int) -> int:
         return session.query(Annotation).filter(Annotation.image_id == image_id).count()

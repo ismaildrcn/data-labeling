@@ -278,15 +278,19 @@ class ImageHandler:
         return False
 
     def check_annotation_in_current_source(self, source: QUrl) -> bool:
-        state = ImageStatus.ANNOTATED
-        annotations = self.get_annotation(source)
-        if annotations:
-            for annotation in annotations:
-                if annotation.label == None:
-                    state = ImageStatus.UNANNOTATED
-                    break
-        else:
+        """
+            Belirtilen görselin etiket durumunu kontrol eder ve günceller.
+
+            args:
+                source (QUrl): Kontrol edilecek görselin kaynağı.
+        """
+        state = self._connector.database.annotation.filter(
+            image_id=self._connector.database.image.filter(source.toLocalFile()).id,
+        )
+        if state:
             state = ImageStatus.UNANNOTATED
+        else:
+            state = ImageStatus.ANNOTATED
         self._images[source].set_status(state)
     
     def export(self):
