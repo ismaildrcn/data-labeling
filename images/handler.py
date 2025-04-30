@@ -35,6 +35,27 @@ class ImageHandler:
     @overload
     def add_annotation(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem, label: str = None) -> None: ...
     def add_annotation(self, **kwargs):
+        def add_annotation_index_to_rect():
+            # Index text item'ı oluştur
+            text_item = self._connector.scene.addText(str(annotation.db_item.annotation_id))
+            font = text_item.font()
+            font.setPointSize(15)
+            font.setBold(True)
+            text_item.setFont(font)
+            text_item.setDefaultTextColor(Qt.red)
+            pixmap = QPixmap(annotation.db_item.image.url)
+            img_width = pixmap.width()
+            img_height = pixmap.height()
+
+            # Normalize edilmiş koordinatları gerçek koordinatlara çevir
+            real_x = (annotation.db_item.x - (annotation.db_item.width/2)) * img_width
+            real_y = (annotation.db_item.y - (annotation.db_item.height/2)) * img_height
+            
+            # Text item'ı rect'in sol üst köşesine yerleştir, biraz offset ile
+            text_item.setPos(real_x - 7, 
+                    real_y - 27)
+            widget.annotation_index.setText(str(annotation.db_item.annotation_id))
+            
         self._connector.database.setting.update("session", True)
         
         widget = LabelWidget().setup(self._connector)
@@ -91,6 +112,7 @@ class ImageHandler:
             self.annotation_count += 1
             self.add_annotation_to_list(annotation)
 
+        add_annotation_index_to_rect()
         self.check_annotation_in_current_source(annotation.source)
         widget.delete_label.clicked.connect(lambda: self.delete_annotation(annotation))
         widget.view_label.clicked.connect(lambda: self.hide(annotation))

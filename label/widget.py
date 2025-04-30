@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QPushButton
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QPushButton, QLabel
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QIcon, QPixmap, QFont
 
  
 
@@ -39,6 +39,14 @@ class LabelWidget(QWidget):
         self.horizontalLayout_2 = QHBoxLayout(self.main)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.annotation_index = QLabel(self.main)
+        self.annotation_index.setObjectName("annotation_index")
+        self.annotation_index.setMinimumWidth(30)
+        self.annotation_index.setAlignment(Qt.AlignCenter)
+        font = QFont()
+        font.setPointSize(10)
+        self.annotation_index.setFont(font)
+        self.horizontalLayout_2.addWidget(self.annotation_index)
         self.label_list = QComboBox(self.main)
         self.label_list.setObjectName("label_list")
         self.label_list.setEditable(True)

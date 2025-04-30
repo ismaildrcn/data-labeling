@@ -104,7 +104,6 @@ class Connector(QMainWindow, UI):
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
         self.image_handler.add_annotation(source=self.source.current, coords=detail[0], rect_obj=detail[1])
-        self.image_handler.check_annotation_in_current_source(self.source.current)
 
     @overload
     def load_selected_image(self, item: QTableWidgetItem) -> None: ...
