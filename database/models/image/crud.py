@@ -27,11 +27,9 @@ class ImageCRUD(CRUD):
             session.commit()
 
     @staticmethod
-    def delete(id: int) -> None:
-        image = session.query(Image).filter(Image.id == id).first()
-        if image:
-            session.delete(image)
-            session.commit()
+    def delete(image: Image) -> None:
+        session.delete(image)
+        session.commit()
 
     @staticmethod
     def filter(url: str) -> Image:

@@ -7,6 +7,10 @@ from database import session
 class SettingCRUD(CRUD):
     def __init__(self):
         super().__init__()
+        self.update("use_default_labels", True)
+        session = self.filter("session")
+        if session is None:
+            self.add("session", False)
 
     @staticmethod
     def add(name: str, value: str) -> int:
@@ -28,3 +32,7 @@ class SettingCRUD(CRUD):
             setting = Setting(name=name, value=value)
             session.add(setting)
         session.commit()
+
+    @staticmethod
+    def filter(name: str):
+        return session.query(Setting).filter(Setting.name == name).first()

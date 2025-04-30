@@ -28,10 +28,14 @@ class ImageHandler:
     @overload
     def add_annotation(self, annotation) -> None: ...
     @overload
+    def add_annotation(self, db_item) -> None: ...
+    @overload
     def add_annotation(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem) -> None: ...
     @overload
     def add_annotation(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem, label: str = None) -> None: ...
-    def add_annotation(self, *args):
+    def add_annotation(self, **kwargs):
+        self._connector.database.setting.update("session", True)
+        
         widget = LabelWidget().setup(self._connector)
         for item in self._connector.configurator.labels:
             widget.label_list.addItem(f"{item[1]} - {item[0]}")
@@ -42,11 +46,37 @@ class ImageHandler:
         item.setSizeHint(widget.main.sizeHint())
         self._connector.current_label_list.setItemWidget(item, widget.main)
 
-        if len(args) != 1:
+        arg_annotation = kwargs.get("annotation")
+        arg_db_item = kwargs.get("db_item")
+        arg_source = kwargs.get("source")
+        arg_coords = kwargs.get("coords")
+        arg_rect_obj = kwargs.get("rect_obj")
+        arg_item = kwargs.get("item")
+        arg_label = kwargs.get("label")
+
+        
+        args = list(kwargs.values())
+
+        if arg_db_item:
+            annotation = Annotation(
+                source=QUrl.fromLocalFile(arg_db_item.image.url), 
+                coords=(arg_db_item.x, arg_db_item.y, arg_db_item.width, arg_db_item.height), 
+                rect_obj=QGraphicsRectItem, 
+                item=item, 
+                label=arg_db_item.label_id, 
+                db_item=arg_db_item)
+            self.annotation_count += 1
+            self.add_annotation_to_list(annotation)
+        elif arg_annotation:
+            annotation = args[0]
+            annotation.item = item
+            if annotation.label is not None:
+                widget.label_list.setCurrentIndex(int(annotation.label))
+        else:
             if len(args) == 3:
-                annotation = Annotation(source=args[0], coords=args[1], rect_obj=args[2], item=item)
+                annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item)
             elif len(args) == 4:
-                annotation = Annotation(source=args[0], coords=args[1], rect_obj=args[2], item=item, label=args[3])
+                annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item, label=arg_label)
 
             image_id = self._connector.database.image.filter(args[0].toLocalFile()).id
             db_item = self._connector.database.annotation.add(
@@ -56,14 +86,11 @@ class ImageHandler:
                 annotation.coords
             )
             annotation.db_item = db_item
+
             self.annotation_count += 1
             self.add_annotation_to_list(annotation)
-        else:
-            annotation = args[0]
-            annotation.item = item
-            if annotation.label is not None:
-                widget.label_list.setCurrentIndex(int(annotation.label))
 
+        self.check_annotation_in_current_source(annotation.source)
         widget.delete_label.clicked.connect(lambda: self.delete_annotation(annotation))
         widget.view_label.clicked.connect(lambda: self.hide(annotation))
         widget.label_list.currentTextChanged.connect(lambda: self.type_changed(widget.label_list.currentText(), annotation))
@@ -155,7 +182,7 @@ class ImageHandler:
                 annotation.rect_obj = self._connector.scene.addRect(rect, pen)
             
                 # Yeni annotation'ı ekle
-                self.add_annotation(annotation)
+                self.add_annotation(annotation=annotation)
     
     def delete_multi_annotation(self, source: Source):
         path = False
@@ -249,6 +276,24 @@ class ImageHandler:
         selected_file = QFileDialog.getOpenFileName(self._connector, "Çalışmayı Uygulamaya Aktar", "", f"ANNS File (*{ARCHIVE_EXTENSION})")[0]
         if QUrl.fromLocalFile(selected_file).path().endswith(ARCHIVE_EXTENSION):
             return QUrl.fromLocalFile(selected_file)
+        
+    def insert_from_database(self):
+        """
+
+        """
+        images = self._connector.database.image.get()
+        for image in images:
+            self._images[QUrl.fromLocalFile(image.url)] = ImageCore(self._connector, QUrl.fromLocalFile(image.url))
+        
+        annotations = self._connector.database.annotation.get()
+        for annotation in annotations:
+            self.add_annotation(
+                db_item=annotation
+            )
+        self._connector.pages.setCurrentIndex(2)
+        self._connector.load_selected_image(0, 1)
+        _, _, defined_label_count = self.check_annotation
+        self._connector.label_defined_annotation_value.setText(str(defined_label_count))
     
     def clear_tempdir(self):
         if os.path.exists(TEMPDIR):
@@ -266,7 +311,7 @@ class ImageHandler:
                         if len(line) == 5:
                             coords = (float(line[1]), float(line[2]), float(line[3]), float(line[4]))
                             rect_obj = QGraphicsRectItem()
-                            self.add_annotation(image, coords, rect_obj, int(line[0]))
+                            self.add_annotation(source=image, coords=coords, rect_obj=rect_obj, label=int(line[0]))
                             self.check_annotation_in_current_source(image)
         
     def check_image_path_list(self, path: str) -> Union[QUrl, bool]:

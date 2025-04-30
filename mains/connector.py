@@ -1,8 +1,11 @@
+import sys
+
 from typing import overload
-from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression
+from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, pyqtSignal
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem
 
+from modals.popup.utils import Answers
 from templates.ui.mainWindow import Ui_MainWindow as UI
 from widgets.graphics_view import CustomGraphicsView
 
@@ -29,7 +32,6 @@ class Connector(QMainWindow, UI):
         self.pages.setCurrentIndex(0)
         self.modules()
         self.initialize()
-        self.show()
 
     def modules(self):
         self.listener = Listener(self)
@@ -72,8 +74,20 @@ class Connector(QMainWindow, UI):
         self.init_actions()
 
         self.pushButton_exit_project.setVisible(False)
+        self.show()
 
-        self.database.setting.update("use_default_labels", True)
+        # Yarım bırakılmış oturum varsa tüm çalışmayı veritabanından içeri aktarır.
+        if self.database.settings.session:
+            answer = self.show_message(PopupMessages.Action.M404)
+            if answer == Answers.OK:
+                self.image_handler.insert_from_database()
+            else:
+                answer = self.show_message(PopupMessages.Verify.M500)
+                if answer == Answers.OK:
+                    self.clear_database()
+                else:
+                    self.close()
+                    sys.exit()
 
 
         
@@ -89,7 +103,7 @@ class Connector(QMainWindow, UI):
             Args:
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
-        self.image_handler.add_annotation(self.source.current, detail[0], detail[1])
+        self.image_handler.add_annotation(source=self.source.current, coords=detail[0], rect_obj=detail[1])
         self.image_handler.check_annotation_in_current_source(self.source.current)
 
     @overload
@@ -174,6 +188,20 @@ class Connector(QMainWindow, UI):
         self.pages.setCurrentIndex(0)
         self.image_handler.clear_tempdir()
     
+    @pyqtSlot()
+    def clear_database(self):
+        annotations = self.database.annotation.get()
+        for annotation in annotations:
+            self.database.annotation.delete(annotation)
+        images = self.database.image.get().all()
+        for image in images:
+            self.database.image.delete(image)
+        
+        self.configurator.reset()
+        self.database.setting.update("session", False)
+        
+
+
     def pages_current_changed(self, index):
         if index == 2:
             self.pushButton_exit_project.setVisible(True)
