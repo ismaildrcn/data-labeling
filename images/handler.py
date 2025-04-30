@@ -23,6 +23,7 @@ class ImageHandler:
     def __init__(self, connector=None):
         self._connector = connector
         self._images = {}
+        self.image_dir_list = []
         self.annotation_count = 0
 
     @overload
@@ -477,3 +478,15 @@ class ImageHandler:
     def annotation_count(self, value):
         self._annotation_count = value
         self._connector.label_total_annotation_value.setText(str(value))
+
+    def check_directroy(self, path: QUrl):
+        dirname = os.path.dirname(path.toLocalFile()).split('/')[-1]
+        if dirname not in self.image_dir_list:
+            self.image_dir_list.append(dirname)
+            self._connector.label_image_directory.setText(', '.join(self.image_dir_list))
+    
+    def clear(self):
+        self.annotation_count = 0
+        self.images.clear()
+        self.clear_tempdir()
+        self.image_dir_list.clear()

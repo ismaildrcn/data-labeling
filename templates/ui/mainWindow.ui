@@ -934,6 +934,12 @@ QPushButton:checked{
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="styleSheet">
+              <string notr="true">#widget_total_image, #widget_defined_annotation, #widget_total_annotation, #widget_image_directory_area{
+	border-radius: 5px;
+	background-color:  rgba(57, 62, 70, 128);;
+}</string>
+             </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <property name="spacing">
                <number>10</number>
@@ -950,6 +956,84 @@ QPushButton:checked{
               <property name="bottomMargin">
                <number>0</number>
               </property>
+              <item>
+               <widget class="QWidget" name="widget_image_directory_area" native="true">
+                <property name="toolTip">
+                 <string>Görsellerin uyugulama aktarıldığı klasörü temsil eder.</string>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <widget class="QWidget" name="widget_5" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_12">
+                    <property name="spacing">
+                     <number>15</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="icon_image_directory">
+                      <property name="minimumSize">
+                       <size>
+                        <width>30</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>30</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="pixmap">
+                       <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/folder-image.svg</pixmap>
+                      </property>
+                      <property name="scaledContents">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_image_directory">
+                      <property name="font">
+                       <font>
+                        <pointsize>13</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
               <item>
                <widget class="QWidget" name="widget_image_list" native="true">
                 <property name="minimumSize">
@@ -1070,10 +1154,7 @@ QPushButton:checked{
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">#widget_total_image, #widget_defined_annotation, #widget_total_annotation{
-	border-radius: 5px;
-	background-color:  rgba(57, 62, 70, 128);;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_7">
                  <property name="spacing">
