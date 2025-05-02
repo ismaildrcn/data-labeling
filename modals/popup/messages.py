@@ -71,6 +71,8 @@ class PopupMessages(object):
         M402 = "Çalışmadan ayrılmak istediğinizden emin misiniz? Tüm ilerlemenizi kalıcı olarak kaybedeceksiniz."
         M403 = "Etiket tür listesi temizlenecek, devam etmek istiyor musunuz?"
         M404 = "Daha önce yarım bırakılmış bir çalışmanız tespit edildi. Onunla devam etmek ister misiniz?"
+        M405 = "Seçmiş olduğunuz görseli silmek üzeresiniz, devam etmek istiyor musunuz?"
+        M406 = "Silmek istediğiniz görsel üzerinde oluşturulmuş etiketlemeler var. Bunlar kalıcı olarak silinecektir, devam etmek istiyor musunuz?"
     
     class Verify(BaseEnum):
         @property

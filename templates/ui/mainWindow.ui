@@ -148,6 +148,9 @@ QPushButton{
        <property name="topMargin">
         <number>0</number>
        </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
        <property name="bottomMargin">
         <number>0</number>
        </property>
@@ -231,27 +234,45 @@ QPushButton{
        <item alignment="Qt::AlignRight">
         <widget class="QWidget" name="widget_topbar_actions" native="true">
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">QPushButton:hover{
+	background-color: #00ADB5;
+}
+
+#pushButton_close_window:hover{
+	background-color: rgb(255, 0, 0);
+}</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="leftMargin">
            <number>0</number>
           </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_hide_window">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>25</width>
-              <height>25</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>25</width>
-              <height>25</height>
+              <width>35</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="text">
@@ -271,16 +292,22 @@ QPushButton{
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_fullscreen_window">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>25</width>
-              <height>25</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>25</width>
-              <height>25</height>
+              <width>35</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="text">
@@ -300,16 +327,22 @@ QPushButton{
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_close_window">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>25</width>
-              <height>25</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>25</width>
-              <height>25</height>
+              <width>35</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="text">
@@ -1101,6 +1134,9 @@ QPushButton:checked{
                    <property name="sortingEnabled">
                     <bool>false</bool>
                    </property>
+                   <property name="columnCount">
+                    <number>3</number>
+                   </property>
                    <attribute name="horizontalHeaderVisible">
                     <bool>false</bool>
                    </attribute>
@@ -1135,6 +1171,7 @@ QPushButton:checked{
                      <string>Görsel</string>
                     </property>
                    </column>
+                   <column/>
                   </widget>
                  </item>
                  <item>

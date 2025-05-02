@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QGraphicsView
+from PyQt5.QtWidgets import QMainWindow, QWidget, QGraphicsView, QAction, QMenu
 from PyQt5.QtCore import QEvent, Qt
+from PyQt5.QtGui import QIcon, QPixmap
 
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
@@ -17,6 +18,8 @@ class Listener(QMainWindow):
     def eventFilter(self, source, event):
         match event.type():
             case QEvent.MouseButtonDblClick | QEvent.MouseButtonPress:
+                if source.parent() == self._connector.image_table:
+                    source = source.parent()
                 match source:
                     case self._connector.label_drop_images | self._connector.icon_drop_images:
                         self._connector.image_handler.insert_image()
@@ -56,6 +59,8 @@ class Listener(QMainWindow):
                         self._connector.image_handler.insert_project()
                     case self._connector.pushButton_clear_labels:
                         self._connector.configurator.clear()
+                    case self._connector.image_table:
+                        self.image_table_event_changed(event)
 
                     
             case QEvent.KeyPress:
@@ -136,3 +141,40 @@ class Listener(QMainWindow):
         else:
             self._connector.graphicsView.setDragMode(QGraphicsView.NoDrag)
         self._connector.pushButton_activate_hand.setChecked(not self._connector.pushButton_activate_hand.isChecked())
+    
+    def image_table_event_changed(self, event):
+        if event.button() == Qt.RightButton:
+            menu = QMenu(self._connector.image_table)
+            menu.setStyleSheet("""
+                QMenu {
+                    background-color: #222831;
+                    border: 1px solid #3D3D3D;
+                    border-radius: 3px;
+                    padding: 5px;
+                }
+                QMenu::item {
+                    color: white;
+                    padding: 5px 30px 5px 30px;
+                    margin: 2px;
+                }
+                QMenu::item:selected {
+                    background-color: #393E46;
+                    border-radius: 2px;
+                }
+            """)
+            delete_action = QAction("Görseli Sil", menu)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(":/images/templates/images/delete.svg"), QIcon.Normal, QIcon.Off)
+            delete_action.setIcon(icon)
+            menu.addAction(delete_action)
+
+            clicked_item = self._connector.image_table.itemAt(event.pos())
+            if clicked_item:
+                clicked_item.row()
+                delete_action.triggered.connect(
+                    lambda: self._connector.image_handler.delete_image(
+                        self._connector.image_table.item(clicked_item.row(), 1).data(Qt.UserRole)
+                        )
+                )
+                # Menüyü göster
+                menu.exec_(event.globalPos())

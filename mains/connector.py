@@ -60,8 +60,9 @@ class Connector(QMainWindow, UI):
         self.scene = QGraphicsScene()
         self.graphicsView.setScene(self.scene)
 
-        self.image_table.setColumnWidth(0, 50)
-        self.image_table.setColumnWidth(1, 150)
+        self.image_table.setColumnWidth(0, 40)
+        self.image_table.setColumnWidth(1, 200)
+        self.image_table.setColumnWidth(2, 40)
         self.image_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.image_table.horizontalHeader().setDefaultAlignment(Qt.AlignCenter)
 

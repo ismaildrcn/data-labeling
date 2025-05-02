@@ -41,7 +41,7 @@ class LabelWidget(QWidget):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.annotation_index = QLabel(self.main)
         self.annotation_index.setObjectName("annotation_index")
-        self.annotation_index.setMinimumWidth(30)
+        self.annotation_index.setMinimumWidth(20)
         self.annotation_index.setAlignment(Qt.AlignCenter)
         font = QFont()
         font.setPointSize(10)

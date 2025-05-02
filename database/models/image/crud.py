@@ -34,3 +34,7 @@ class ImageCRUD(CRUD):
     @staticmethod
     def filter(url: str) -> Image:
         return session.query(Image).filter(Image.url == url).first()
+
+    @staticmethod
+    def count() -> int:
+        return session.query(Image).count()
