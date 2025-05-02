@@ -405,7 +405,10 @@ class ImageHandler:
                             content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
                     if content:
                         archive.writestr(f'{base_name}.txt', content)
-            archive.writestr(str(uuid.uuid4()) + '.lbl', str(self._connector.configurator.label_type))
+            label_type = {}
+            for item in self._connector.configurator.label_type:
+                label_type[item.name] = item.unquie_id
+            archive.writestr(str(uuid.uuid4()) + '.lbl', str(label_type))
             archive.comment = b"***REMOVED***"
         archive.close()
     
