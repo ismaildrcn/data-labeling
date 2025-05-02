@@ -2,6 +2,10 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QPushButton, QLabel
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 
+class NoScrollComboBox(QComboBox):
+    def wheelEvent(self, event):
+        event.ignore()  # Tekerlek hareketini yok say
+
  
 
 class LabelWidget(QWidget):
@@ -47,7 +51,7 @@ class LabelWidget(QWidget):
         font.setPointSize(10)
         self.annotation_index.setFont(font)
         self.horizontalLayout_2.addWidget(self.annotation_index)
-        self.label_list = QComboBox(self.main)
+        self.label_list = NoScrollComboBox(self.main)
         self.label_list.setObjectName("label_list")
         self.label_list.setEditable(True)
         self.label_list.lineEdit().setPlaceholderText("Etiket Seç")
