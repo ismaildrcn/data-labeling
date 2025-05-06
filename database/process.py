@@ -5,7 +5,6 @@ from database.models.annotation.crud import AnnotationCRUD
 
 from database.settings import Settings
 
-
 class DatabaseProcess:
     def __init__(self):
         self.image = ImageCRUD()
@@ -20,3 +19,5 @@ class DatabaseProcess:
         self.image.clear()
         self.label.clear()
         self.setting.update("use_default_labels", True)
+        self.setting.update("session", False)
+        self.settings.create_temp_dir()

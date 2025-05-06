@@ -38,10 +38,6 @@ class Configurator(object):
             Returns:
                 None
         """
-        # Clear the current label list
-        not_default_labels = self._connector.database.label.filter(Label.is_default, False)
-        for label in not_default_labels:
-            self._connector.database.label.delete(label)
         self._connector.listWidget_label_list.clear()
         # Add default labels
         self.add_default_labels()

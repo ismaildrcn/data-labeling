@@ -85,7 +85,7 @@ class Connector(QMainWindow, UI):
             else:
                 answer = self.show_message(PopupMessages.Verify.M500)
                 if answer == Answers.OK:
-                    self.clear_database()
+                    self.clear_project()
                 else:
                     self.close()
                     sys.exit()
@@ -188,20 +188,6 @@ class Connector(QMainWindow, UI):
         self.image_table.setRowCount(0)
         self.source.clear()
         self.pages.setCurrentIndex(0)
-    
-    @pyqtSlot()
-    def clear_database(self):
-        annotations = self.database.annotation.get()
-        for annotation in annotations:
-            self.database.annotation.delete(annotation)
-        images = self.database.image.get().all()
-        for image in images:
-            self.database.image.delete(image)
-        
-        self.configurator.reset()
-        self.database.setting.update("session", False)
-        
-
 
     def pages_current_changed(self, index):
         if index == 2:

@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from typing import Union, overload
 import uuid
@@ -10,13 +11,11 @@ from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
 
 from images.annotation import Annotation
 from images.core import ImageCore
-from images.utils import ImageStatus, TEMPDIR, ARCHIVE_EXTENSION
+from images.utils import ImageStatus, ARCHIVE_EXTENSION
 from label.widget import LabelWidget
 from mains.source import Source
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
-
-from database.utils import Tables
 
 
 class ImageHandler:
@@ -236,15 +235,16 @@ class ImageHandler:
             self.set_dashboard_values()
     
     def insert_from_drag_drop(self, drop_list):
+        drop_list = self.copy_image_to_temp_dir(drop_list)
         for image in drop_list:
             if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self._images:
                 self.add_image(url=image, read_only=False)
 
     def insert_from_file_dialog(self):
-        selected_list = QFileDialog.getOpenFileNames(self._connector, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg)")[0]
+        selected_list = self.copy_image_to_temp_dir(QFileDialog.getOpenFileNames(self._connector, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg)")[0])
         for image in selected_list:
-            if QUrl.fromLocalFile(image) not in self._images:
-                self.add_image(url=QUrl.fromLocalFile(image), read_only=False)
+            if image not in self._images:
+                self.add_image(url=image, read_only=False)
 
     def insert_project(self, drop_list = False):
         if drop_list:
@@ -256,20 +256,20 @@ class ImageHandler:
                 if archive.comment != b"***REMOVED***":
                     self._connector.show_message(PopupMessages.Error.M302)  # Add appropriate error message
                     return
-                archive.extractall(TEMPDIR)  # Zip dosyasını çıkar
+                archive.extractall(self._connector.database.settings.tempdir)  # Zip dosyasını çıkar
                 name_list = archive.namelist()
                 lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
-                self._connector.configurator.import_labels(os.path.join(TEMPDIR, lbl))
+                self._connector.configurator.import_labels(os.path.join(self._connector.database.settings.tempdir, lbl))
                 name_list.remove(lbl)
 
                 images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
                 for image in images:
-                    image_path = os.path.join(TEMPDIR, image)
+                    image_path = os.path.join(self._connector.database.settings.tempdir, image)
                     if os.path.exists(image_path):
                         self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
                         name_list.remove(image)
 
-                self.create_annotations_for_included_past_works(TEMPDIR, name_list)
+                self.create_annotations_for_included_past_works(self._connector.database.settings.tempdir, name_list)
             self._connector.pages.setCurrentIndex(2)
             self._connector.load_selected_image(0, 1)
             self.set_dashboard_values()
@@ -302,9 +302,10 @@ class ImageHandler:
         self.set_dashboard_values()
     
     def clear_tempdir(self):
-        if os.path.exists(TEMPDIR):
-            for image in os.listdir(TEMPDIR):
-                os.remove(os.path.join(TEMPDIR, image))
+        if os.path.exists(self._connector.database.settings.tempdir):
+            for image in os.listdir(self._connector.database.settings.tempdir):
+                os.remove(os.path.join(self._connector.database.settings.tempdir, image))
+            os.rmdir(self._connector.database.settings.tempdir)
 
     def create_annotations_for_included_past_works(self, tmpdir, name_list):
         for file in name_list:
@@ -530,3 +531,13 @@ class ImageHandler:
         self._connector.label_total_image_value.setNum(self._connector.database.image.count())
         self._connector.label_total_annotation_value.setNum(self._connector.database.annotation.count())
         self._connector.label_defined_annotation_value.setNum(self._connector.database.annotation.defined_count())
+
+    def copy_image_to_temp_dir(self, images) -> list:
+        print(self._connector.database.settings.tempdir)
+        temp_images = []
+        for image in images:
+            source = image.toLocalFile() if isinstance(image, QUrl) else image
+            target = os.path.join(self._connector.database.settings.tempdir, os.path.basename(source))
+            shutil.copyfile(source, target)
+            temp_images.append(QUrl.fromLocalFile(target))
+        return temp_images
