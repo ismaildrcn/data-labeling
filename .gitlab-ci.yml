@@ -32,7 +32,7 @@ install_dependencies:
     - if: '$CI_COMMIT_TAG'
       when: always
     - when: never
-  needs: [update_pip]
+  needs: ["update_pip"]
 
 
 build_application:
@@ -60,7 +60,7 @@ build_application:
     paths:
       - dist/
       - asset.json
-  needs: [install_dependencies]
+  needs: ["install_dependencies"]
 
 
 
@@ -88,4 +88,4 @@ release_job:
   artifacts:
     paths:
       - release_artifacts/
-  needs: [build_application]
+  needs: ["build_application"]
