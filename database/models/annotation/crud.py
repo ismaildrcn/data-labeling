@@ -66,3 +66,9 @@ class AnnotationCRUD(CRUD):
     @staticmethod
     def defined_count() -> int:
         return session.query(Annotation).filter(Annotation.label_id != None).count()
+    
+    @staticmethod
+    def clear() -> None:
+        for item in session.query(Annotation).all():
+            session.delete(item)
+        session.commit()

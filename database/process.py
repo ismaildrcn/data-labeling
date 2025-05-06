@@ -14,3 +14,9 @@ class DatabaseProcess:
         self.annotation = AnnotationCRUD()
 
         self.settings = Settings(self)
+    
+    def clear(self):
+        self.annotation.clear()
+        self.image.clear()
+        self.label.clear()
+        self.setting.update("use_default_labels", True)

@@ -15,3 +15,5 @@ class Tables(Enum):
 class Settings(Enum):
     """Enum for database settings."""
     USE_DEFAULT_LABELS = "use_default_labels"
+    SESSION = "session"
+    TMP_URL = "tmp_url"

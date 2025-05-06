@@ -124,6 +124,7 @@ class Connector(QMainWindow, UI):
             pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
 
             self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
+            self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
 
             self.graphicsView.fitInView(pixmap_item, Qt.KeepAspectRatio)
 
@@ -177,9 +178,11 @@ class Connector(QMainWindow, UI):
     def clear_project(self):
         self.scene.clear()
         self.image_pixmap = None
+
         self.configurator.reset()
-        
         self.image_handler.clear()
+        self.database.clear()
+        
         self.current_label_list.clear()
         self.image_table.clearContents()
         self.image_table.setRowCount(0)

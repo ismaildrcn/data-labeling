@@ -36,3 +36,9 @@ class LabelCRUD(CRUD):
     @staticmethod
     def filter(*args) -> list[Label]:
         return session.query(Label).filter(args[0] == args[1]).all()
+    
+    @staticmethod
+    def clear():
+        for item in session.query(Label).filter(Label.is_default == False).all():
+            session.delete(item)
+        session.commit()

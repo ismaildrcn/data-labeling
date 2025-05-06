@@ -38,3 +38,9 @@ class ImageCRUD(CRUD):
     @staticmethod
     def count() -> int:
         return session.query(Image).count()
+    
+    @staticmethod
+    def clear() -> None:
+        for item in session.query(Image).all():
+            session.delete(item)
+        session.commit()

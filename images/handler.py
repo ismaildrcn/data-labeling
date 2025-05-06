@@ -54,6 +54,7 @@ class ImageHandler:
             # Text item'ı rect'in sol üst köşesine yerleştir, biraz offset ile
             text_item.setPos(real_x - 7, 
                     real_y - 27)
+            annotation.rect_index = text_item
             widget.annotation_index.setText(str(annotation.db_item.annotation_id))
             
         self._connector.database.setting.update("session", True)
@@ -96,7 +97,7 @@ class ImageHandler:
                 widget.label_list.setCurrentIndex(int(annotation.label))
         else:
             if len(args) == 3:
-                annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item)
+                annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item if arg_item else item)
             elif len(args) == 4:
                 annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item, label=arg_label)
 
@@ -136,6 +137,10 @@ class ImageHandler:
                     scene.removeItem(annotation.rect_obj)
                     # Rect'i memory'den temizle
                     annotation.rect_obj = None
+                if annotation.rect_index in scene.items():
+                    scene.removeItem(annotation.rect_index)
+                    annotation.rect_index = None
+                
                 self.remove_annotation(annotation)
                 self.annotation_count -= 1
             self.set_dashboard_values()
@@ -261,7 +266,7 @@ class ImageHandler:
                 for image in images:
                     image_path = os.path.join(TEMPDIR, image)
                     if os.path.exists(image_path):
-                        self.add_image(url=QUrl.fromLocalFile(image_path))
+                        self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
                         name_list.remove(image)
 
                 self.create_annotations_for_included_past_works(TEMPDIR, name_list)
@@ -459,6 +464,7 @@ class ImageHandler:
             Görselle ilişkili etiketi kaldırır.
         """
         self._images[annotation.source].remove_annotation(annotation)
+        self._connector.database.annotation.delete(annotation.db_item)
     
     def get_annotation_count_from_source(self, source: QUrl) -> int:
         """
