@@ -17,7 +17,9 @@ update_pip:
     - python -m pip install --upgrade pip
     - python -m pip install --upgrade setuptools wheel
   rules:
-    - when: always
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: always
+    - when: never
 
 install_dependencies:
   stage: install
@@ -27,7 +29,9 @@ install_dependencies:
     - python -m pip install -r requirements.txt
     - python -m pip install pyinstaller 
   rules:
-    - when: always
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: always
+    - when: never
   needs:
     - job: update_pip
       artifacts: false
@@ -57,6 +61,10 @@ build_application:
     paths:
       - dist/
       - asset.json
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: always
+    - when: never
   needs:
     - job: install_dependencies
       artifacts: false
