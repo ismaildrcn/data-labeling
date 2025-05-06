@@ -31,7 +31,6 @@ install_dependencies:
   rules:
     - if: '$CI_COMMIT_TAG'
       when: always
-    - when: never
   needs: ["update_pip"]
 
 
