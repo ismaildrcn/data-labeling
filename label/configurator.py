@@ -7,17 +7,26 @@ from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
 from label.utils import LABEL_TYPES
 
-
+from database.models.label.model import Label
+SETTINGS = {}
 
 class Configurator(object):
     def __init__(self, connector=None):
         self._connector = connector
         self.label_type = {}
-        self.reset()
+        for key, value in LABEL_TYPES.items():
+            self._connector.database.label.add(unique_id=value, name=key, is_default=True)
+        self.add_default_labels()                
     
     @property
     def labels(self):
-        return self.label_type.keys()
+        labels = self._connector.database.label.get().all()
+        self.get_settings_from_database()
+        if bool(int(SETTINGS['use_default_labels'])):
+            return [[label.name, label.unquie_id + 1] for label in labels]
+        else:
+            return [[label.name, label.unquie_id + 1] for label in labels if not label.is_default]
+        
 
     def reset(self):
         """
@@ -29,11 +38,31 @@ class Configurator(object):
             Returns:
                 None
         """
-        self.label_type = LABEL_TYPES.copy()
+        # Clear the current label list
+        not_default_labels = self._connector.database.label.filter(Label.is_default, False)
+        for label in not_default_labels:
+            self._connector.database.label.delete(label)
         self._connector.listWidget_label_list.clear()
-        for lbl in self.label_type.keys():
-            item = QListWidgetItem(lbl)
+        # Add default labels
+        self.add_default_labels()
+        self._connector.database.setting.update('use_default_labels', True)
+        
+    def add_default_labels(self):
+        """
+            Varsayılan etiketleri ekler.
+
+            Bu method, varsayılan etiketleri etiket listesine ekler
+            ve etiket listesi widget'ını günceller.
+
+            Returns:
+                None
+        """
+        self.label_type = self._connector.database.label.get().all()
+        for lbl in self.label_type:
+            item = QListWidgetItem(lbl.name)
             self._connector.listWidget_label_list.addItem(item)
+        self._connector.database.setting.update('use_default_labels', True)
+        
 
     def clear(self):
         """
@@ -45,8 +74,15 @@ class Configurator(object):
             Returns:
                 None
         """
-        self.label_type = {}
-        self._connector.listWidget_label_list.clear()
+        if self.label_type:
+            answer = self._connector.show_message(PopupMessages.Action.M403)
+            if answer is Answers.OK:
+                labels = self._connector.database.label.get().all()
+                for label in labels:
+                    if not label.is_default:
+                        self._connector.database.label.delete(label)
+                self._connector.listWidget_label_list.clear()
+            self._connector.database.setting.update('use_default_labels', False)
 
     def add(self):
         """
@@ -60,11 +96,13 @@ class Configurator(object):
                 None
         """
         text = self._connector.lineEdit_add_label.text()
-        if text in self.label_type.keys():
+        name_list  = [item for item in self.label_type if item.name == text]
+        if text in name_list:
             self._connector.show_message(PopupMessages.Warning.M202)
         else:
             if text != '':
-                self.label_type[text] = len(self.label_type)
+                db_item = self._connector.database.label.add(unique_id=len(self.label_type), name=text, is_default=False)
+                self.label_type.append(db_item)
                 item = QListWidgetItem(text)
                 self._connector.listWidget_label_list.addItem(item)
                 self._connector.lineEdit_add_label.clear()
@@ -123,4 +161,16 @@ class Configurator(object):
                             self._connector.listWidget_label_list.addItem(item)
                     self.label_type = text
 
-    
+    def get_settings_from_database(self):
+        """
+            Ayarları alır.
+
+            Bu method, ayarları veritabanından alır ve
+            etiket listesi widget'ını günceller.
+
+            Returns:
+                None
+        """
+        settings = self._connector.database.setting.get().all()
+        for setting in settings:
+            SETTINGS[setting.name] = setting.value

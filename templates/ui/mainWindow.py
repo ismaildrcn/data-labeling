@@ -110,6 +110,7 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton{\n"
 "    border:none;\n"
+"    padding: 5px 8px;\n"
 "    background-color: transparent;\n"
 "    color: #EEEEEE;\n"
 "}")
@@ -118,6 +119,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setContentsMargins(9, 0, -1, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.widget_topbar_left_actions = QtWidgets.QWidget(self.widget_top)
+        self.widget_topbar_left_actions.setStyleSheet("QPushButton:hover{\n"
+"    border-radius:5px;\n"
+"    background-color: #00ADB5;\n"
+"}")
         self.widget_topbar_left_actions.setObjectName("widget_topbar_left_actions")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.widget_topbar_left_actions)
         self.horizontalLayout_4.setSpacing(12)
@@ -141,7 +146,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.pushButton_actions.setFont(font)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/images/templates/images/fire.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/images/templates/images/menu.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_actions.setIcon(icon2)
         self.pushButton_actions.setIconSize(QtCore.QSize(22, 22))
         self.pushButton_actions.setObjectName("pushButton_actions")
@@ -837,7 +842,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Görsel Veri Etiketleme - FAD"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Görsel Veri Etiketleme - CATCH"))
         self.pushButton_exit_project.setText(_translate("MainWindow", "Çalışmadan Çık"))
         self.pushButton_actions.setText(_translate("MainWindow", "Eylemler"))
         self.label_image_labeling_title.setText(_translate("MainWindow", "Görsel Veri Etiketleme"))

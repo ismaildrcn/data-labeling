@@ -69,3 +69,16 @@ class PopupMessages(object):
         M400 = "Etiket türü atanmamış seçimleriniz mevcut. Eğer devam ederseniz sadece atanmış seçimler bilgisayara aktarılacaktır. Onaylıyor musunuz?"
         M401 = "Etiketleriniz uygulamaya aktarılmak üzere, eğer daha önceden oluşturulmuş etiketleriniz varsa bunlar kaldırılacaktır. Onaylıyor musunuz?"
         M402 = "Çalışmadan ayrılmak istediğinizden emin misiniz? Tüm ilerlemenizi kalıcı olarak kaybedeceksiniz."
+        M403 = "Etiket tür listesi temizlenecek, devam etmek istiyor musunuz?"
+        M404 = "Daha önce yarım bırakılmış bir çalışmanız tespit edildi. Onunla devam etmek ister misiniz?"
+    
+    class Verify(BaseEnum):
+        @property
+        def icon(self):
+            return ":/images/templates/images/verify.svg"
+        
+        @property
+        def type(self):
+            return "Doğrulama"
+        
+        M500 = "Dikkat kayıtlar kalıcı olarak silinecek, devam etmek için &param kodunu girerek işlemi onaylayınız. İptal etmeniz durumunda uygulama kapatılacaktır."
