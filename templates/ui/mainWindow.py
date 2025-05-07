@@ -881,7 +881,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -895,7 +895,7 @@ class Ui_MainWindow(object):
         self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiketleri Uygulamaya Aktar</span></p></body></html>"))
         self.label_create_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiket Oluştur</span></p></body></html>"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini istediğiniz gibi oluşturabilirsiniz.</span></p></body></html>"))
-        self.lineEdit_add_label.setPlaceholderText(_translate("MainWindow", "solder-balling"))
+        self.lineEdit_add_label.setPlaceholderText(_translate("MainWindow", "top_lehim"))
         self.pushButton_add_label.setText(_translate("MainWindow", "Oluştur"))
         self.pushButton_continue_labeling.setText(_translate("MainWindow", "İlerle"))
         self.pushButton_clear_labels.setText(_translate("MainWindow", "Temizle"))

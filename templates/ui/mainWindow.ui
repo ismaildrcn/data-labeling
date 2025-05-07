@@ -376,7 +376,7 @@ QPushButton{
 }</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_data_importing">
        <property name="styleSheet">
@@ -768,7 +768,7 @@ QPushButton{
                  <string/>
                 </property>
                 <property name="placeholderText">
-                 <string>solder-balling</string>
+                 <string>top_lehim</string>
                 </property>
                 <property name="clearButtonEnabled">
                  <bool>true</bool>
