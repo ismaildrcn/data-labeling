@@ -55,9 +55,7 @@ class ImageHandler:
                     real_y - 27)
             annotation.rect_index = text_item
             widget.annotation_index.setText(str(annotation.db_item.annotation_id))
-            
-        self._connector.database.setting.update("session", True)
-        
+                
         widget = LabelWidget().setup(self._connector)
         for item in self._connector.configurator.labels:
             widget.label_list.addItem(f"{item[1]} - {item[0]}")
@@ -230,6 +228,7 @@ class ImageHandler:
         else:
             self.insert_from_file_dialog()
         if self._images:
+            self._connector.database.setting.update("session", True)
             self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
             self.set_dashboard_values()
@@ -268,7 +267,7 @@ class ImageHandler:
                     if os.path.exists(image_path):
                         self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
                         name_list.remove(image)
-
+                self._connector.database.setting.update("session", True)
                 self.create_annotations_for_included_past_works(self._connector.database.settings.tempdir, name_list)
             self._connector.pages.setCurrentIndex(2)
             self._connector.load_selected_image(0, 1)
@@ -291,7 +290,9 @@ class ImageHandler:
         images = self._connector.database.image.get()
         for image in images:
             self.add_image(url=QUrl.fromLocalFile(image.url))
-        
+        if images:
+            self._connector.database.setting.update("session", True)
+
         annotations = self._connector.database.annotation.get()
         for annotation in annotations:
             self.add_annotation(
