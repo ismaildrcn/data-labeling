@@ -35,24 +35,8 @@ class Ui_MainWindow(object):
 "    padding-right: 5px;\n"
 "}\n"
 "QLineEdit:focus{\n"
-"    border: 1px solid #00ADB5;\n"
+"    border: 1px solid #6086EF;\n"
 "}\n"
-"\n"
-"QHeaderView{\n"
-"    background-color: transparent;\n"
-"    color: #EEEEEE;\n"
-"}\n"
-"QHeaderView:section:horizontal{\n"
-"    background-color: transparent;\n"
-"    border:none;\n"
-"    padding-bottom: 5px;\n"
-"    border-bottom: 2px solid #00ADB5;\n"
-"}\n"
-"QHeaderView:section:vertical{\n"
-"    background-color: transparent;\n"
-"    border:none;\n"
-"    padding-bottom: 5px;\n"
-"    }\n"
 "QScrollBar:vertical {\n"
 "    background: transparent; \n"
 "    width: 15px;\n"
@@ -121,7 +105,7 @@ class Ui_MainWindow(object):
         self.widget_topbar_left_actions = QtWidgets.QWidget(self.widget_top)
         self.widget_topbar_left_actions.setStyleSheet("QPushButton:hover{\n"
 "    border-radius:5px;\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "}")
         self.widget_topbar_left_actions.setObjectName("widget_topbar_left_actions")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.widget_topbar_left_actions)
@@ -164,7 +148,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.label_image_labeling_title, 0, QtCore.Qt.AlignHCenter)
         self.widget_topbar_actions = QtWidgets.QWidget(self.widget_top)
         self.widget_topbar_actions.setStyleSheet("QPushButton:hover{\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "}\n"
 "\n"
 "#pushButton_close_window:hover{\n"
@@ -229,7 +213,7 @@ class Ui_MainWindow(object):
         self.page_data_importing = QtWidgets.QWidget()
         self.page_data_importing.setStyleSheet("#widget_importing_area, #widget_import_project{\n"
 "    border-radius:5px;\n"
-"    border: 3px solid #00ADB5;\n"
+"    border: 3px solid #6086EF;\n"
 "}")
         self.page_data_importing.setObjectName("page_data_importing")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.page_data_importing)
@@ -289,7 +273,7 @@ class Ui_MainWindow(object):
         self.page_init_label = QtWidgets.QWidget()
         self.page_init_label.setStyleSheet("#widget_init_label_area, #widget_insert_label_area{\n"
 "    border-radius:5px;\n"
-"    border: 3px solid #00ADB5;\n"
+"    border: 3px solid #6086EF;\n"
 "}\n"
 "QListWidget{\n"
 "    border:none;\n"
@@ -297,7 +281,7 @@ class Ui_MainWindow(object):
 "    color: #EEEEEE;\n"
 "}\n"
 "QPushButton{\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
@@ -402,14 +386,14 @@ class Ui_MainWindow(object):
         self.widget_init_label_button_area.setMinimumSize(QtCore.QSize(450, 50))
         self.widget_init_label_button_area.setMaximumSize(QtCore.QSize(450, 16777215))
         self.widget_init_label_button_area.setStyleSheet("QPushButton{\n"
-"    border: 2px solid #00ADB5;\n"
+"    border: 2px solid #6086EF;\n"
 "    background-color: transparent;\n"
-"    color: #00ADB5;\n"
+"    color: #6086EF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
 "}\n"
 "QPushButton:hover{\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
@@ -457,7 +441,7 @@ class Ui_MainWindow(object):
 "}\n"
 "QTableWidget QTableCornerButton::section {\n"
 "        background-color: transparent;\n"
-"    border-bottom: 2px solid #00ADB5;\n"
+"    border-bottom: 2px solid #6086EF;\n"
 "    }\n"
 "#widget_image_list, #widget_current_label_area{\n"
 "    background-color: rgba(57, 62, 70, 128);\n"
@@ -910,10 +894,10 @@ class Ui_MainWindow(object):
         self.label_drop_project.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Geçmiş proje arşiv dosyasını bırakın </span></p><p align=\"center\"><span style=\" font-size:10pt;\">veya </span></p><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Seçmek için buraya tıklayın</span></p></body></html>"))
         self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiketleri Uygulamaya Aktar</span></p></body></html>"))
         self.label_create_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiket Oluştur</span></p></body></html>"))
-        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini İngilizce olmak kaydıyla istediğiniz gibi oluşturabilirsiniz.</span></p></body></html>"))
+        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini istediğiniz gibi oluşturabilirsiniz.</span></p></body></html>"))
         self.lineEdit_add_label.setPlaceholderText(_translate("MainWindow", "solder-balling"))
         self.pushButton_add_label.setText(_translate("MainWindow", "Oluştur"))
-        self.pushButton_continue_labeling.setText(_translate("MainWindow", "Devam et"))
+        self.pushButton_continue_labeling.setText(_translate("MainWindow", "İlerle"))
         self.pushButton_clear_labels.setText(_translate("MainWindow", "Temizle"))
         self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Bilgisayara Aktar"))
         self.widget_image_directory_area.setToolTip(_translate("MainWindow", "Görsellerin uyugulama aktarıldığı klasörü temsil eder."))

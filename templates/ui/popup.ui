@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>518</width>
-    <height>363</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,13 +41,13 @@ QLabel{
 	color: #EEEEEE;
 }
 QPushButton{
-	border: 1px solid #00ADB5;
+	border: 1px solid #6086EF;
 	color: #FFFFFF;
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
 }
 #pushButton_ok{
-	background-color: #00ADB5;
+	background-color: #6086EF;
 }
 QLineEdit{
 	border-radius: 5px;
@@ -55,7 +55,7 @@ QLineEdit{
 	color: #EEEEEE;
 }
 QLineEdit:focus{
-	border: 1px solid #00ADB5;
+	border: 1px solid #6086EF;
 }</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">

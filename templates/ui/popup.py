@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(518, 363)
+        Dialog.resize(518, 381)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/images/templates/images/fad.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
@@ -35,13 +35,13 @@ class Ui_Dialog(object):
 "    color: #EEEEEE;\n"
 "}\n"
 "QPushButton{\n"
-"    border: 1px solid #00ADB5;\n"
+"    border: 1px solid #6086EF;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
 "}\n"
 "#pushButton_ok{\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "}\n"
 "QLineEdit{\n"
 "    border-radius: 5px;\n"
@@ -49,7 +49,7 @@ class Ui_Dialog(object):
 "    color: #EEEEEE;\n"
 "}\n"
 "QLineEdit:focus{\n"
-"    border: 1px solid #00ADB5;\n"
+"    border: 1px solid #6086EF;\n"
 "}")
         self.widget_main.setObjectName("widget_main")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.widget_main)

@@ -42,24 +42,8 @@ QLineEdit{
 	padding-right: 5px;
 }
 QLineEdit:focus{
-	border: 1px solid #00ADB5;
+	border: 1px solid #6086EF;
 }
-
-QHeaderView{
-	background-color: transparent;
-	color: #EEEEEE;
-}
-QHeaderView:section:horizontal{
-	background-color: transparent;
-	border:none;
-	padding-bottom: 5px;
-	border-bottom: 2px solid #00ADB5;
-}
-QHeaderView:section:vertical{
-	background-color: transparent;
-	border:none;
-	padding-bottom: 5px;
-	}
 QScrollBar:vertical {
 	background: transparent; 
 	width: 15px;
@@ -159,7 +143,7 @@ QPushButton{
          <property name="styleSheet">
           <string notr="true">QPushButton:hover{
 	border-radius:5px;
-	background-color: #00ADB5;
+	background-color: #6086EF;
 }</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -253,7 +237,7 @@ QPushButton{
         <widget class="QWidget" name="widget_topbar_actions" native="true">
          <property name="styleSheet">
           <string notr="true">QPushButton:hover{
-	background-color: #00ADB5;
+	background-color: #6086EF;
 }
 
 #pushButton_close_window:hover{
@@ -398,7 +382,7 @@ QPushButton{
        <property name="styleSheet">
         <string notr="true">#widget_importing_area, #widget_import_project{
 	border-radius:5px;
-	border: 3px solid #00ADB5;
+	border: 3px solid #6086EF;
 }</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -563,7 +547,7 @@ QPushButton{
        <property name="styleSheet">
         <string notr="true">#widget_init_label_area, #widget_insert_label_area{
 	border-radius:5px;
-	border: 3px solid #00ADB5;
+	border: 3px solid #6086EF;
 }
 QListWidget{
 	border:none;
@@ -571,7 +555,7 @@ QListWidget{
 	color: #EEEEEE;
 }
 QPushButton{
-	background-color: #00ADB5;
+	background-color: #6086EF;
 	color: #FFFFFF;
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
@@ -712,7 +696,7 @@ QPushButton{
               <item>
                <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini İngilizce olmak kaydıyla istediğiniz gibi oluşturabilirsiniz.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini istediğiniz gibi oluşturabilirsiniz.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
@@ -831,14 +815,14 @@ QPushButton{
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
-	border: 2px solid #00ADB5;
+	border: 2px solid #6086EF;
 	background-color: transparent;
-	color: #00ADB5;
+	color: #6086EF;
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
 }
 QPushButton:hover{
-	background-color: #00ADB5;
+	background-color: #6086EF;
 	color: #FFFFFF;
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
@@ -874,7 +858,7 @@ QPushButton:hover{
               </font>
              </property>
              <property name="text">
-              <string>Devam et</string>
+              <string>İlerle</string>
              </property>
             </widget>
            </item>
@@ -946,7 +930,7 @@ QTableWidget::item:selected, QTableWidget::item:hover{
 }
 QTableWidget QTableCornerButton::section {
         background-color: transparent;
-	border-bottom: 2px solid #00ADB5;
+	border-bottom: 2px solid #6086EF;
     }
 #widget_image_list, #widget_current_label_area{
 	background-color: rgba(57, 62, 70, 128);

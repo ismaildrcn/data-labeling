@@ -6,6 +6,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem
 
 from modals.popup.utils import Answers
+from templates.theme.colors import Colors
 from templates.ui.mainWindow import Ui_MainWindow as UI
 from widgets.graphics_view import CustomGraphicsView
 
@@ -136,29 +137,29 @@ class Connector(QMainWindow, UI):
 
     def init_actions(self):
         self.menu = QMenu(self)
-        self.menu.setStyleSheet("""
-            QMenu {
-                border: 1px solid #00969d;
-                background-color: #00ADB5;
+        self.menu.setStyleSheet(f"""
+            QMenu {{
+                border: 1px solid #5678d5;
+                background-color: {Colors.PRIMARY};
                 color: #EEEEEE;
                 padding: 8px;
-            }
-            QMenu::item {
+            }}
+            QMenu::item {{
                 padding: 8px 10px;
                 background-color: transparent;
-            }
-            QMenu::item:selected {
-                background-color: #00969d;
-            }
+            }}
+            QMenu::item:selected {{
+                background-color: #5678d5;
+            }}
         """)
-
-        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Etiketleri Düzenle", self)
-        edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
-        self.menu.addAction(edit_label)
 
         import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Görüntüleri Uygulamaya Aktar", self)
         import_images.triggered.connect(lambda: self.pages.setCurrentIndex(0))
         self.menu.addAction(import_images)
+
+        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Etiketleri Düzenle", self)
+        edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
+        self.menu.addAction(edit_label)
 
         import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı Uygulamaya Aktar", self)
         # exit_action.triggered.connect(self.close)

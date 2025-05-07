@@ -24,7 +24,7 @@ class LabelWidget(QWidget):
             color: #EEEEEE;
         }
         QComboBox QAbstractItemView {
-            background-color: #00ADB5;
+            background-color: #6086EF;
             border: 1px solid #555;
             selection-color: white; /* Seçili öğenin yazı rengi */
             padding: 5px;
