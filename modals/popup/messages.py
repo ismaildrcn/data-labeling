@@ -85,3 +85,4 @@ class PopupMessages(object):
             return "Doğrulama"
         
         M500 = "Dikkat kayıtlar kalıcı olarak silinecek, devam etmek için &param kodunu girerek işlemi onaylayınız. İptal etmeniz durumunda uygulama kapatılacaktır."
+        M501 = "Dikkat kayıtlar kalıcı olarak silinecek, devam etmek için &param kodunu girerek işlemi onaylayınız."
