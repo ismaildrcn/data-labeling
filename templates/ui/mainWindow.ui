@@ -1798,6 +1798,9 @@ QPushButton:hover, QPushButton:checked {
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="toolTip">
+                    <string>Çalışma onay durumunu ve onaylayan kişiyi niteler.</string>
+                   </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_15">
                     <property name="sizeConstraint">
                      <enum>QLayout::SetDefaultConstraint</enum>
@@ -1863,6 +1866,13 @@ QPushButton:hover, QPushButton:checked {
                       </property>
                       <property name="autoExclusive">
                        <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_authorized">
+                      <property name="text">
+                       <string/>
                       </property>
                      </widget>
                     </item>

@@ -58,7 +58,7 @@ class Connector(QMainWindow, UI):
         elif answer == Users.operator.value:
             self.widget_personel_state.setVisible(False)
         else:
-            self.approve_project(bool(int(self.database.setting.filter(UtilsForSettings.APPROVED.value).value)), False)
+            self.approve_project(self.database.setting.filter(UtilsForSettings.APPROVED.value).value, None)
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         self.listWidget_label_list.setSpacing(5)
@@ -116,7 +116,7 @@ class Connector(QMainWindow, UI):
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
         self.image_handler.add_annotation(source=self.source.current, coords=detail[0], rect_obj=detail[1])
-        self.approve_project(False)
+        self.approve_project(None)
 
     @overload
     def load_selected_image(self, item: QTableWidgetItem) -> None: ...
@@ -129,6 +129,7 @@ class Connector(QMainWindow, UI):
             item = self.image_table.item(args[0], 1)
         """ Seçilen görseli yükle"""
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
+        self.image_table.setCurrentItem(item)  # Seçili satırı güncelle
         if self.source.current != self.source.previous:
             self.image_pixmap = QPixmap(self.source.current.toLocalFile())
 
@@ -182,7 +183,7 @@ class Connector(QMainWindow, UI):
 
         if self.login.user != Users.operator.value:
             approve_action = QAction(QIcon(":/images/templates/images/approve.svg"), "Çalışmayı Onayla", self)
-            approve_action.triggered.connect(lambda: self.approve_project(True))
+            approve_action.triggered.connect(lambda: self.approve_project(self.login.user.username))
             self.menu.addAction(approve_action)
         
         
@@ -220,14 +221,15 @@ class Connector(QMainWindow, UI):
         self.graphicsView.resetTransform()
         self.graphicsView.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
     
-    def approve_project(self, status: bool, animation: bool = True):
+    def approve_project(self, authorized: str, animation: bool = True):
         """
             Onaylama işlemini gerçekleştirir.
             Eğer onaylama işlemi başarılı olursa, animasyon gösterilir.
         """
-        self.database.setting.update(UtilsForSettings.APPROVED.value, status)
-        self.pushButton_personel_state.setChecked(status)
-        if status and animation:
+        self.database.setting.update(UtilsForSettings.APPROVED.value, authorized)
+        self.pushButton_personel_state.setChecked(bool(authorized))
+        self.label_authorized.setText(authorized if authorized else "")
+        if authorized and animation:
             self.create_approve_animation()
     
     def create_approve_animation(self):

@@ -855,6 +855,10 @@ class Ui_MainWindow(object):
         self.pushButton_personel_state.setAutoExclusive(False)
         self.pushButton_personel_state.setObjectName("pushButton_personel_state")
         self.horizontalLayout_15.addWidget(self.pushButton_personel_state)
+        self.label_authorized = QtWidgets.QLabel(self.widget_personel_state)
+        self.label_authorized.setText("")
+        self.label_authorized.setObjectName("label_authorized")
+        self.horizontalLayout_15.addWidget(self.label_authorized)
         self.horizontalLayout_6.addWidget(self.widget_personel_state, 0, QtCore.Qt.AlignRight)
         self.verticalLayout_5.addWidget(self.widget_7)
         self.widget_labeling_area = QtWidgets.QWidget(self.widget_2)
@@ -1007,5 +1011,6 @@ class Ui_MainWindow(object):
         self.pushButton_zoom_fit.setToolTip(_translate("MainWindow", "Sığdır"))
         self.pushButton_activate_hand.setToolTip(_translate("MainWindow", "Eller Serbest"))
         self.pushButton_activate_crosshair.setToolTip(_translate("MainWindow", "Seçim Yap"))
+        self.widget_personel_state.setToolTip(_translate("MainWindow", "Çalışma onay durumunu ve onaylayan kişiyi niteler."))
         self.label.setText(_translate("MainWindow", "Etiketler"))
 import rsrc_rc

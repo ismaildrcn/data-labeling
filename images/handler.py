@@ -1,10 +1,11 @@
 import os
+import uuid
+import json
 import shutil
 
 from typing import Union, overload
-import uuid
 from zipfile import ZipFile
-
+from datetime import datetime
 from PyQt5.QtCore import QUrl, QRectF, Qt
 from PyQt5.QtGui import QPixmap, QPen
 from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
@@ -23,6 +24,13 @@ class ImageHandler:
     def __init__(self, connector=None):
         self._connector = connector
         self._images = {}
+        self.archive_metadata = {
+            "signature": "***REMOVED***",
+            "version": 1.0,
+            "authorized": "",
+            "description": "",
+            "date": "",
+        }
         self.image_dir_list = []
         self.annotation_count = 0
 
@@ -143,7 +151,7 @@ class ImageHandler:
                 self.annotation_count -= 1
             self.set_dashboard_values()
             self.check_annotation_in_current_source(annotation.source)
-            self._connector.approve_project(False)
+            self._connector.approve_project(None)
 
 
     def delete_all_annotation_from_list(self):
@@ -179,7 +187,7 @@ class ImageHandler:
                 self.check_annotation_in_current_source(annotation.source)
                 break
         self.set_dashboard_values()
-        self._connector.approve_project(False)
+        self._connector.approve_project(None)
     
     def add_multi_annotation(self, source: Source):
         self.delete_multi_annotation(source)
@@ -264,6 +272,13 @@ class ImageHandler:
                 lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
                 self._connector.configurator.import_labels(os.path.join(self._connector.database.settings.tempdir, lbl))
                 name_list.remove(lbl)
+
+                metadata = list(filter(lambda x: x.endswith('metadata.json'), name_list))[0]
+                with open(os.path.join(self._connector.database.settings.tempdir, metadata), 'r') as metadata_file:
+                    metadata = json.load(metadata_file)
+                    if metadata.get("authorized"):
+                        self._connector.approve_project(metadata.get("authorized"), False)
+
 
                 images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
                 for image in images:
@@ -419,6 +434,10 @@ class ImageHandler:
             label_type = {}
             for item in self._connector.configurator.label_type:
                 label_type[item.name] = item.unquie_id
+            
+            authorized = self._connector.login.user.username if bool(int(self._connector.database.setting.filter(UtilsForSettings.APPROVED.value).value)) else None
+            metadata = self.update_metadata(authorized = authorized, date = datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            archive.writestr('metadata.json', json.dumps(metadata))
             archive.writestr(str(uuid.uuid4()) + '.lbl', str(label_type))
             archive.comment = b"***REMOVED***"
         archive.close()
@@ -546,3 +565,14 @@ class ImageHandler:
             shutil.copyfile(source, target)
             temp_images.append(QUrl.fromLocalFile(target))
         return temp_images
+
+    def update_metadata(self, **kwargs):
+        """
+            Metadata günceller.
+            args:
+                kwargs (dict): Güncellenecek metadata anahtar-değer çiftleri.
+        """
+        for key, value in kwargs.items():
+            if key in self.archive_metadata:
+                self.archive_metadata[key] = value
+        return self.archive_metadata
