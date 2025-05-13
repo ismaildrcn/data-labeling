@@ -9,8 +9,8 @@ class ImageCRUD(CRUD):
         super().__init__()
 
     @staticmethod
-    def add(url: str) -> int:
-        new_image = Image(url=url)
+    def add(url: str, main_url) -> int:
+        new_image = Image(url=url, main_url=main_url)
         session.add(new_image)
         session.commit()
         return new_image

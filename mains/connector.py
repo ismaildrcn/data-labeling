@@ -137,7 +137,6 @@ class Connector(QMainWindow, UI):
             pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
 
             self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
-            self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
 
             self.graphicsView.fitInView(pixmap_item, Qt.KeepAspectRatio)
 

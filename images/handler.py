@@ -308,7 +308,9 @@ class ImageHandler:
         """
         images = self._connector.database.image.get()
         for image in images:
-            self.add_image(url=QUrl.fromLocalFile(image.url))
+            url = QUrl.fromLocalFile(image.url)
+            url.setFragment(image.main_url)
+            self.add_image(url=url)
         if images:
             self._connector.database.setting.update("session", True)
 
@@ -515,7 +517,10 @@ class ImageHandler:
         self._connector.label_total_annotation_value.setText(str(value))
 
     def check_directroy(self, path: QUrl):
-        dirname = os.path.dirname(path.toLocalFile()).split('/')[-1]
+        if path.fragment() != "":
+            dirname = os.path.dirname(path.fragment()).split('/')[-1]
+        else:
+            dirname = os.path.dirname(path.toLocalFile()).split('/')[-1]
         if dirname not in self.image_dir_list:
             self.image_dir_list.append(dirname)
             self._connector.label_image_directory.setText(', '.join(self.image_dir_list))
@@ -529,7 +534,8 @@ class ImageHandler:
     def add_image(self, url: QUrl, read_only: bool = True):
         self._images[url] = ImageCore(self._connector, url)
         if not read_only:
-            self._connector.database.image.add(url.toLocalFile())
+            main_url = None if url.fragment() == "" else url.fragment()
+            self._connector.database.image.add(url.toLocalFile(), main_url)
 
     def delete_image(self, image):
         answer = self._connector.show_message(PopupMessages.Action.M405)
@@ -563,7 +569,9 @@ class ImageHandler:
             source = image.toLocalFile() if isinstance(image, QUrl) else image
             target = os.path.join(self._connector.database.settings.tempdir, os.path.basename(source))
             shutil.copyfile(source, target)
-            temp_images.append(QUrl.fromLocalFile(target))
+            url = QUrl.fromLocalFile(target)
+            url.setFragment(source)
+            temp_images.append(url)
         return temp_images
 
     def update_metadata(self, **kwargs):

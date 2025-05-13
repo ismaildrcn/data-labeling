@@ -6,6 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+if not os.path.exists(os.path.expanduser("~/catch")):
+    os.makedirs(os.path.expanduser("~/catch"))
+
 engine = create_engine(f"sqlite:///{os.path.expanduser('~/catch/catch_database.db')}", echo=False)
 
 from database.models.image.model import Image

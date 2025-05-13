@@ -23,7 +23,7 @@ class Settings:
         return self._tempdir
     
     def create_temp_dir(self):
-        self._tempdir = tempfile.TemporaryDirectory(prefix="catch_", suffix="_temp").name
+        self._tempdir = os.path.join(os.path.expanduser("~/catch"), "temp")
         if not os.path.exists(self.tempdir):
             os.mkdir(self.tempdir)
         self._database.setting.update(UtilsForSettings.TEMP_URL.value, self.tempdir)
