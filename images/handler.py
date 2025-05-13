@@ -260,39 +260,48 @@ class ImageHandler:
                 self.add_image(url=image, read_only=False)
 
     def insert_project(self, drop_list = False):
-        if drop_list:
-            path = self.insert_project_from_drag_drop(drop_list)
+        """
+            Projeyi uygulamaya ekler.
+
+            args:
+                drop_list (list): Sürükleyip bırakılan dosyaların listesi.
+        """
+        if bool(int(self._connector.database.setting.filter(UtilsForSettings.SESSION.value).value)):
+            self._connector.show_message(PopupMessages.Warning.M205)
         else:
-            path = self.insert_project_from_file_dialog()
-        if path:
-            with ZipFile(path.toLocalFile(), 'r') as archive:
-                if archive.comment != b"***REMOVED***":
-                    self._connector.show_message(PopupMessages.Error.M302)  # Add appropriate error message
-                    return
-                archive.extractall(self._connector.database.settings.tempdir)  # Zip dosyasını çıkar
-                name_list = archive.namelist()
-                lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
-                self._connector.configurator.import_labels(os.path.join(self._connector.database.settings.tempdir, lbl))
-                name_list.remove(lbl)
+            if drop_list:
+                path = self.insert_project_from_drag_drop(drop_list)
+            else:
+                path = self.insert_project_from_file_dialog()
+            if path:
+                with ZipFile(path.toLocalFile(), 'r') as archive:
+                    if archive.comment != b"***REMOVED***":
+                        self._connector.show_message(PopupMessages.Error.M302)  # Add appropriate error message
+                        return
+                    archive.extractall(self._connector.database.settings.tempdir)  # Zip dosyasını çıkar
+                    name_list = archive.namelist()
+                    lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
+                    self._connector.configurator.import_labels(os.path.join(self._connector.database.settings.tempdir, lbl))
+                    name_list.remove(lbl)
 
-                metadata = list(filter(lambda x: x.endswith('metadata.json'), name_list))[0]
-                with open(os.path.join(self._connector.database.settings.tempdir, metadata), 'r') as metadata_file:
-                    metadata = json.load(metadata_file)
-                    if metadata.get("authorized"):
-                        self._connector.approve_project(metadata.get("authorized"), False)
+                    metadata = list(filter(lambda x: x.endswith('metadata.json'), name_list))[0]
+                    with open(os.path.join(self._connector.database.settings.tempdir, metadata), 'r') as metadata_file:
+                        metadata = json.load(metadata_file)
+                        if metadata.get("authorized"):
+                            self._connector.approve_project(metadata.get("authorized"), False)
 
 
-                images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
-                for image in images:
-                    image_path = os.path.join(self._connector.database.settings.tempdir, image)
-                    if os.path.exists(image_path):
-                        self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
-                        name_list.remove(image)
-                self._connector.database.setting.update("session", True)
-                self.create_annotations_for_included_past_works(self._connector.database.settings.tempdir, name_list)
-            self._connector.pages.setCurrentIndex(2)
-            self._connector.load_selected_image(0, 1)
-            self.set_dashboard_values()
+                    images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
+                    for image in images:
+                        image_path = os.path.join(self._connector.database.settings.tempdir, image)
+                        if os.path.exists(image_path):
+                            self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
+                            name_list.remove(image)
+                    self._connector.database.setting.update("session", True)
+                    self.create_annotations_for_included_past_works(self._connector.database.settings.tempdir, name_list)
+                self._connector.pages.setCurrentIndex(2)
+                self._connector.load_selected_image(0, 1)
+                self.set_dashboard_values()
     
     def insert_project_from_drag_drop(self, drop_list):
         for archive in drop_list:

@@ -573,7 +573,7 @@ class Ui_MainWindow(object):
         self.layout_image_list.addWidget(self.label_image_list_title, 0, QtCore.Qt.AlignHCenter)
         self.image_table = QtWidgets.QTableWidget(self.widget_image_list)
         self.image_table.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.image_table.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.image_table.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.image_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.image_table.setAlternatingRowColors(False)
         self.image_table.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
