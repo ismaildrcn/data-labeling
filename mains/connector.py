@@ -187,6 +187,8 @@ class Connector(QMainWindow, UI):
         
         
     def show_menu(self):
+        if len(self.menu.actions()) == 5: 
+            self.menu.actions()[4].setVisible(self.pages.currentIndex() == 2)
         self.menu.exec_(self.pushButton_actions.mapToGlobal(self.pushButton_actions.rect().bottomLeft()))
     
     def show_message(self, p_code: PopupMessages):
