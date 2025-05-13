@@ -143,6 +143,7 @@ class Connector(QMainWindow, UI):
             self.graphicsView.setTransformationAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setRenderHint(QPainter.Antialiasing)
+            self.current_label_list.clear()
             self.image_handler.add_multi_annotation(self.source)
             self.label_current_image_name.setText(f"{self.image_table.currentRow() + 1} - {self.source.current.toLocalFile().split('/')[-1]}")
 

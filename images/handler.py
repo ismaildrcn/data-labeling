@@ -87,8 +87,10 @@ class ImageHandler:
         args = list(kwargs.values())
 
         if arg_db_item:
+            url = QUrl.fromLocalFile(arg_db_item.image.url)
+            url.setFragment(arg_db_item.image.main_url)
             annotation = Annotation(
-                source=QUrl.fromLocalFile(arg_db_item.image.url), 
+                source=url, 
                 coords=(arg_db_item.x, arg_db_item.y, arg_db_item.width, arg_db_item.height), 
                 rect_obj=QGraphicsRectItem, 
                 item=item, 
@@ -437,7 +439,7 @@ class ImageHandler:
             for item in self._connector.configurator.label_type:
                 label_type[item.name] = item.unquie_id
             
-            authorized = self._connector.login.user.username if bool(int(self._connector.database.setting.filter(UtilsForSettings.APPROVED.value).value)) else None
+            authorized = self._connector.login.user.username if bool(self._connector.database.setting.filter(UtilsForSettings.APPROVED.value).value) else None
             metadata = self.update_metadata(authorized = authorized, date = datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             archive.writestr('metadata.json', json.dumps(metadata))
             archive.writestr(str(uuid.uuid4()) + '.lbl', str(label_type))
