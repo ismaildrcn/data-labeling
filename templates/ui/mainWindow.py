@@ -35,24 +35,8 @@ class Ui_MainWindow(object):
 "    padding-right: 5px;\n"
 "}\n"
 "QLineEdit:focus{\n"
-"    border: 1px solid #00ADB5;\n"
+"    border: 1px solid #6086EF;\n"
 "}\n"
-"\n"
-"QHeaderView{\n"
-"    background-color: transparent;\n"
-"    color: #EEEEEE;\n"
-"}\n"
-"QHeaderView:section:horizontal{\n"
-"    background-color: transparent;\n"
-"    border:none;\n"
-"    padding-bottom: 5px;\n"
-"    border-bottom: 2px solid #00ADB5;\n"
-"}\n"
-"QHeaderView:section:vertical{\n"
-"    background-color: transparent;\n"
-"    border:none;\n"
-"    padding-bottom: 5px;\n"
-"    }\n"
 "QScrollBar:vertical {\n"
 "    background: transparent; \n"
 "    width: 15px;\n"
@@ -116,15 +100,16 @@ class Ui_MainWindow(object):
 "}")
         self.widget_top.setObjectName("widget_top")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_top)
-        self.horizontalLayout_2.setContentsMargins(9, 0, -1, 0)
+        self.horizontalLayout_2.setContentsMargins(9, 0, 0, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.widget_topbar_left_actions = QtWidgets.QWidget(self.widget_top)
         self.widget_topbar_left_actions.setStyleSheet("QPushButton:hover{\n"
 "    border-radius:5px;\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "}")
         self.widget_topbar_left_actions.setObjectName("widget_topbar_left_actions")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.widget_topbar_left_actions)
+        self.horizontalLayout_4.setContentsMargins(0, 4, 0, 4)
         self.horizontalLayout_4.setSpacing(12)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.pushButton_exit_project = QtWidgets.QPushButton(self.widget_topbar_left_actions)
@@ -140,6 +125,7 @@ class Ui_MainWindow(object):
         self.pushButton_exit_project.setObjectName("pushButton_exit_project")
         self.horizontalLayout_4.addWidget(self.pushButton_exit_project)
         self.pushButton_actions = QtWidgets.QPushButton(self.widget_topbar_left_actions)
+        self.pushButton_actions.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -161,14 +147,25 @@ class Ui_MainWindow(object):
         self.label_image_labeling_title.setObjectName("label_image_labeling_title")
         self.horizontalLayout_2.addWidget(self.label_image_labeling_title, 0, QtCore.Qt.AlignHCenter)
         self.widget_topbar_actions = QtWidgets.QWidget(self.widget_top)
-        self.widget_topbar_actions.setStyleSheet("")
+        self.widget_topbar_actions.setStyleSheet("QPushButton:hover{\n"
+"    background-color: #6086EF;\n"
+"}\n"
+"\n"
+"#pushButton_close_window:hover{\n"
+"    background-color: rgb(255, 0, 0);\n"
+"}")
         self.widget_topbar_actions.setObjectName("widget_topbar_actions")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget_topbar_actions)
-        self.horizontalLayout.setContentsMargins(0, -1, 0, -1)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_hide_window = QtWidgets.QPushButton(self.widget_topbar_actions)
-        self.pushButton_hide_window.setMinimumSize(QtCore.QSize(25, 25))
-        self.pushButton_hide_window.setMaximumSize(QtCore.QSize(25, 25))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_hide_window.sizePolicy().hasHeightForWidth())
+        self.pushButton_hide_window.setSizePolicy(sizePolicy)
+        self.pushButton_hide_window.setMinimumSize(QtCore.QSize(0, 0))
+        self.pushButton_hide_window.setMaximumSize(QtCore.QSize(40, 16777215))
         self.pushButton_hide_window.setText("")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/images/templates/images/minus.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -177,8 +174,13 @@ class Ui_MainWindow(object):
         self.pushButton_hide_window.setObjectName("pushButton_hide_window")
         self.horizontalLayout.addWidget(self.pushButton_hide_window)
         self.pushButton_fullscreen_window = QtWidgets.QPushButton(self.widget_topbar_actions)
-        self.pushButton_fullscreen_window.setMinimumSize(QtCore.QSize(25, 25))
-        self.pushButton_fullscreen_window.setMaximumSize(QtCore.QSize(25, 25))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_fullscreen_window.sizePolicy().hasHeightForWidth())
+        self.pushButton_fullscreen_window.setSizePolicy(sizePolicy)
+        self.pushButton_fullscreen_window.setMinimumSize(QtCore.QSize(0, 0))
+        self.pushButton_fullscreen_window.setMaximumSize(QtCore.QSize(40, 16777215))
         self.pushButton_fullscreen_window.setText("")
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap(":/images/templates/images/full-screen.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -187,8 +189,13 @@ class Ui_MainWindow(object):
         self.pushButton_fullscreen_window.setObjectName("pushButton_fullscreen_window")
         self.horizontalLayout.addWidget(self.pushButton_fullscreen_window)
         self.pushButton_close_window = QtWidgets.QPushButton(self.widget_topbar_actions)
-        self.pushButton_close_window.setMinimumSize(QtCore.QSize(25, 25))
-        self.pushButton_close_window.setMaximumSize(QtCore.QSize(25, 25))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_close_window.sizePolicy().hasHeightForWidth())
+        self.pushButton_close_window.setSizePolicy(sizePolicy)
+        self.pushButton_close_window.setMinimumSize(QtCore.QSize(0, 0))
+        self.pushButton_close_window.setMaximumSize(QtCore.QSize(40, 16777215))
         self.pushButton_close_window.setText("")
         icon5 = QtGui.QIcon()
         icon5.addPixmap(QtGui.QPixmap(":/images/templates/images/close.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -206,7 +213,7 @@ class Ui_MainWindow(object):
         self.page_data_importing = QtWidgets.QWidget()
         self.page_data_importing.setStyleSheet("#widget_importing_area, #widget_import_project{\n"
 "    border-radius:5px;\n"
-"    border: 3px solid #00ADB5;\n"
+"    border: 3px solid #6086EF;\n"
 "}")
         self.page_data_importing.setObjectName("page_data_importing")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.page_data_importing)
@@ -266,7 +273,7 @@ class Ui_MainWindow(object):
         self.page_init_label = QtWidgets.QWidget()
         self.page_init_label.setStyleSheet("#widget_init_label_area, #widget_insert_label_area{\n"
 "    border-radius:5px;\n"
-"    border: 3px solid #00ADB5;\n"
+"    border: 3px solid #6086EF;\n"
 "}\n"
 "QListWidget{\n"
 "    border:none;\n"
@@ -274,7 +281,7 @@ class Ui_MainWindow(object):
 "    color: #EEEEEE;\n"
 "}\n"
 "QPushButton{\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
@@ -379,14 +386,14 @@ class Ui_MainWindow(object):
         self.widget_init_label_button_area.setMinimumSize(QtCore.QSize(450, 50))
         self.widget_init_label_button_area.setMaximumSize(QtCore.QSize(450, 16777215))
         self.widget_init_label_button_area.setStyleSheet("QPushButton{\n"
-"    border: 2px solid #00ADB5;\n"
+"    border: 2px solid #6086EF;\n"
 "    background-color: transparent;\n"
-"    color: #00ADB5;\n"
+"    color: #6086EF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
 "}\n"
 "QPushButton:hover{\n"
-"    background-color: #00ADB5;\n"
+"    background-color: #6086EF;\n"
 "    color: #FFFFFF;\n"
 "    border-radius: 5px;\n"
 "    padding: 5px 10px 5px 10px;\n"
@@ -434,7 +441,7 @@ class Ui_MainWindow(object):
 "}\n"
 "QTableWidget QTableCornerButton::section {\n"
 "        background-color: transparent;\n"
-"    border-bottom: 2px solid #00ADB5;\n"
+"    border-bottom: 2px solid #6086EF;\n"
 "    }\n"
 "#widget_image_list, #widget_current_label_area{\n"
 "    background-color: rgba(57, 62, 70, 128);\n"
@@ -462,11 +469,50 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_4.sizePolicy().hasHeightForWidth())
         self.widget_4.setSizePolicy(sizePolicy)
+        self.widget_4.setStyleSheet("#widget_total_image, #widget_defined_annotation, #widget_total_annotation, #widget_image_directory_area{\n"
+"    border-radius: 5px;\n"
+"    background-color:  rgba(57, 62, 70, 128);;\n"
+"}")
         self.widget_4.setObjectName("widget_4")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.widget_4)
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_6.setSpacing(10)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.widget_image_directory_area = QtWidgets.QWidget(self.widget_4)
+        self.widget_image_directory_area.setObjectName("widget_image_directory_area")
+        self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.widget_image_directory_area)
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        self.widget_5 = QtWidgets.QWidget(self.widget_image_directory_area)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_5.sizePolicy().hasHeightForWidth())
+        self.widget_5.setSizePolicy(sizePolicy)
+        self.widget_5.setObjectName("widget_5")
+        self.horizontalLayout_12 = QtWidgets.QHBoxLayout(self.widget_5)
+        self.horizontalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_12.setSpacing(15)
+        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        self.icon_image_directory = QtWidgets.QLabel(self.widget_5)
+        self.icon_image_directory.setMinimumSize(QtCore.QSize(30, 30))
+        self.icon_image_directory.setMaximumSize(QtCore.QSize(30, 30))
+        self.icon_image_directory.setText("")
+        self.icon_image_directory.setPixmap(QtGui.QPixmap(":/images/templates/images/folder-image.svg"))
+        self.icon_image_directory.setScaledContents(True)
+        self.icon_image_directory.setObjectName("icon_image_directory")
+        self.horizontalLayout_12.addWidget(self.icon_image_directory)
+        self.label_image_directory = QtWidgets.QLabel(self.widget_5)
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_image_directory.setFont(font)
+        self.label_image_directory.setText("")
+        self.label_image_directory.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_image_directory.setObjectName("label_image_directory")
+        self.horizontalLayout_12.addWidget(self.label_image_directory)
+        self.horizontalLayout_13.addWidget(self.widget_5)
+        self.verticalLayout_6.addWidget(self.widget_image_directory_area)
         self.widget_image_list = QtWidgets.QWidget(self.widget_4)
         self.widget_image_list.setMinimumSize(QtCore.QSize(300, 0))
         self.widget_image_list.setMaximumSize(QtCore.QSize(300, 16777215))
@@ -490,8 +536,8 @@ class Ui_MainWindow(object):
         self.image_table.setAlternatingRowColors(False)
         self.image_table.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.image_table.setShowGrid(False)
+        self.image_table.setColumnCount(3)
         self.image_table.setObjectName("image_table")
-        self.image_table.setColumnCount(2)
         self.image_table.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.image_table.setHorizontalHeaderItem(0, item)
@@ -514,10 +560,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addWidget(self.widget_image_list)
         self.widget_total_values = QtWidgets.QWidget(self.widget_4)
         self.widget_total_values.setMinimumSize(QtCore.QSize(0, 80))
-        self.widget_total_values.setStyleSheet("#widget_total_image, #widget_defined_annotation, #widget_total_annotation{\n"
-"    border-radius: 5px;\n"
-"    background-color:  rgba(57, 62, 70, 128);;\n"
-"}")
+        self.widget_total_values.setStyleSheet("")
         self.widget_total_values.setObjectName("widget_total_values")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.widget_total_values)
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
@@ -828,6 +871,7 @@ class Ui_MainWindow(object):
 "    border:none;\n"
 "    background-color: #272B32;\n"
 "}")
+        self.current_label_list.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.current_label_list.setObjectName("current_label_list")
         self.verticalLayout_4.addWidget(self.current_label_list)
         self.horizontalLayout_3.addWidget(self.widget_current_label_area)
@@ -837,7 +881,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -850,12 +894,13 @@ class Ui_MainWindow(object):
         self.label_drop_project.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Geçmiş proje arşiv dosyasını bırakın </span></p><p align=\"center\"><span style=\" font-size:10pt;\">veya </span></p><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Seçmek için buraya tıklayın</span></p></body></html>"))
         self.label_import_labels.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiketleri Uygulamaya Aktar</span></p></body></html>"))
         self.label_create_label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Etiket Oluştur</span></p></body></html>"))
-        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini İngilizce olmak kaydıyla istediğiniz gibi oluşturabilirsiniz.</span></p></body></html>"))
-        self.lineEdit_add_label.setPlaceholderText(_translate("MainWindow", "solder-balling"))
+        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini istediğiniz gibi oluşturabilirsiniz.</span></p></body></html>"))
+        self.lineEdit_add_label.setPlaceholderText(_translate("MainWindow", "top_lehim"))
         self.pushButton_add_label.setText(_translate("MainWindow", "Oluştur"))
-        self.pushButton_continue_labeling.setText(_translate("MainWindow", "Devam et"))
+        self.pushButton_continue_labeling.setText(_translate("MainWindow", "İlerle"))
         self.pushButton_clear_labels.setText(_translate("MainWindow", "Temizle"))
         self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Bilgisayara Aktar"))
+        self.widget_image_directory_area.setToolTip(_translate("MainWindow", "Görsellerin uyugulama aktarıldığı klasörü temsil eder."))
         self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
         self.image_table.setSortingEnabled(False)
         item = self.image_table.horizontalHeaderItem(0)

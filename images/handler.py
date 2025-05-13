@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from typing import Union, overload
 import uuid
@@ -10,19 +11,18 @@ from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
 
 from images.annotation import Annotation
 from images.core import ImageCore
-from images.utils import ImageStatus, TEMPDIR, ARCHIVE_EXTENSION
+from images.utils import ImageStatus, ARCHIVE_EXTENSION
 from label.widget import LabelWidget
 from mains.source import Source
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
-
-from database.utils import Tables
 
 
 class ImageHandler:
     def __init__(self, connector=None):
         self._connector = connector
         self._images = {}
+        self.image_dir_list = []
         self.annotation_count = 0
 
     @overload
@@ -34,8 +34,28 @@ class ImageHandler:
     @overload
     def add_annotation(self, source: Source, coords: QRectF, rect_obj: QGraphicsRectItem, label: str = None) -> None: ...
     def add_annotation(self, **kwargs):
-        self._connector.database.setting.update("session", True)
-        
+        def add_annotation_index_to_rect():
+            # Index text item'ı oluştur
+            text_item = self._connector.scene.addText(str(annotation.db_item.annotation_id))
+            font = text_item.font()
+            font.setPointSize(15)
+            font.setBold(True)
+            text_item.setFont(font)
+            text_item.setDefaultTextColor(Qt.red)
+            pixmap = QPixmap(annotation.db_item.image.url)
+            img_width = pixmap.width()
+            img_height = pixmap.height()
+
+            # Normalize edilmiş koordinatları gerçek koordinatlara çevir
+            real_x = (annotation.db_item.x - (annotation.db_item.width/2)) * img_width
+            real_y = (annotation.db_item.y - (annotation.db_item.height/2)) * img_height
+            
+            # Text item'ı rect'in sol üst köşesine yerleştir, biraz offset ile
+            text_item.setPos(real_x - 7, 
+                    real_y - 27)
+            annotation.rect_index = text_item
+            widget.annotation_index.setText(str(annotation.db_item.annotation_id))
+                
         widget = LabelWidget().setup(self._connector)
         for item in self._connector.configurator.labels:
             widget.label_list.addItem(f"{item[1]} - {item[0]}")
@@ -74,7 +94,7 @@ class ImageHandler:
                 widget.label_list.setCurrentIndex(int(annotation.label))
         else:
             if len(args) == 3:
-                annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item)
+                annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item if arg_item else item)
             elif len(args) == 4:
                 annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item, label=arg_label)
 
@@ -82,7 +102,7 @@ class ImageHandler:
             db_item = self._connector.database.annotation.add(
                 image_id, 
                 annotation.label,
-                self._connector.database.annotation.count(image_id) + 1,
+                self._connector.database.annotation.current_count(image_id) + 1,
                 annotation.coords
             )
             annotation.db_item = db_item
@@ -90,6 +110,7 @@ class ImageHandler:
             self.annotation_count += 1
             self.add_annotation_to_list(annotation)
 
+        add_annotation_index_to_rect()
         self.check_annotation_in_current_source(annotation.source)
         widget.delete_label.clicked.connect(lambda: self.delete_annotation(annotation))
         widget.view_label.clicked.connect(lambda: self.hide(annotation))
@@ -113,10 +134,13 @@ class ImageHandler:
                     scene.removeItem(annotation.rect_obj)
                     # Rect'i memory'den temizle
                     annotation.rect_obj = None
+                if annotation.rect_index in scene.items():
+                    scene.removeItem(annotation.rect_index)
+                    annotation.rect_index = None
+                
                 self.remove_annotation(annotation)
                 self.annotation_count -= 1
-            _, _, defined_label_count = self.check_annotation
-            self._connector.label_defined_annotation_value.setText(str(defined_label_count))
+            self.set_dashboard_values()
             self.check_annotation_in_current_source(annotation.source)
 
     def delete_all_annotation_from_list(self):
@@ -151,23 +175,7 @@ class ImageHandler:
                 self._connector.database.annotation.update(db_item=annotation.db_item, label_id=annotation.label)
                 self.check_annotation_in_current_source(annotation.source)
                 break
-        _, _, defined_label_count = self.check_annotation
-        self._connector.label_defined_annotation_value.setText(str(defined_label_count))
-        
-    @property
-    def check_annotation(self):
-        defined_label_count = 0
-        available_annotation = False
-        has_unwrite = False
-        for image in self.images:
-            for annotation in self.get_annotation(image):
-                if annotation.label is None:
-                    has_unwrite = True
-                else:
-                    defined_label_count += 1
-                available_annotation = True
-        return has_unwrite, available_annotation, defined_label_count
-
+        self.set_dashboard_values()
     
     def add_multi_annotation(self, source: Source):
         self.delete_multi_annotation(source)
@@ -220,23 +228,22 @@ class ImageHandler:
         else:
             self.insert_from_file_dialog()
         if self._images:
+            self._connector.database.setting.update("session", True)
             self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
-            _, _, defined_ann = self.check_annotation
-            self._connector.label_defined_annotation_value.setText(str(defined_ann))
+            self.set_dashboard_values()
     
     def insert_from_drag_drop(self, drop_list):
+        drop_list = self.copy_image_to_temp_dir(drop_list)
         for image in drop_list:
             if image.path().endswith((".png", ".jpg", ".jpeg")) and image not in self._images:
-                self._images[image] = ImageCore(self._connector, image)
-                self._connector.database.image.add(image.toLocalFile())
+                self.add_image(url=image, read_only=False)
 
     def insert_from_file_dialog(self):
-        selected_list = QFileDialog.getOpenFileNames(self._connector, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg)")[0]
+        selected_list = self.copy_image_to_temp_dir(QFileDialog.getOpenFileNames(self._connector, "Görselleri Uygulamaya Aktar", "", "Images (*.png *.jpg *.jpeg)")[0])
         for image in selected_list:
-            if QUrl.fromLocalFile(image) not in self._images:
-                self._images[QUrl.fromLocalFile(image)] = ImageCore(self._connector, QUrl.fromLocalFile(image))
-                self._connector.database.image.add(image)
+            if image not in self._images:
+                self.add_image(url=image, read_only=False)
 
     def insert_project(self, drop_list = False):
         if drop_list:
@@ -248,24 +255,23 @@ class ImageHandler:
                 if archive.comment != b"***REMOVED***":
                     self._connector.show_message(PopupMessages.Error.M302)  # Add appropriate error message
                     return
-                archive.extractall(TEMPDIR)  # Zip dosyasını çıkar
+                archive.extractall(self._connector.database.settings.tempdir)  # Zip dosyasını çıkar
                 name_list = archive.namelist()
                 lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
-                self._connector.configurator.import_labels(os.path.join(TEMPDIR, lbl))
+                self._connector.configurator.import_labels(os.path.join(self._connector.database.settings.tempdir, lbl))
                 name_list.remove(lbl)
 
                 images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
                 for image in images:
-                    image_path = os.path.join(TEMPDIR, image)
+                    image_path = os.path.join(self._connector.database.settings.tempdir, image)
                     if os.path.exists(image_path):
-                        self._images[QUrl.fromLocalFile(image_path)] = ImageCore(self._connector, QUrl.fromLocalFile(image_path))
+                        self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
                         name_list.remove(image)
-
-                self.create_annotations_for_included_past_works(TEMPDIR, name_list)
+                self._connector.database.setting.update("session", True)
+                self.create_annotations_for_included_past_works(self._connector.database.settings.tempdir, name_list)
             self._connector.pages.setCurrentIndex(2)
             self._connector.load_selected_image(0, 1)
-            _, _, defined_label_count = self.check_annotation
-            self._connector.label_defined_annotation_value.setText(str(defined_label_count))
+            self.set_dashboard_values()
     
     def insert_project_from_drag_drop(self, drop_list):
         for archive in drop_list:
@@ -283,8 +289,10 @@ class ImageHandler:
         """
         images = self._connector.database.image.get()
         for image in images:
-            self._images[QUrl.fromLocalFile(image.url)] = ImageCore(self._connector, QUrl.fromLocalFile(image.url))
-        
+            self.add_image(url=QUrl.fromLocalFile(image.url))
+        if images:
+            self._connector.database.setting.update("session", True)
+
         annotations = self._connector.database.annotation.get()
         for annotation in annotations:
             self.add_annotation(
@@ -292,13 +300,13 @@ class ImageHandler:
             )
         self._connector.pages.setCurrentIndex(2)
         self._connector.load_selected_image(0, 1)
-        _, _, defined_label_count = self.check_annotation
-        self._connector.label_defined_annotation_value.setText(str(defined_label_count))
+        self.set_dashboard_values()
     
     def clear_tempdir(self):
-        if os.path.exists(TEMPDIR):
-            for image in os.listdir(TEMPDIR):
-                os.remove(os.path.join(TEMPDIR, image))
+        if os.path.exists(self._connector.database.settings.tempdir):
+            for image in os.listdir(self._connector.database.settings.tempdir):
+                os.remove(os.path.join(self._connector.database.settings.tempdir, image))
+            os.rmdir(self._connector.database.settings.tempdir)
 
     def create_annotations_for_included_past_works(self, tmpdir, name_list):
         for file in name_list:
@@ -350,13 +358,14 @@ class ImageHandler:
             İşlem sırasında herhangi bir hata olması durumunda, hata mesajı gösterilir.
         """
         try:
-            has_unwrite, available_annotation, _ = self.check_annotation
-            if available_annotation is False:
+            available_annotation = self._connector.database.annotation.count()
+            defined_annotation = self._connector.database.annotation.defined_count()
+            if available_annotation == 0:
                 self._connector.show_message(PopupMessages.Warning.M200)
             else:
-                if has_unwrite:
+                if available_annotation - defined_annotation > 0:
                     answer = self._connector.show_message(PopupMessages.Action.M400)
-                if has_unwrite is False or answer == Answers.OK:
+                if available_annotation - defined_annotation == 0 or answer == Answers.OK:
                     save_dir = QFileDialog.getExistingDirectory(self._connector, 'Çalışmanın Kaydedileceği Klasörü Seçin')
                     if save_dir:
                         self.zipper(save_dir)
@@ -403,7 +412,10 @@ class ImageHandler:
                             content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
                     if content:
                         archive.writestr(f'{base_name}.txt', content)
-            archive.writestr(str(uuid.uuid4()) + '.lbl', str(self._connector.configurator.label_type))
+            label_type = {}
+            for item in self._connector.configurator.label_type:
+                label_type[item.name] = item.unquie_id
+            archive.writestr(str(uuid.uuid4()) + '.lbl', str(label_type))
             archive.comment = b"***REMOVED***"
         archive.close()
     
@@ -454,6 +466,7 @@ class ImageHandler:
             Görselle ilişkili etiketi kaldırır.
         """
         self._images[annotation.source].remove_annotation(annotation)
+        self._connector.database.annotation.delete(annotation.db_item)
     
     def get_annotation_count_from_source(self, source: QUrl) -> int:
         """
@@ -477,3 +490,55 @@ class ImageHandler:
     def annotation_count(self, value):
         self._annotation_count = value
         self._connector.label_total_annotation_value.setText(str(value))
+
+    def check_directroy(self, path: QUrl):
+        dirname = os.path.dirname(path.toLocalFile()).split('/')[-1]
+        if dirname not in self.image_dir_list:
+            self.image_dir_list.append(dirname)
+            self._connector.label_image_directory.setText(', '.join(self.image_dir_list))
+    
+    def clear(self):
+        self.annotation_count = 0
+        self.images.clear()
+        self.clear_tempdir()
+        self.image_dir_list.clear()
+
+    def add_image(self, url: QUrl, read_only: bool = True):
+        self._images[url] = ImageCore(self._connector, url)
+        if not read_only:
+            self._connector.database.image.add(url.toLocalFile())
+
+    def delete_image(self, image):
+        answer = self._connector.show_message(PopupMessages.Action.M405)
+        if answer == Answers.OK:
+            self._connector.image_table.selectRow(self.images[image].row_index)
+            db_item = self._connector.database.image.filter(url=image.toLocalFile())
+            if db_item.annotations:
+                answer = self._connector.show_message(PopupMessages.Action.M406)
+                if answer == Answers.OK:
+                    for item in db_item.annotations:
+                        self._connector.database.annotation.delete(item)
+                else:
+                    return
+            self._connector.database.image.delete(db_item)
+            self._connector.image_table.removeRow(self.images[image].row_index)
+            self._images.pop(image)
+
+            for index, image in enumerate(self._images):
+                self._images[image].row_index = index
+        self.set_dashboard_values()
+    
+    def set_dashboard_values(self):
+        self._connector.label_total_image_value.setNum(self._connector.database.image.count())
+        self._connector.label_total_annotation_value.setNum(self._connector.database.annotation.count())
+        self._connector.label_defined_annotation_value.setNum(self._connector.database.annotation.defined_count())
+
+    def copy_image_to_temp_dir(self, images) -> list:
+        print(self._connector.database.settings.tempdir)
+        temp_images = []
+        for image in images:
+            source = image.toLocalFile() if isinstance(image, QUrl) else image
+            target = os.path.join(self._connector.database.settings.tempdir, os.path.basename(source))
+            shutil.copyfile(source, target)
+            temp_images.append(QUrl.fromLocalFile(target))
+        return temp_images

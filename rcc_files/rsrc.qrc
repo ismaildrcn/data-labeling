@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="images">
+    <file>../templates/images/folder-image.svg</file>
     <file>../templates/images/menu.svg</file>
     <file>../templates/images/verify.svg</file>
     <file>../templates/images/import-project.svg</file>

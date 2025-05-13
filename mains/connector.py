@@ -6,6 +6,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem
 
 from modals.popup.utils import Answers
+from templates.theme.colors import Colors
 from templates.ui.mainWindow import Ui_MainWindow as UI
 from widgets.graphics_view import CustomGraphicsView
 
@@ -60,8 +61,9 @@ class Connector(QMainWindow, UI):
         self.scene = QGraphicsScene()
         self.graphicsView.setScene(self.scene)
 
-        self.image_table.setColumnWidth(0, 50)
-        self.image_table.setColumnWidth(1, 150)
+        self.image_table.setColumnWidth(0, 40)
+        self.image_table.setColumnWidth(1, 200)
+        self.image_table.setColumnWidth(2, 40)
         self.image_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.image_table.horizontalHeader().setDefaultAlignment(Qt.AlignCenter)
 
@@ -84,7 +86,7 @@ class Connector(QMainWindow, UI):
             else:
                 answer = self.show_message(PopupMessages.Verify.M500)
                 if answer == Answers.OK:
-                    self.clear_database()
+                    self.clear_project()
                 else:
                     self.close()
                     sys.exit()
@@ -104,7 +106,6 @@ class Connector(QMainWindow, UI):
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
         self.image_handler.add_annotation(source=self.source.current, coords=detail[0], rect_obj=detail[1])
-        self.image_handler.check_annotation_in_current_source(self.source.current)
 
     @overload
     def load_selected_image(self, item: QTableWidgetItem) -> None: ...
@@ -124,6 +125,7 @@ class Connector(QMainWindow, UI):
             pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
 
             self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
+            self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
 
             self.graphicsView.fitInView(pixmap_item, Qt.KeepAspectRatio)
 
@@ -135,29 +137,29 @@ class Connector(QMainWindow, UI):
 
     def init_actions(self):
         self.menu = QMenu(self)
-        self.menu.setStyleSheet("""
-            QMenu {
-                border: 1px solid #00969d;
-                background-color: #00ADB5;
+        self.menu.setStyleSheet(f"""
+            QMenu {{
+                border: 1px solid #5678d5;
+                background-color: {Colors.PRIMARY};
                 color: #EEEEEE;
                 padding: 8px;
-            }
-            QMenu::item {
+            }}
+            QMenu::item {{
                 padding: 8px 10px;
                 background-color: transparent;
-            }
-            QMenu::item:selected {
-                background-color: #00969d;
-            }
+            }}
+            QMenu::item:selected {{
+                background-color: #5678d5;
+            }}
         """)
-
-        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Etiketleri Düzenle", self)
-        edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
-        self.menu.addAction(edit_label)
 
         import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Görüntüleri Uygulamaya Aktar", self)
         import_images.triggered.connect(lambda: self.pages.setCurrentIndex(0))
         self.menu.addAction(import_images)
+
+        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Etiketleri Düzenle", self)
+        edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
+        self.menu.addAction(edit_label)
 
         import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı Uygulamaya Aktar", self)
         # exit_action.triggered.connect(self.close)
@@ -177,30 +179,16 @@ class Connector(QMainWindow, UI):
     def clear_project(self):
         self.scene.clear()
         self.image_pixmap = None
-        self.image_handler.annotation_count = 0
+
         self.configurator.reset()
+        self.image_handler.clear()
+        self.database.clear()
         
         self.current_label_list.clear()
         self.image_table.clearContents()
         self.image_table.setRowCount(0)
-        self.image_handler.images.clear()
         self.source.clear()
         self.pages.setCurrentIndex(0)
-        self.image_handler.clear_tempdir()
-    
-    @pyqtSlot()
-    def clear_database(self):
-        annotations = self.database.annotation.get()
-        for annotation in annotations:
-            self.database.annotation.delete(annotation)
-        images = self.database.image.get().all()
-        for image in images:
-            self.database.image.delete(image)
-        
-        self.configurator.reset()
-        self.database.setting.update("session", False)
-        
-
 
     def pages_current_changed(self, index):
         if index == 2:

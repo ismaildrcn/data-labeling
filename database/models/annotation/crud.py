@@ -56,5 +56,19 @@ class AnnotationCRUD(CRUD):
         return session.query(Annotation).filter(Annotation.image_id == image_id).filter(Annotation.label_id == None).all()
  
     @staticmethod
-    def count(image_id: int) -> int:
+    def current_count(image_id: int) -> int:
         return session.query(Annotation).filter(Annotation.image_id == image_id).count()
+    
+    @staticmethod
+    def count() -> int:
+        return session.query(Annotation).count()
+    
+    @staticmethod
+    def defined_count() -> int:
+        return session.query(Annotation).filter(Annotation.label_id != None).count()
+    
+    @staticmethod
+    def clear() -> None:
+        for item in session.query(Annotation).all():
+            session.delete(item)
+        session.commit()
