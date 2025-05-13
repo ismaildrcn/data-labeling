@@ -9,6 +9,7 @@ from PyQt5.QtCore import QUrl, QRectF, Qt
 from PyQt5.QtGui import QPixmap, QPen
 from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
 
+from database.utils import UtilsForSettings
 from images.annotation import Annotation
 from images.core import ImageCore
 from images.utils import ImageStatus, ARCHIVE_EXTENSION
@@ -142,6 +143,8 @@ class ImageHandler:
                 self.annotation_count -= 1
             self.set_dashboard_values()
             self.check_annotation_in_current_source(annotation.source)
+            self._connector.approve_project(False)
+
 
     def delete_all_annotation_from_list(self):
         # Widget'ı listeden bul ve sil
@@ -176,6 +179,7 @@ class ImageHandler:
                 self.check_annotation_in_current_source(annotation.source)
                 break
         self.set_dashboard_values()
+        self._connector.approve_project(False)
     
     def add_multi_annotation(self, source: Source):
         self.delete_multi_annotation(source)
