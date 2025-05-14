@@ -126,7 +126,9 @@ class Listener(QMainWindow):
     def pushButton_exit_project_event_changed(self):
         answer = self._connector.show_message(PopupMessages.Action.M402)
         if answer == Answers.OK:
-            self._connector.clear_project()
+            answer = self._connector.show_message(PopupMessages.Verify.M501)
+            if answer == Answers.OK:
+                self._connector.clear_project()
 
     def pushButton_activate_hand_event_changed(self):
         if self._connector.pushButton_activate_hand.isChecked():

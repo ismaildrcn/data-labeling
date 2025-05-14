@@ -1,14 +1,16 @@
 import os
+import uuid
+import json
 import shutil
 
 from typing import Union, overload
-import uuid
 from zipfile import ZipFile
-
+from datetime import datetime
 from PyQt5.QtCore import QUrl, QRectF, Qt
 from PyQt5.QtGui import QPixmap, QPen
 from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
 
+from database.utils import UtilsForSettings
 from images.annotation import Annotation
 from images.core import ImageCore
 from images.utils import ImageStatus, ARCHIVE_EXTENSION
@@ -22,6 +24,13 @@ class ImageHandler:
     def __init__(self, connector=None):
         self._connector = connector
         self._images = {}
+        self.archive_metadata = {
+            "signature": "***REMOVED***",
+            "version": 1.0,
+            "authorized": "",
+            "description": "",
+            "date": "",
+        }
         self.image_dir_list = []
         self.annotation_count = 0
 
@@ -78,8 +87,10 @@ class ImageHandler:
         args = list(kwargs.values())
 
         if arg_db_item:
+            url = QUrl.fromLocalFile(arg_db_item.image.url)
+            url.setFragment(arg_db_item.image.main_url)
             annotation = Annotation(
-                source=QUrl.fromLocalFile(arg_db_item.image.url), 
+                source=url, 
                 coords=(arg_db_item.x, arg_db_item.y, arg_db_item.width, arg_db_item.height), 
                 rect_obj=QGraphicsRectItem, 
                 item=item, 
@@ -142,6 +153,8 @@ class ImageHandler:
                 self.annotation_count -= 1
             self.set_dashboard_values()
             self.check_annotation_in_current_source(annotation.source)
+            self._connector.approve_project(None)
+
 
     def delete_all_annotation_from_list(self):
         # Widget'ı listeden bul ve sil
@@ -176,6 +189,7 @@ class ImageHandler:
                 self.check_annotation_in_current_source(annotation.source)
                 break
         self.set_dashboard_values()
+        self._connector.approve_project(None)
     
     def add_multi_annotation(self, source: Source):
         self.delete_multi_annotation(source)
@@ -246,32 +260,48 @@ class ImageHandler:
                 self.add_image(url=image, read_only=False)
 
     def insert_project(self, drop_list = False):
-        if drop_list:
-            path = self.insert_project_from_drag_drop(drop_list)
-        else:
-            path = self.insert_project_from_file_dialog()
-        if path:
-            with ZipFile(path.toLocalFile(), 'r') as archive:
-                if archive.comment != b"***REMOVED***":
-                    self._connector.show_message(PopupMessages.Error.M302)  # Add appropriate error message
-                    return
-                archive.extractall(self._connector.database.settings.tempdir)  # Zip dosyasını çıkar
-                name_list = archive.namelist()
-                lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
-                self._connector.configurator.import_labels(os.path.join(self._connector.database.settings.tempdir, lbl))
-                name_list.remove(lbl)
+        """
+            Projeyi uygulamaya ekler.
 
-                images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
-                for image in images:
-                    image_path = os.path.join(self._connector.database.settings.tempdir, image)
-                    if os.path.exists(image_path):
-                        self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
-                        name_list.remove(image)
-                self._connector.database.setting.update("session", True)
-                self.create_annotations_for_included_past_works(self._connector.database.settings.tempdir, name_list)
-            self._connector.pages.setCurrentIndex(2)
-            self._connector.load_selected_image(0, 1)
-            self.set_dashboard_values()
+            args:
+                drop_list (list): Sürükleyip bırakılan dosyaların listesi.
+        """
+        if bool(int(self._connector.database.setting.filter(UtilsForSettings.SESSION.value).value)):
+            self._connector.show_message(PopupMessages.Warning.M205)
+        else:
+            if drop_list:
+                path = self.insert_project_from_drag_drop(drop_list)
+            else:
+                path = self.insert_project_from_file_dialog()
+            if path:
+                with ZipFile(path.toLocalFile(), 'r') as archive:
+                    if archive.comment != b"***REMOVED***":
+                        self._connector.show_message(PopupMessages.Error.M302)  # Add appropriate error message
+                        return
+                    archive.extractall(self._connector.database.settings.tempdir)  # Zip dosyasını çıkar
+                    name_list = archive.namelist()
+                    lbl = list(filter(lambda x: x.endswith('.lbl'), name_list))[0]
+                    self._connector.configurator.import_labels(os.path.join(self._connector.database.settings.tempdir, lbl))
+                    name_list.remove(lbl)
+
+                    metadata = list(filter(lambda x: x.endswith('metadata.json'), name_list))[0]
+                    with open(os.path.join(self._connector.database.settings.tempdir, metadata), 'r') as metadata_file:
+                        metadata = json.load(metadata_file)
+                        if metadata.get("authorized"):
+                            self._connector.approve_project(metadata.get("authorized"), False)
+
+
+                    images = list(filter(lambda x: x.lower().endswith(('.png', '.jpg', '.jpeg')), name_list))
+                    for image in images:
+                        image_path = os.path.join(self._connector.database.settings.tempdir, image)
+                        if os.path.exists(image_path):
+                            self.add_image(url=QUrl.fromLocalFile(image_path), read_only=False)
+                            name_list.remove(image)
+                    self._connector.database.setting.update("session", True)
+                    self.create_annotations_for_included_past_works(self._connector.database.settings.tempdir, name_list)
+                self._connector.pages.setCurrentIndex(2)
+                self._connector.load_selected_image(0, 1)
+                self.set_dashboard_values()
     
     def insert_project_from_drag_drop(self, drop_list):
         for archive in drop_list:
@@ -289,7 +319,9 @@ class ImageHandler:
         """
         images = self._connector.database.image.get()
         for image in images:
-            self.add_image(url=QUrl.fromLocalFile(image.url))
+            url = QUrl.fromLocalFile(image.url)
+            url.setFragment(image.main_url)
+            self.add_image(url=url)
         if images:
             self._connector.database.setting.update("session", True)
 
@@ -415,6 +447,10 @@ class ImageHandler:
             label_type = {}
             for item in self._connector.configurator.label_type:
                 label_type[item.name] = item.unquie_id
+            
+            authorized = self._connector.login.user.username if bool(self._connector.database.setting.filter(UtilsForSettings.APPROVED.value).value) else None
+            metadata = self.update_metadata(authorized = authorized, date = datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            archive.writestr('metadata.json', json.dumps(metadata))
             archive.writestr(str(uuid.uuid4()) + '.lbl', str(label_type))
             archive.comment = b"***REMOVED***"
         archive.close()
@@ -492,7 +528,10 @@ class ImageHandler:
         self._connector.label_total_annotation_value.setText(str(value))
 
     def check_directroy(self, path: QUrl):
-        dirname = os.path.dirname(path.toLocalFile()).split('/')[-1]
+        if path.fragment() != "":
+            dirname = os.path.dirname(path.fragment()).split('/')[-1]
+        else:
+            dirname = os.path.dirname(path.toLocalFile()).split('/')[-1]
         if dirname not in self.image_dir_list:
             self.image_dir_list.append(dirname)
             self._connector.label_image_directory.setText(', '.join(self.image_dir_list))
@@ -506,7 +545,8 @@ class ImageHandler:
     def add_image(self, url: QUrl, read_only: bool = True):
         self._images[url] = ImageCore(self._connector, url)
         if not read_only:
-            self._connector.database.image.add(url.toLocalFile())
+            main_url = None if url.fragment() == "" else url.fragment()
+            self._connector.database.image.add(url.toLocalFile(), main_url)
 
     def delete_image(self, image):
         answer = self._connector.show_message(PopupMessages.Action.M405)
@@ -540,5 +580,18 @@ class ImageHandler:
             source = image.toLocalFile() if isinstance(image, QUrl) else image
             target = os.path.join(self._connector.database.settings.tempdir, os.path.basename(source))
             shutil.copyfile(source, target)
-            temp_images.append(QUrl.fromLocalFile(target))
+            url = QUrl.fromLocalFile(target)
+            url.setFragment(source)
+            temp_images.append(url)
         return temp_images
+
+    def update_metadata(self, **kwargs):
+        """
+            Metadata günceller.
+            args:
+                kwargs (dict): Güncellenecek metadata anahtar-değer çiftleri.
+        """
+        for key, value in kwargs.items():
+            if key in self.archive_metadata:
+                self.archive_metadata[key] = value
+        return self.archive_metadata

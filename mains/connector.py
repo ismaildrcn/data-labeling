@@ -1,10 +1,11 @@
 import sys
 
 from typing import overload
-from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, pyqtSignal
-from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator
-from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem
+from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer
+from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator, QMovie
+from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem, QLabel
 
+from database.utils import UtilsForSettings
 from modals.popup.utils import Answers
 from templates.theme.colors import Colors
 from templates.ui.mainWindow import Ui_MainWindow as UI
@@ -18,8 +19,9 @@ from modals.popup.messages import PopupMessages
 from images.handler import ImageHandler
 
 from database.process import DatabaseProcess
-from database.utils import Tables
 
+from account.login import Login
+from account.users import Users
 
 
 
@@ -41,6 +43,7 @@ class Connector(QMainWindow, UI):
         self.configurator = Configurator(self)
         self.modals = Modals(self)
         self.image_handler = ImageHandler(self)
+        self.login = Login(self)
 
     def connection(self):
         self.image_table.cellClicked.connect(self.load_selected_image)
@@ -49,6 +52,13 @@ class Connector(QMainWindow, UI):
 
 
     def initialize(self):
+        answer = self.login.show()
+        if not answer:
+            sys.exit()
+        elif answer == Users.operator.value:
+            self.widget_personel_state.setVisible(False)
+        else:
+            self.approve_project(self.database.setting.filter(UtilsForSettings.APPROVED.value).value, None)
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         self.listWidget_label_list.setSpacing(5)
@@ -106,6 +116,7 @@ class Connector(QMainWindow, UI):
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
         self.image_handler.add_annotation(source=self.source.current, coords=detail[0], rect_obj=detail[1])
+        self.approve_project(None)
 
     @overload
     def load_selected_image(self, item: QTableWidgetItem) -> None: ...
@@ -118,6 +129,7 @@ class Connector(QMainWindow, UI):
             item = self.image_table.item(args[0], 1)
         """ Seçilen görseli yükle"""
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
+        self.image_table.setCurrentItem(item)  # Seçili satırı güncelle
         if self.source.current != self.source.previous:
             self.image_pixmap = QPixmap(self.source.current.toLocalFile())
 
@@ -125,13 +137,13 @@ class Connector(QMainWindow, UI):
             pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
 
             self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
-            self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
 
             self.graphicsView.fitInView(pixmap_item, Qt.KeepAspectRatio)
 
             self.graphicsView.setTransformationAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setRenderHint(QPainter.Antialiasing)
+            self.current_label_list.clear()
             self.image_handler.add_multi_annotation(self.source)
             self.label_current_image_name.setText(f"{self.image_table.currentRow() + 1} - {self.source.current.toLocalFile().split('/')[-1]}")
 
@@ -162,15 +174,22 @@ class Connector(QMainWindow, UI):
         self.menu.addAction(edit_label)
 
         import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı Uygulamaya Aktar", self)
-        # exit_action.triggered.connect(self.close)
+        import_action.triggered.connect(self.image_handler.insert_project)
         self.menu.addAction(import_action)
         
         export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Çalışmayı Bilgisayara Aktar", self)
         export_action.triggered.connect(self.image_handler.export)
         self.menu.addAction(export_action)
+
+        if self.login.user != Users.operator.value:
+            approve_action = QAction(QIcon(":/images/templates/images/approve.svg"), "Çalışmayı Onayla", self)
+            approve_action.triggered.connect(lambda: self.approve_project(self.login.user.username))
+            self.menu.addAction(approve_action)
         
         
     def show_menu(self):
+        if len(self.menu.actions()) == 5: 
+            self.menu.actions()[4].setVisible(self.pages.currentIndex() == 2)
         self.menu.exec_(self.pushButton_actions.mapToGlobal(self.pushButton_actions.rect().bottomLeft()))
     
     def show_message(self, p_code: PopupMessages):
@@ -201,3 +220,52 @@ class Connector(QMainWindow, UI):
         self.graphicsView.reset()
         self.graphicsView.resetTransform()
         self.graphicsView.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
+    
+    def approve_project(self, authorized: str, animation: bool = True):
+        """
+            Onaylama işlemini gerçekleştirir.
+            Eğer onaylama işlemi başarılı olursa, animasyon gösterilir.
+        """
+        self.database.setting.update(UtilsForSettings.APPROVED.value, authorized)
+        self.pushButton_personel_state.setChecked(bool(authorized))
+        self.label_authorized.setText(authorized if authorized else "")
+        if authorized and animation:
+            self.create_approve_animation()
+    
+    def create_approve_animation(self):
+        """
+            Shows an approval animation in the center of the application for 1.6 seconds
+        """
+        # Create a label for the animation
+        animation_label = QLabel(self)
+        animation_label.setFixedSize(100, 100)
+        
+        # Load and set the GIF animation
+        movie = QMovie(":/images/templates/images/approve.gif")  # Adjust path to your GIF
+        movie.setScaledSize(animation_label.size())
+        animation_label.setMovie(movie)
+        
+        # Center the label in the main window
+        animation_label.setAlignment(Qt.AlignCenter)
+        geometry = self.geometry()
+        x = (geometry.width() - animation_label.width()) // 2
+        y = (geometry.height() - animation_label.height()) // 2
+        animation_label.move(x, y)
+        
+        # Set window flags to show on top
+        animation_label.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        
+        # Start animation and show label
+        movie.start()
+        animation_label.show()
+        
+        # Create timer to hide and cleanup
+        timer = QTimer(self)
+        timer.singleShot(1600, lambda: self.cleanup_animation(animation_label, movie))
+
+    def cleanup_animation(self, label, movie):
+        """Helper method to cleanup the animation"""
+        movie.stop()
+        label.hide()
+        label.deleteLater()
+        

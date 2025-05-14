@@ -24,7 +24,7 @@ class SettingCRUD(CRUD):
         return session.query(Setting)
     
     @staticmethod
-    def update(name: str, value: str) -> None:
+    def update(name: str, value) -> None:
         setting = session.query(Setting).filter(Setting.name == name).first()
         if setting:
             setting.value = value
