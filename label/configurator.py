@@ -152,10 +152,14 @@ class Configurator(object):
                 with open(f"{fname}", 'r') as f:
                     text = ast.literal_eval(f.readline().strip())
                     if text:
-                        for lbl in text:
-                            item = QListWidgetItem(lbl)
+                        for key, value in text.items():
+                            item = QListWidgetItem(key)
                             self._connector.listWidget_label_list.addItem(item)
-                    self.label_type = text
+                            if not self._connector.database.label.filter(Label.name, key):
+                                db_item = self._connector.database.label.add(unique_id=len(self.label_type), name=key, is_default=False)
+                            else:
+                                db_item = self._connector.database.label.filter(Label.name, key)[0]
+                            self.label_type.append(db_item)
 
     def get_settings_from_database(self):
         """
