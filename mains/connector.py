@@ -58,7 +58,7 @@ class Connector(QMainWindow, UI):
         elif answer == Users.operator.value:
             self.widget_personel_state.setVisible(False)
         else:
-            self.approve_project(self.database.setting.filter(UtilsForSettings.APPROVED.value).value, None)
+            self.authorize_project(self.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value, None)
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         self.listWidget_label_list.setSpacing(5)
@@ -116,7 +116,7 @@ class Connector(QMainWindow, UI):
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
         self.image_handler.add_annotation(source=self.source.current, coords=detail[0], rect_obj=detail[1])
-        self.approve_project(None)
+        self.authorize_project(None)
 
     @overload
     def load_selected_image(self, item: QTableWidgetItem) -> None: ...
@@ -182,9 +182,9 @@ class Connector(QMainWindow, UI):
         self.menu.addAction(export_action)
 
         if self.login.user != Users.operator.value:
-            approve_action = QAction(QIcon(":/images/templates/images/approve.svg"), "Çalışmayı Onayla", self)
-            approve_action.triggered.connect(lambda: self.approve_project(self.login.user.username))
-            self.menu.addAction(approve_action)
+            authorize_action = QAction(QIcon(":/images/templates/images/authorize.svg"), "Çalışmayı Onayla", self)
+            authorize_action.triggered.connect(lambda: self.authorize_project(self.login.user.username))
+            self.menu.addAction(authorize_action)
         
         
     def show_menu(self):
@@ -221,18 +221,18 @@ class Connector(QMainWindow, UI):
         self.graphicsView.resetTransform()
         self.graphicsView.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
     
-    def approve_project(self, authorized: str, animation: bool = True):
+    def authorize_project(self, authorized: str, animation: bool = True):
         """
             Onaylama işlemini gerçekleştirir.
             Eğer onaylama işlemi başarılı olursa, animasyon gösterilir.
         """
-        self.database.setting.update(UtilsForSettings.APPROVED.value, authorized)
+        self.database.setting.update(UtilsForSettings.AUTHORIZED.value, authorized)
         self.pushButton_personel_state.setChecked(bool(authorized))
         self.label_authorized.setText(authorized if authorized else "")
         if authorized and animation:
-            self.create_approve_animation()
-    
-    def create_approve_animation(self):
+            self.create_authorize_animation()
+
+    def create_authorize_animation(self):
         """
             Shows an approval animation in the center of the application for 1.6 seconds
         """
@@ -241,7 +241,7 @@ class Connector(QMainWindow, UI):
         animation_label.setFixedSize(100, 100)
         
         # Load and set the GIF animation
-        movie = QMovie(":/images/templates/images/approve.gif")  # Adjust path to your GIF
+        movie = QMovie(":/images/templates/images/authorize.gif")  # Adjust path to your GIF
         movie.setScaledSize(animation_label.size())
         animation_label.setMovie(movie)
         
