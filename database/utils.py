@@ -17,4 +17,4 @@ class UtilsForSettings(Enum):
     USE_DEFAULT_LABELS = "use_default_labels"
     SESSION = "session"
     TEMP_URL = "temp_url"
-    APPROVED = "approved"
+    AUTHORIZED = "authorized"

@@ -2,9 +2,9 @@
   <qresource prefix="images">
     <file>../templates/images/document-check.svg</file>
     <file>../templates/images/document-cross.svg</file>
-    <file>../templates/images/approve.gif</file>
-    <file>../templates/images/approve.svg</file>
     <file>../templates/images/account.svg</file>
+    <file>../templates/images/authorize.gif</file>
+    <file>../templates/images/authorize.svg</file>
     <file>../templates/images/microchip.svg</file>
     <file>../templates/images/login-background.jpg</file>
     <file>../templates/images/folder-image.svg</file>
