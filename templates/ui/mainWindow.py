@@ -272,6 +272,7 @@ class Ui_MainWindow(object):
         self.widget_importing_area = QtWidgets.QWidget(self.page_data_importing)
         self.widget_importing_area.setMinimumSize(QtCore.QSize(450, 250))
         self.widget_importing_area.setMaximumSize(QtCore.QSize(450, 250))
+        self.widget_importing_area.setAcceptDrops(True)
         self.widget_importing_area.setStyleSheet("")
         self.widget_importing_area.setObjectName("widget_importing_area")
         self.layout_importing_area = QtWidgets.QVBoxLayout(self.widget_importing_area)
@@ -297,6 +298,7 @@ class Ui_MainWindow(object):
         self.widget_import_project = QtWidgets.QWidget(self.page_data_importing)
         self.widget_import_project.setMinimumSize(QtCore.QSize(450, 250))
         self.widget_import_project.setMaximumSize(QtCore.QSize(450, 250))
+        self.widget_import_project.setAcceptDrops(True)
         self.widget_import_project.setObjectName("widget_import_project")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.widget_import_project)
         self.verticalLayout_12.setContentsMargins(-1, 40, -1, -1)
@@ -977,7 +979,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
