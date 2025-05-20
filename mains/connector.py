@@ -236,7 +236,7 @@ class Connector(QMainWindow, UI):
         """
         self.database.setting.update(UtilsForSettings.AUTHORIZED.value, authorized)
         self.pushButton_personel_state.setChecked(bool(authorized))
-        self.label_authorized.setText(authorized if authorized else "")
+        self.label_authorized.setText(authorized if authorized else "Onaylanmamış")
         if authorized and animation:
             self.create_authorize_animation()
 
