@@ -534,8 +534,10 @@ class ImageHandler:
             dirname = os.path.dirname(path.toLocalFile()).split('/')[-1]
         if dirname not in self.image_dir_list:
             self.image_dir_list.append(dirname)
-            self._connector.label_image_directory.setText(', '.join(self.image_dir_list))
-    
+            text = ', '.join(self.image_dir_list)
+            self._connector.label_image_directory.setText(text)
+            self._connector.label_image_directory.setToolTip(text)
+
     def clear(self):
         self.annotation_count = 0
         self.images.clear()
