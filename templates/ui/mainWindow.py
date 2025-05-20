@@ -17,11 +17,11 @@ class Ui_MainWindow(object):
         MainWindow.resize(1298, 720)
         MainWindow.setMinimumSize(QtCore.QSize(1280, 720))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/images/templates/images/fad.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/images/templates/images/microchip.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setStyleSheet("#centralwidget{\n"
+        self.centralwidget.setStyleSheet("#pages{\n"
 "    background-color: #222831;\n"
 "}\n"
 "QLabel, QPushButton{\n"
@@ -84,11 +84,17 @@ class Ui_MainWindow(object):
 "    height: 0px;\n"
 "}")
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.widget_top = QtWidgets.QWidget(self.centralwidget)
+        self.centralLayout = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.centralLayout.setContentsMargins(9, 9, 9, 9)
+        self.centralLayout.setSpacing(0)
+        self.centralLayout.setObjectName("centralLayout")
+        self.widget_main = QtWidgets.QWidget(self.centralwidget)
+        self.widget_main.setObjectName("widget_main")
+        self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.widget_main)
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_13.setSpacing(0)
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
+        self.widget_top = QtWidgets.QWidget(self.widget_main)
         self.widget_top.setMinimumSize(QtCore.QSize(0, 40))
         self.widget_top.setStyleSheet("#widget_top{\n"
 "    background-color: #393E46;\n"
@@ -246,8 +252,8 @@ class Ui_MainWindow(object):
         self.pushButton_close_window.setObjectName("pushButton_close_window")
         self.horizontalLayout.addWidget(self.pushButton_close_window)
         self.horizontalLayout_2.addWidget(self.widget_topbar_actions, 0, QtCore.Qt.AlignRight)
-        self.verticalLayout.addWidget(self.widget_top)
-        self.pages = QtWidgets.QStackedWidget(self.centralwidget)
+        self.verticalLayout_13.addWidget(self.widget_top)
+        self.pages = QtWidgets.QStackedWidget(self.widget_main)
         self.pages.setStyleSheet("#page_labeling, #page_data_importing, #page_init_label{\n"
 "    background-color: #222831;\n"
 "}")
@@ -966,7 +972,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.widget_current_label_area)
         self.verticalLayout_2.addWidget(self.widget)
         self.pages.addWidget(self.page_labeling)
-        self.verticalLayout.addWidget(self.pages)
+        self.verticalLayout_13.addWidget(self.pages)
+        self.centralLayout.addWidget(self.widget_main)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)

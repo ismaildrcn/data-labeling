@@ -103,7 +103,9 @@ class Listener(QMainWindow):
     def pushButton_fullscreen_window_event_changed(self) -> None:
         if self._connector.isFullScreen():
             self._connector.showNormal()
+            self._connector.centralLayout.setContentsMargins(9, 9, 9, 9)
         else:
+            self._connector.centralLayout.setContentsMargins(0, 0, 0, 0)
             self._connector.showFullScreen()
             self._connector.reset_zoom()
 

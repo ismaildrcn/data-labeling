@@ -19,6 +19,7 @@ class Login(QDialog, LoginUI):
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.connection()
+        self.widget_main.setGraphicsEffect(self._connector.create_shadow())
 
     def connection(self):
         self.pushButton_login.clicked.connect(self.check_login_input)

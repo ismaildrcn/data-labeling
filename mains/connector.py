@@ -4,6 +4,7 @@ from typing import overload
 from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator, QMovie
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem, QLabel
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 
 from database.utils import UtilsForSettings
 from modals.popup.utils import Answers
@@ -60,6 +61,9 @@ class Connector(QMainWindow, UI):
         else:
             self.authorize_project(self.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value, None)
         self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        self.widget_main.setGraphicsEffect(self.create_shadow())
 
         self.listWidget_label_list.setSpacing(5)
 
@@ -269,3 +273,9 @@ class Connector(QMainWindow, UI):
         label.hide()
         label.deleteLater()
         
+    def create_shadow(self):
+        shadow = QGraphicsDropShadowEffect(self)
+        shadow.setBlurRadius(15)
+        shadow.setColor(Qt.black)
+        shadow.setOffset(0, 0)
+        return shadow

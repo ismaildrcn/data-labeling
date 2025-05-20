@@ -21,14 +21,14 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../rcc_files/rsrc.qrc">
-    <normaloff>:/images/templates/images/fad.ico</normaloff>:/images/templates/images/fad.ico</iconset>
+    <normaloff>:/images/templates/images/microchip.svg</normaloff>:/images/templates/images/microchip.svg</iconset>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">#centralwidget{
+    <string notr="true">#pages{
 	background-color: #222831;
 }
 QLabel, QPushButton{
@@ -91,44 +91,30 @@ QScrollBar::down-arrow:horizontal {
     height: 0px;
 }</string>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="centralLayout">
     <property name="spacing">
      <number>0</number>
     </property>
     <property name="leftMargin">
-     <number>0</number>
+     <number>9</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>9</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>9</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>9</number>
     </property>
     <item>
-     <widget class="QWidget" name="widget_top" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#widget_top{
-	background-color: #393E46;
-}
-QPushButton{
-	border:none;
-	padding: 5px 8px;
-	background-color: transparent;
-	color: #EEEEEE;
-}</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <widget class="QWidget" name="widget_main" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_13">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
-        <number>9</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
         <number>0</number>
@@ -139,102 +125,81 @@ QPushButton{
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item alignment="Qt::AlignLeft">
-        <widget class="QWidget" name="widget_topbar_left_actions" native="true">
+       <item>
+        <widget class="QWidget" name="widget_top" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton:hover{
-	border-radius:5px;
-	background-color: #6086EF;
+          <string notr="true">#widget_top{
+	background-color: #393E46;
+}
+QPushButton{
+	border:none;
+	padding: 5px 8px;
+	background-color: transparent;
+	color: #EEEEEE;
 }</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="spacing">
-           <number>12</number>
-          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="leftMargin">
-           <number>0</number>
+           <number>9</number>
           </property>
           <property name="topMargin">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>4</number>
+           <number>0</number>
           </property>
-          <item>
-           <widget class="QLabel" name="window_icon">
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/microchip.svg</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="widget_username" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
+          <item alignment="Qt::AlignLeft">
+           <widget class="QWidget" name="widget_topbar_left_actions" native="true">
             <property name="styleSheet">
-             <string notr="true">#widget_username{
-	border-radius: 5px;
-	background-color: rgba(76,81,88, 150)
-;
+             <string notr="true">QPushButton:hover{
+	border-radius:5px;
+	background-color: #6086EF;
 }</string>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <property name="spacing">
+              <number>12</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
              <property name="topMargin">
               <number>4</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
              </property>
              <property name="bottomMargin">
               <number>4</number>
              </property>
              <item>
-              <widget class="QLabel" name="icon_account">
+              <widget class="QLabel" name="window_icon">
                <property name="minimumSize">
                 <size>
-                 <width>22</width>
-                 <height>22</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>22</width>
-                 <height>22</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="text">
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/account.svg</pixmap>
+                <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/microchip.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -242,7 +207,77 @@ QPushButton{
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_account_username">
+              <widget class="QWidget" name="widget_username" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">#widget_username{
+	border-radius: 5px;
+	background-color: rgba(76,81,88, 150)
+;
+}</string>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_14">
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>4</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="icon_account">
+                  <property name="minimumSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/account.svg</pixmap>
+                  </property>
+                  <property name="scaledContents">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_account_username">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>username</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_exit_project">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -251,397 +286,380 @@ QPushButton{
                 </font>
                </property>
                <property name="text">
-                <string>username</string>
+                <string>Çalışmadan Çık</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../rcc_files/rsrc.qrc">
+                 <normaloff>:/images/templates/images/exit.svg</normaloff>:/images/templates/images/exit.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>22</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_actions">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Eylemler</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../rcc_files/rsrc.qrc">
+                 <normaloff>:/images/templates/images/menu.svg</normaloff>:/images/templates/images/menu.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>22</width>
+                 <height>22</height>
+                </size>
                </property>
               </widget>
              </item>
             </layout>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_exit_project">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="label_image_labeling_title">
             <property name="font">
              <font>
-              <pointsize>10</pointsize>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
             <property name="text">
-             <string>Çalışmadan Çık</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../rcc_files/rsrc.qrc">
-              <normaloff>:/images/templates/images/exit.svg</normaloff>:/images/templates/images/exit.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>22</width>
-              <height>22</height>
-             </size>
+             <string>Görsel Veri Etiketleme</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_actions">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Eylemler</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../rcc_files/rsrc.qrc">
-              <normaloff>:/images/templates/images/menu.svg</normaloff>:/images/templates/images/menu.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>22</width>
-              <height>22</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label_image_labeling_title">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Görsel Veri Etiketleme</string>
-         </property>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignRight">
-        <widget class="QWidget" name="widget_topbar_actions" native="true">
-         <property name="styleSheet">
-          <string notr="true">QPushButton:hover{
+          <item alignment="Qt::AlignRight">
+           <widget class="QWidget" name="widget_topbar_actions" native="true">
+            <property name="styleSheet">
+             <string notr="true">QPushButton:hover{
 	background-color: #6086EF;
 }
 
 #pushButton_close_window:hover{
 	background-color: rgb(255, 0, 0);
 }</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="pushButton_hide_window">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../rcc_files/rsrc.qrc">
-              <normaloff>:/images/templates/images/minus.svg</normaloff>:/images/templates/images/minus.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>22</width>
-              <height>22</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_fullscreen_window">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../rcc_files/rsrc.qrc">
-              <normaloff>:/images/templates/images/full-screen.svg</normaloff>:/images/templates/images/full-screen.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>22</width>
-              <height>22</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_close_window">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../rcc_files/rsrc.qrc">
-              <normaloff>:/images/templates/images/close.svg</normaloff>:/images/templates/images/close.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>22</width>
-              <height>22</height>
-             </size>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="pushButton_hide_window">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../rcc_files/rsrc.qrc">
+                 <normaloff>:/images/templates/images/minus.svg</normaloff>:/images/templates/images/minus.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>22</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_fullscreen_window">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../rcc_files/rsrc.qrc">
+                 <normaloff>:/images/templates/images/full-screen.svg</normaloff>:/images/templates/images/full-screen.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>22</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_close_window">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../rcc_files/rsrc.qrc">
+                 <normaloff>:/images/templates/images/close.svg</normaloff>:/images/templates/images/close.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>22</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QStackedWidget" name="pages">
-      <property name="styleSheet">
-       <string notr="true">#page_labeling, #page_data_importing, #page_init_label{
+       <item>
+        <widget class="QStackedWidget" name="pages">
+         <property name="styleSheet">
+          <string notr="true">#page_labeling, #page_data_importing, #page_init_label{
 	background-color: #222831;
 }</string>
-      </property>
-      <property name="currentIndex">
-       <number>2</number>
-      </property>
-      <widget class="QWidget" name="page_data_importing">
-       <property name="styleSheet">
-        <string notr="true">#widget_importing_area, #widget_import_project{
+         </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <widget class="QWidget" name="page_data_importing">
+          <property name="styleSheet">
+           <string notr="true">#widget_importing_area, #widget_import_project{
 	border-radius:5px;
 	border: 3px solid #6086EF;
 }</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_11">
-        <property name="spacing">
-         <number>35</number>
-        </property>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item alignment="Qt::AlignHCenter">
-         <widget class="QWidget" name="widget_importing_area" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>450</width>
-            <height>250</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>450</width>
-            <height>250</height>
-           </size>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <property name="spacing">
+            <number>35</number>
+           </property>
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QWidget" name="widget_importing_area" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>450</width>
+               <height>250</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>450</width>
+               <height>250</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <layout class="QVBoxLayout" name="layout_importing_area">
+              <property name="topMargin">
+               <number>40</number>
+              </property>
+              <item alignment="Qt::AlignHCenter">
+               <widget class="QLabel" name="icon_drop_images">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="acceptDrops">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/drop-images.svg</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_drop_images">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="acceptDrops">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Resimleri bırakın&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;veya &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Seçmek için buraya tıklayın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QWidget" name="widget_import_project" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>450</width>
+               <height>250</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>450</width>
+               <height>250</height>
+              </size>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_12">
+              <property name="topMargin">
+               <number>40</number>
+              </property>
+              <item alignment="Qt::AlignHCenter">
+               <widget class="QLabel" name="icon_drop_project">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="acceptDrops">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/import-project.svg</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_drop_project">
+                <property name="acceptDrops">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Geçmiş proje arşiv dosyasını bırakın &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;veya &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Seçmek için buraya tıklayın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_init_label">
           <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <layout class="QVBoxLayout" name="layout_importing_area">
-           <property name="topMargin">
-            <number>40</number>
-           </property>
-           <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="icon_drop_images">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>60</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="acceptDrops">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/drop-images.svg</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_drop_images">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="acceptDrops">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Resimleri bırakın&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;veya &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Seçmek için buraya tıklayın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item alignment="Qt::AlignHCenter">
-         <widget class="QWidget" name="widget_import_project" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>450</width>
-            <height>250</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>450</width>
-            <height>250</height>
-           </size>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_12">
-           <property name="topMargin">
-            <number>40</number>
-           </property>
-           <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="icon_drop_project">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>60</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="acceptDrops">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/import-project.svg</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_drop_project">
-             <property name="acceptDrops">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Geçmiş proje arşiv dosyasını bırakın &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;veya &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Seçmek için buraya tıklayın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="page_init_label">
-       <property name="styleSheet">
-        <string notr="true">#widget_init_label_area, #widget_insert_label_area{
+           <string notr="true">#widget_init_label_area, #widget_insert_label_area{
 	border-radius:5px;
 	border: 3px solid #6086EF;
 }
@@ -656,109 +674,47 @@ QPushButton{
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
 }</string>
-       </property>
-       <layout class="QVBoxLayout" name="layout_page_init_label">
-        <property name="spacing">
-         <number>35</number>
-        </property>
-        <property name="bottomMargin">
-         <number>9</number>
-        </property>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item alignment="Qt::AlignHCenter">
-         <widget class="QWidget" name="widget_insert_label_area" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>450</width>
-            <height>150</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>450</width>
-            <height>150</height>
-           </size>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <property name="topMargin">
-            <number>20</number>
+          <layout class="QVBoxLayout" name="layout_page_init_label">
+           <property name="spacing">
+            <number>35</number>
            </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="icon_insert_label">
+            <widget class="QWidget" name="widget_insert_label_area" native="true">
              <property name="minimumSize">
               <size>
-               <width>60</width>
-               <height>60</height>
+               <width>450</width>
+               <height>150</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>60</width>
-               <height>60</height>
+               <width>450</width>
+               <height>150</height>
               </size>
              </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/insert.svg</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_import_labels">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiketleri Uygulamaya Aktar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item alignment="Qt::AlignHCenter">
-         <widget class="QWidget" name="widget_init_label_area" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>450</width>
-            <height>320</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>450</width>
-            <height>320</height>
-           </size>
-          </property>
-          <layout class="QVBoxLayout" name="layout_init_label_area">
-           <property name="leftMargin">
-            <number>20</number>
-           </property>
-           <property name="rightMargin">
-            <number>20</number>
-           </property>
-           <item>
-            <widget class="QWidget" name="widget_init_label_header" native="true">
-             <layout class="QVBoxLayout" name="layout_init_label_header">
+             <layout class="QVBoxLayout" name="verticalLayout_3">
               <property name="topMargin">
-               <number>0</number>
+               <number>20</number>
               </property>
               <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="icon_label">
+               <widget class="QLabel" name="icon_insert_label">
                 <property name="minimumSize">
                  <size>
                   <width>60</width>
@@ -775,7 +731,7 @@ QPushButton{
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/label.svg</pixmap>
+                 <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/insert.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -783,19 +739,9 @@ QPushButton{
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_create_label">
+               <widget class="QLabel" name="label_import_labels">
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiket Oluştur&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini istediğiniz gibi oluşturabilirsiniz.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiketleri Uygulamaya Aktar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -803,114 +749,186 @@ QPushButton{
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="Line" name="line">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QWidget" name="widget_init_label_area" native="true">
              <property name="minimumSize">
               <size>
-               <width>325</width>
-               <height>0</height>
+               <width>450</width>
+               <height>320</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>325</width>
-               <height>16777215</height>
+               <width>450</width>
+               <height>320</height>
               </size>
              </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="listWidget_label_list"/>
-           </item>
-           <item>
-            <widget class="QWidget" name="widget_add_label" native="true">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <layout class="QHBoxLayout" name="layout_add_label">
-              <property name="spacing">
+             <layout class="QVBoxLayout" name="layout_init_label_area">
+              <property name="leftMargin">
                <number>20</number>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>20</number>
               </property>
               <item>
-               <widget class="QLineEdit" name="lineEdit_add_label">
+               <widget class="QWidget" name="widget_init_label_header" native="true">
+                <layout class="QVBoxLayout" name="layout_init_label_header">
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <item alignment="Qt::AlignHCenter">
+                  <widget class="QLabel" name="icon_label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>60</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>60</width>
+                     <height>60</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="pixmap">
+                    <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/label.svg</pixmap>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_create_label">
+                   <property name="text">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Etiket Oluştur&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini istediğiniz gibi oluşturabilirsiniz.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignHCenter">
+               <widget class="Line" name="line">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>28</height>
+                  <width>325</width>
+                  <height>0</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
+                <property name="maximumSize">
+                 <size>
+                  <width>325</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>top_lehim</string>
-                </property>
-                <property name="clearButtonEnabled">
-                 <bool>true</bool>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_add_label">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>28</height>
-                 </size>
-                </property>
+               <widget class="QListWidget" name="listWidget_label_list"/>
+              </item>
+              <item>
+               <widget class="QWidget" name="widget_add_label" native="true">
                 <property name="font">
                  <font>
-                  <pointsize>10</pointsize>
+                  <pointsize>11</pointsize>
                  </font>
                 </property>
-                <property name="text">
-                 <string>Oluştur</string>
-                </property>
+                <layout class="QHBoxLayout" name="layout_add_label">
+                 <property name="spacing">
+                  <number>20</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_add_label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>28</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="placeholderText">
+                    <string>top_lehim</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_add_label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>28</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Oluştur</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
             </widget>
            </item>
-          </layout>
-         </widget>
-        </item>
-        <item alignment="Qt::AlignHCenter">
-         <widget class="QWidget" name="widget_init_label_button_area" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>450</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>450</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QWidget" name="widget_init_label_button_area" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>450</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>450</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
 	border: 2px solid #6086EF;
 	background-color: transparent;
 	color: #6086EF;
@@ -923,98 +941,98 @@ QPushButton:hover{
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
 }</string>
-          </property>
-          <layout class="QHBoxLayout" name="layout_init_label_button_area">
-           <property name="spacing">
-            <number>20</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QPushButton" name="pushButton_continue_labeling">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
              </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>İlerle</string>
-             </property>
+             <layout class="QHBoxLayout" name="layout_init_label_button_area">
+              <property name="spacing">
+               <number>20</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="pushButton_continue_labeling">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>İlerle</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_clear_labels">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Temizle</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_export_labels">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Etiketleri Bilgisayara Aktar</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_clear_labels">
-             <property name="minimumSize">
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
               <size>
-               <width>0</width>
+               <width>20</width>
                <height>40</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Temizle</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_export_labels">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Etiketleri Bilgisayara Aktar</string>
-             </property>
-            </widget>
+            </spacer>
            </item>
           </layout>
          </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="page_labeling">
-       <property name="styleSheet">
-        <string notr="true">QListWidget, QTableWidget{
+         <widget class="QWidget" name="page_labeling">
+          <property name="styleSheet">
+           <string notr="true">QListWidget, QTableWidget{
 	border:none;
 	background-color: transparent;
 	color: #EEEEEE;
@@ -1040,253 +1058,38 @@ QPushButton:checked{
 	background-color: #393E46;
 	border-radius: 3px;
 }</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QWidget" name="widget" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QWidget" name="widget_4" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">#widget_total_image, #widget_defined_annotation, #widget_total_annotation, #widget_image_directory_area, #widget_management_personel_approval{
+            <widget class="QWidget" name="widget" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QWidget" name="widget_4" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">#widget_total_image, #widget_defined_annotation, #widget_total_annotation, #widget_image_directory_area, #widget_management_personel_approval{
 	border-radius: 5px;
 	background-color:  rgba(57, 62, 70, 128);;
 }</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="spacing">
-               <number>10</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QWidget" name="widget_image_directory_area" native="true">
-                <property name="toolTip">
-                 <string>Görsellerin uyugulama aktarıldığı klasörü temsil eder.</string>
                 </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_13">
-                 <item>
-                  <widget class="QWidget" name="widget_5" native="true">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_12">
-                    <property name="spacing">
-                     <number>15</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
-                    <item>
-                     <widget class="QLabel" name="icon_image_directory">
-                      <property name="minimumSize">
-                       <size>
-                        <width>30</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="pixmap">
-                       <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/folder-image.svg</pixmap>
-                      </property>
-                      <property name="scaledContents">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_image_directory">
-                      <property name="font">
-                       <font>
-                        <pointsize>13</pointsize>
-                        <weight>75</weight>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QWidget" name="widget_image_list" native="true">
-                <property name="minimumSize">
-                 <size>
-                  <width>300</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>300</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <layout class="QVBoxLayout" name="layout_image_list">
-                 <property name="leftMargin">
-                  <number>9</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>12</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>9</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>9</number>
-                 </property>
-                 <item alignment="Qt::AlignHCenter">
-                  <widget class="QLabel" name="label_image_list_title">
-                   <property name="font">
-                    <font>
-                     <pointsize>13</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Görseller</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QTableWidget" name="image_table">
-                   <property name="verticalScrollBarPolicy">
-                    <enum>Qt::ScrollBarAsNeeded</enum>
-                   </property>
-                   <property name="horizontalScrollBarPolicy">
-                    <enum>Qt::ScrollBarAlwaysOff</enum>
-                   </property>
-                   <property name="editTriggers">
-                    <set>QAbstractItemView::NoEditTriggers</set>
-                   </property>
-                   <property name="alternatingRowColors">
-                    <bool>false</bool>
-                   </property>
-                   <property name="selectionMode">
-                    <enum>QAbstractItemView::SingleSelection</enum>
-                   </property>
-                   <property name="showGrid">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sortingEnabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="columnCount">
-                    <number>3</number>
-                   </property>
-                   <attribute name="horizontalHeaderVisible">
-                    <bool>false</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>false</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>50</number>
-                   </attribute>
-                   <attribute name="horizontalHeaderHighlightSections">
-                    <bool>true</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderMinimumSectionSize">
-                    <number>0</number>
-                   </attribute>
-                   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                    <bool>false</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderStretchLastSection">
-                    <bool>true</bool>
-                   </attribute>
-                   <attribute name="verticalHeaderVisible">
-                    <bool>false</bool>
-                   </attribute>
-                   <column>
-                    <property name="text">
-                     <string>Durum</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>Görsel</string>
-                    </property>
-                   </column>
-                   <column/>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QWidget" name="widget_total_values" native="true">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>80</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_7">
+                <layout class="QVBoxLayout" name="verticalLayout_6">
                  <property name="spacing">
                   <number>10</number>
                  </property>
@@ -1303,507 +1106,207 @@ QPushButton:checked{
                   <number>0</number>
                  </property>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <property name="spacing">
-                    <number>10</number>
+                  <widget class="QWidget" name="widget_image_directory_area" native="true">
+                   <property name="toolTip">
+                    <string>Görsellerin uyugulama aktarıldığı klasörü temsil eder.</string>
                    </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QWidget" name="widget_total_image" native="true">
-                     <property name="toolTip">
-                      <string>Toplam Görsel</string>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_8">
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_9">
-                        <item>
-                         <widget class="QLabel" name="total_image_icon">
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                          <property name="pixmap">
-                           <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/image.svg</pixmap>
-                          </property>
-                          <property name="scaledContents">
-                           <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="label_total_image_value">
-                          <property name="font">
-                           <font>
-                            <pointsize>15</pointsize>
-                            <weight>75</weight>
-                            <bold>true</bold>
-                           </font>
-                          </property>
-                          <property name="text">
-                           <string>0</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="label_image_title">
-                        <property name="font">
-                         <font>
-                          <pointsize>13</pointsize>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Görsel</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QWidget" name="widget_total_annotation" native="true">
-                     <property name="toolTip">
-                      <string>Toplam Etiket</string>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_9">
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_10">
-                        <item>
-                         <widget class="QLabel" name="total_annotation_icon">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                          <property name="pixmap">
-                           <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/label-colorful.svg</pixmap>
-                          </property>
-                          <property name="scaledContents">
-                           <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="label_total_annotation_value">
-                          <property name="font">
-                           <font>
-                            <pointsize>15</pointsize>
-                            <weight>75</weight>
-                            <bold>true</bold>
-                           </font>
-                          </property>
-                          <property name="text">
-                           <string>0</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                      <item alignment="Qt::AlignLeft">
-                       <widget class="QLabel" name="label_total_annotation_title">
-                        <property name="font">
-                         <font>
-                          <pointsize>13</pointsize>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Etiket</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QWidget" name="widget_defined_annotation" native="true">
-                     <property name="toolTip">
-                      <string>Toplam Tanımlı Etiket</string>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_10">
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_11">
-                        <item>
-                         <widget class="QLabel" name="defined_annotation_icon">
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                          <property name="pixmap">
-                           <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/tick-double.svg</pixmap>
-                          </property>
-                          <property name="scaledContents">
-                           <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="label_defined_annotation_value">
-                          <property name="font">
-                           <font>
-                            <pointsize>15</pointsize>
-                            <weight>75</weight>
-                            <bold>true</bold>
-                           </font>
-                          </property>
-                          <property name="text">
-                           <string>0</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="label_defined_annotation_title">
-                        <property name="font">
-                         <font>
-                          <pointsize>13</pointsize>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Tanımlı</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QWidget" name="widget_2" native="true">
-             <layout class="QVBoxLayout" name="verticalLayout_5">
-              <item>
-               <widget class="QWidget" name="widget_7" native="true">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item alignment="Qt::AlignLeft">
-                  <widget class="QWidget" name="widget_3" native="true">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_7">
-                    <property name="spacing">
-                     <number>15</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>20</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_13">
                     <item>
-                     <widget class="QPushButton" name="pushButton_zoom_in">
-                      <property name="minimumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
+                     <widget class="QWidget" name="widget_5" native="true">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Yakınlaş</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-    background-repeat: no-repeat;
-    border-image: url(:/images/templates/images/zoom-in.svg);
-}
-
-QPushButton:hover {
-    border-image: url(:/images/templates/images/zoom-in-colorful.svg);
-}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_zoom_out">
-                      <property name="minimumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Uzaklaş</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-    background-repeat: no-repeat;
-    border-image: url(:/images/templates/images/zoom-out.svg);
-}
-
-QPushButton:hover {
-    border-image: url(:/images/templates/images/zoom-out-colorful.svg);
-}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_zoom_fit">
-                      <property name="minimumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Sığdır</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-    background-repeat: no-repeat;
-    border-image: url(:/images/templates/images/zoom-fit.svg);
-}
-
-QPushButton:hover {
-    border-image: url(:/images/templates/images/zoom-fit-colorful.svg);
-}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="Line" name="line_2">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_activate_hand">
-                      <property name="minimumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Eller Serbest</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-    background-repeat: no-repeat;
-    border-image: url(:/images/templates/images/hand.svg);
-}
-
-QPushButton:hover, QPushButton:checked {
-    border-image: url(:/images/templates/images/hand-colorful.svg);
-}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_activate_crosshair">
-                      <property name="minimumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Seçim Yap</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-    border-image: url(:/images/templates/images/cross-hair.svg);
-}
-
-QPushButton:hover, QPushButton:checked {
-    border-image: url(:/images/templates/images/cross-hair-colorful.svg);
-}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                      <property name="checked">
-                       <bool>true</bool>
-                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_12">
+                       <property name="spacing">
+                        <number>15</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="icon_image_directory">
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="pixmap">
+                          <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/folder-image.svg</pixmap>
+                         </property>
+                         <property name="scaledContents">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_image_directory">
+                         <property name="font">
+                          <font>
+                           <pointsize>13</pointsize>
+                           <weight>75</weight>
+                           <bold>true</bold>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                    </layout>
                   </widget>
                  </item>
-                 <item alignment="Qt::AlignRight">
-                  <widget class="QWidget" name="widget_personel_state" native="true">
-                   <property name="enabled">
-                    <bool>true</bool>
+                 <item>
+                  <widget class="QWidget" name="widget_image_list" native="true">
+                   <property name="minimumSize">
+                    <size>
+                     <width>300</width>
+                     <height>0</height>
+                    </size>
                    </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
+                   <property name="maximumSize">
+                    <size>
+                     <width>300</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
-                   <property name="toolTip">
-                    <string>Çalışma onay durumunu ve onaylayan kişiyi niteler.</string>
+                   <property name="styleSheet">
+                    <string notr="true"/>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_15">
-                    <property name="sizeConstraint">
-                     <enum>QLayout::SetDefaultConstraint</enum>
+                   <layout class="QVBoxLayout" name="layout_image_list">
+                    <property name="leftMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>12</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>9</number>
+                    </property>
+                    <item alignment="Qt::AlignHCenter">
+                     <widget class="QLabel" name="label_image_list_title">
+                      <property name="font">
+                       <font>
+                        <pointsize>13</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Görseller</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QTableWidget" name="image_table">
+                      <property name="verticalScrollBarPolicy">
+                       <enum>Qt::ScrollBarAsNeeded</enum>
+                      </property>
+                      <property name="horizontalScrollBarPolicy">
+                       <enum>Qt::ScrollBarAlwaysOff</enum>
+                      </property>
+                      <property name="editTriggers">
+                       <set>QAbstractItemView::NoEditTriggers</set>
+                      </property>
+                      <property name="alternatingRowColors">
+                       <bool>false</bool>
+                      </property>
+                      <property name="selectionMode">
+                       <enum>QAbstractItemView::SingleSelection</enum>
+                      </property>
+                      <property name="showGrid">
+                       <bool>false</bool>
+                      </property>
+                      <property name="sortingEnabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="columnCount">
+                       <number>3</number>
+                      </property>
+                      <attribute name="horizontalHeaderVisible">
+                       <bool>false</bool>
+                      </attribute>
+                      <attribute name="horizontalHeaderCascadingSectionResizes">
+                       <bool>false</bool>
+                      </attribute>
+                      <attribute name="horizontalHeaderDefaultSectionSize">
+                       <number>50</number>
+                      </attribute>
+                      <attribute name="horizontalHeaderHighlightSections">
+                       <bool>true</bool>
+                      </attribute>
+                      <attribute name="horizontalHeaderMinimumSectionSize">
+                       <number>0</number>
+                      </attribute>
+                      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                       <bool>false</bool>
+                      </attribute>
+                      <attribute name="horizontalHeaderStretchLastSection">
+                       <bool>true</bool>
+                      </attribute>
+                      <attribute name="verticalHeaderVisible">
+                       <bool>false</bool>
+                      </attribute>
+                      <column>
+                       <property name="text">
+                        <string>Durum</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>Görsel</string>
+                       </property>
+                      </column>
+                      <column/>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QWidget" name="widget_total_values" native="true">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>80</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_7">
+                    <property name="spacing">
+                     <number>10</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -1812,69 +1315,230 @@ QPushButton:hover, QPushButton:checked {
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>20</number>
+                     <number>0</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QPushButton" name="pushButton_personel_state">
-                      <property name="enabled">
-                       <bool>true</bool>
+                     <layout class="QHBoxLayout" name="horizontalLayout_8">
+                      <property name="spacing">
+                       <number>10</number>
                       </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
+                      <property name="leftMargin">
+                       <number>0</number>
                       </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton:focus, QPushButton:checked{
-	background-color: transparent;
-}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset resource="../../rcc_files/rsrc.qrc">
-                        <normaloff>:/images/templates/images/document-cross.svg</normaloff>
-                        <normalon>:/images/templates/images/document-check.svg</normalon>
-                        <disabledoff>:/images/templates/images/document-cross.svg</disabledoff>
-                        <disabledon>:/images/templates/images/document-check.svg</disabledon>:/images/templates/images/document-cross.svg</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>22</width>
-                        <height>22</height>
-                       </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                      <property name="checked">
-                       <bool>false</bool>
-                      </property>
-                      <property name="autoRepeat">
-                       <bool>false</bool>
-                      </property>
-                      <property name="autoExclusive">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_authorized">
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
+                      <item>
+                       <widget class="QWidget" name="widget_total_image" native="true">
+                        <property name="toolTip">
+                         <string>Toplam Görsel</string>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_8">
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_9">
+                           <item>
+                            <widget class="QLabel" name="total_image_icon">
+                             <property name="minimumSize">
+                              <size>
+                               <width>30</width>
+                               <height>30</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>30</width>
+                               <height>30</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="pixmap">
+                              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/image.svg</pixmap>
+                             </property>
+                             <property name="scaledContents">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_total_image_value">
+                             <property name="font">
+                              <font>
+                               <pointsize>15</pointsize>
+                               <weight>75</weight>
+                               <bold>true</bold>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>0</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_image_title">
+                           <property name="font">
+                            <font>
+                             <pointsize>13</pointsize>
+                             <weight>75</weight>
+                             <bold>true</bold>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>Görsel</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QWidget" name="widget_total_annotation" native="true">
+                        <property name="toolTip">
+                         <string>Toplam Etiket</string>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_9">
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_10">
+                           <item>
+                            <widget class="QLabel" name="total_annotation_icon">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>30</width>
+                               <height>30</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>30</width>
+                               <height>30</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="pixmap">
+                              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/label-colorful.svg</pixmap>
+                             </property>
+                             <property name="scaledContents">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_total_annotation_value">
+                             <property name="font">
+                              <font>
+                               <pointsize>15</pointsize>
+                               <weight>75</weight>
+                               <bold>true</bold>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>0</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item alignment="Qt::AlignLeft">
+                          <widget class="QLabel" name="label_total_annotation_title">
+                           <property name="font">
+                            <font>
+                             <pointsize>13</pointsize>
+                             <weight>75</weight>
+                             <bold>true</bold>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>Etiket</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QWidget" name="widget_defined_annotation" native="true">
+                        <property name="toolTip">
+                         <string>Toplam Tanımlı Etiket</string>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_10">
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_11">
+                           <item>
+                            <widget class="QLabel" name="defined_annotation_icon">
+                             <property name="minimumSize">
+                              <size>
+                               <width>30</width>
+                               <height>30</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>30</width>
+                               <height>30</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="pixmap">
+                              <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/tick-double.svg</pixmap>
+                             </property>
+                             <property name="scaledContents">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_defined_annotation_value">
+                             <property name="font">
+                              <font>
+                               <pointsize>15</pointsize>
+                               <weight>75</weight>
+                               <bold>true</bold>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>0</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_defined_annotation_title">
+                           <property name="font">
+                            <font>
+                             <pointsize>13</pointsize>
+                             <weight>75</weight>
+                             <bold>true</bold>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>Tanımlı</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
                     </item>
                    </layout>
                   </widget>
@@ -1883,74 +1547,428 @@ QPushButton:hover, QPushButton:checked {
                </widget>
               </item>
               <item>
-               <widget class="QWidget" name="widget_labeling_area" native="true">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QGraphicsView{
+               <widget class="QWidget" name="widget_2" native="true">
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <widget class="QWidget" name="widget_7" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_6">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item alignment="Qt::AlignLeft">
+                     <widget class="QWidget" name="widget_3" native="true">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_7">
+                       <property name="spacing">
+                        <number>15</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>20</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="pushButton_zoom_in">
+                         <property name="minimumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Yakınlaş</string>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/zoom-in.svg);
+}
+
+QPushButton:hover {
+    border-image: url(:/images/templates/images/zoom-in-colorful.svg);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pushButton_zoom_out">
+                         <property name="minimumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Uzaklaş</string>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/zoom-out.svg);
+}
+
+QPushButton:hover {
+    border-image: url(:/images/templates/images/zoom-out-colorful.svg);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pushButton_zoom_fit">
+                         <property name="minimumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Sığdır</string>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/zoom-fit.svg);
+}
+
+QPushButton:hover {
+    border-image: url(:/images/templates/images/zoom-fit-colorful.svg);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="Line" name="line_2">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pushButton_activate_hand">
+                         <property name="minimumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Eller Serbest</string>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+    background-repeat: no-repeat;
+    border-image: url(:/images/templates/images/hand.svg);
+}
+
+QPushButton:hover, QPushButton:checked {
+    border-image: url(:/images/templates/images/hand-colorful.svg);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pushButton_activate_crosshair">
+                         <property name="minimumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Seçim Yap</string>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+    border-image: url(:/images/templates/images/cross-hair.svg);
+}
+
+QPushButton:hover, QPushButton:checked {
+    border-image: url(:/images/templates/images/cross-hair-colorful.svg);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item alignment="Qt::AlignRight">
+                     <widget class="QWidget" name="widget_personel_state" native="true">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="toolTip">
+                       <string>Çalışma onay durumunu ve onaylayan kişiyi niteler.</string>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_15">
+                       <property name="sizeConstraint">
+                        <enum>QLayout::SetDefaultConstraint</enum>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>20</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="pushButton_personel_state">
+                         <property name="enabled">
+                          <bool>true</bool>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:focus, QPushButton:checked{
 	background-color: transparent;
 }</string>
-                </property>
-                <layout class="QVBoxLayout" name="layout_labeling_area">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                </layout>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QWidget" name="widget_labeling_bottom_area" native="true">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_5">
-                 <property name="topMargin">
-                  <number>3</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>3</number>
-                 </property>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="../../rcc_files/rsrc.qrc">
+                           <normaloff>:/images/templates/images/document-cross.svg</normaloff>
+                           <normalon>:/images/templates/images/document-check.svg</normalon>
+                           <disabledoff>:/images/templates/images/document-cross.svg</disabledoff>
+                           <disabledon>:/images/templates/images/document-check.svg</disabledon>:/images/templates/images/document-cross.svg</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>22</width>
+                           <height>22</height>
+                          </size>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeat">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoExclusive">
+                          <bool>false</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_authorized">
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_previous_image">
+                  <widget class="QWidget" name="widget_labeling_area" native="true">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QGraphicsView{
+	background-color: transparent;
+}</string>
+                   </property>
+                   <layout class="QVBoxLayout" name="layout_labeling_area">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item alignment="Qt::AlignHCenter">
+                  <widget class="QWidget" name="widget_labeling_bottom_area" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>25</width>
+                     <width>0</width>
                      <height>25</height>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {
+                    <string notr="true"/>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_5">
+                    <property name="topMargin">
+                     <number>3</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>3</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_previous_image">
+                      <property name="minimumSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
     background-repeat: no-repeat;
     border-image: url(:/images/templates/images/left.svg);
 }
@@ -1960,46 +1978,46 @@ QPushButton:hover {
 	border-radius:5px;
     border-image: url(:/images/templates/images/left-colorful.svg);
 }</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>20</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_current_image_name">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>10</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_next_image">
-                   <property name="minimumSize">
-                    <size>
-                     <width>25</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton {
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>20</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_current_image_name">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_next_image">
+                      <property name="minimumSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
     background-repeat: no-repeat;
     border-image: url(:/images/templates/images/right.svg);
 }
@@ -2009,28 +2027,82 @@ QPushButton:hover {
 	border-radius:5px;
     border-image: url(:/images/templates/images/right-colorful.svg);
 }</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="dark">
+                        <normaloff>.</normaloff>.</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>20</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="autoDefault">
+                       <bool>false</bool>
+                      </property>
+                      <property name="default">
+                       <bool>false</bool>
+                      </property>
+                      <property name="flat">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="widget_current_label_area" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>200</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>250</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <property name="topMargin">
+                  <number>12</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>9</number>
+                 </property>
+                 <item alignment="Qt::AlignHCenter">
+                  <widget class="QLabel" name="label">
+                   <property name="font">
+                    <font>
+                     <pointsize>13</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string>Etiketler</string>
                    </property>
-                   <property name="icon">
-                    <iconset theme="dark">
-                     <normaloff>.</normaloff>.</iconset>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QListWidget" name="current_label_list">
+                   <property name="styleSheet">
+                    <string notr="true">QListWidget::item:selected, QListWidget::item:hover{
+	border:none;
+	background-color: #272B32;
+}</string>
                    </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>20</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="autoDefault">
-                    <bool>false</bool>
-                   </property>
-                   <property name="default">
-                    <bool>false</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>false</bool>
+                   <property name="horizontalScrollBarPolicy">
+                    <enum>Qt::ScrollBarAlwaysOff</enum>
                    </property>
                   </widget>
                  </item>
@@ -2040,62 +2112,11 @@ QPushButton:hover {
              </layout>
             </widget>
            </item>
-           <item>
-            <widget class="QWidget" name="widget_current_label_area" native="true">
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>200</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>250</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <property name="topMargin">
-               <number>12</number>
-              </property>
-              <property name="bottomMargin">
-               <number>9</number>
-              </property>
-              <item alignment="Qt::AlignHCenter">
-               <widget class="QLabel" name="label">
-                <property name="font">
-                 <font>
-                  <pointsize>13</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Etiketler</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QListWidget" name="current_label_list">
-                <property name="styleSheet">
-                 <string notr="true">QListWidget::item:selected, QListWidget::item:hover{
-	border:none;
-	background-color: #272B32;
-}</string>
-                </property>
-                <property name="horizontalScrollBarPolicy">
-                 <enum>Qt::ScrollBarAlwaysOff</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
           </layout>
          </widget>
-        </item>
-       </layout>
-      </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
