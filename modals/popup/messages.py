@@ -42,7 +42,8 @@ class PopupMessages(object):
         M202 = "Bu isimlendirmeye ait zaten bir etiketiniz var, lütfen farklı bir isim girmeyi deneyiniz."
         M203 = "Bazı görseller aktarmış olduğunuz dizinde bulunamadı (görsellerin yeri değişmiş olabilir), bu görseller ve etiketleri dışarıya aktarılmayacaktır."
         M204 = "Böyle bir kullanıcı bulunamadı. Lütfen kullanıcı adınızı doğru girdiğinizden emin olun!"
-        M205 = "Çalışma yüzeyiniz boş değil, lütfen çalışmadaki işlemlerini bitirmeden yeni bir çalışmayı uygulamaya aktarmayı denemeyin."
+        M205 = "Parola yanlış, lütfen doğru girdiğinizden emin olun!"
+        M206 = "Çalışma yüzeyiniz boş değil, lütfen çalışmadaki işlemlerini bitirmeden yeni bir çalışmayı uygulamaya aktarmayı denemeyin."
     
     class Error(BaseEnum):
         @property

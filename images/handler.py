@@ -267,7 +267,7 @@ class ImageHandler:
                 drop_list (list): Sürükleyip bırakılan dosyaların listesi.
         """
         if bool(int(self._connector.database.setting.filter(UtilsForSettings.SESSION.value).value)):
-            self._connector.show_message(PopupMessages.Warning.M205)
+            self._connector.show_message(PopupMessages.Warning.M206)
         else:
             if drop_list:
                 path = self.insert_project_from_drag_drop(drop_list)

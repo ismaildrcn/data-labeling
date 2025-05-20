@@ -41,7 +41,7 @@ class Login(QDialog, LoginUI):
                 user = Users[username].value
                 self.userSignal.emit(user if user.password == password else False)
             except KeyError:
-                return self.userSignal.emit(False)
+                return self.userSignal.emit(None)
     
     @pyqtSlot(object)
     def accept_login(self, value):
@@ -51,6 +51,8 @@ class Login(QDialog, LoginUI):
             self.lineEdit_username.clear()
             self.lineEdit_password.clear()
             self.close()
+        elif value is False:
+            self._connector.show_message(PopupMessages.Warning.M205)
         else:
             self._connector.show_message(PopupMessages.Warning.M204)
         self.user = value
