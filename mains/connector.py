@@ -4,7 +4,7 @@ from typing import overload
 from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator, QMovie
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem, QLabel
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QApplication
 
 from database.utils import UtilsForSettings
 from modals.popup.utils import Answers
@@ -62,6 +62,10 @@ class Connector(QMainWindow, UI):
             self.authorize_project(self.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value, None)
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
+
+        # Alternatif Qt çözümü
+        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+        QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 
         self.widget_main.setGraphicsEffect(self.create_shadow())
 
