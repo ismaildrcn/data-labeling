@@ -83,7 +83,7 @@ class Connector(QMainWindow, UI):
 
         self.image_table.setIconSize(QSize(16, 16))  # Icon boyutunu ayarla
 
-        regex = QRegularExpression("^[a-z]*$")
+        regex = QRegularExpression("^[a-z_]*$")
         validator = QRegularExpressionValidator(regex)
         self.lineEdit_add_label.setValidator(validator)
 
