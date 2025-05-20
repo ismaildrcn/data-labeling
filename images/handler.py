@@ -551,7 +551,6 @@ class ImageHandler:
     def delete_image(self, image):
         answer = self._connector.show_message(PopupMessages.Action.M405)
         if answer == Answers.OK:
-            self._connector.image_table.selectRow(self.images[image].row_index)
             db_item = self._connector.database.image.filter(url=image.toLocalFile())
             if db_item.annotations:
                 answer = self._connector.show_message(PopupMessages.Action.M406)
@@ -561,6 +560,8 @@ class ImageHandler:
                 else:
                     return
             self._connector.database.image.delete(db_item)
+            if self.images[image].row_index == self._connector.image_table.currentRow():
+                self._connector.load_selected_image(self.images[image].row_index - 1 if self.images[image].row_index > 0 else 0, 1)
             self._connector.image_table.removeRow(self.images[image].row_index)
             self._images.pop(image)
 
