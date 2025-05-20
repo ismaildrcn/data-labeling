@@ -93,7 +93,7 @@ class Configurator(object):
         """
         text = self._connector.lineEdit_add_label.text()
         name_list  = [item for item in self.label_type if item.name == text]
-        if text in name_list:
+        if name_list:
             self._connector.show_message(PopupMessages.Warning.M202)
         else:
             if text != '':

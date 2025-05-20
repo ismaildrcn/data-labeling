@@ -64,7 +64,7 @@ class Listener(QMainWindow):
 
                     
             case QEvent.KeyPress:
-                if source == self._connector.pushButton_add_label and event.key() in (Qt.Key_Return, Qt.Key_Enter):
+                if source in (self._connector.pushButton_add_label, self._connector.lineEdit_add_label) and event.key() in (Qt.Key_Return, Qt.Key_Enter):
                     self._connector.configurator.add()
             case QEvent.MouseMove:
                 match source:
