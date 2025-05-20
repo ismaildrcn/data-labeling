@@ -490,7 +490,7 @@ QPushButton{
 }</string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="page_data_importing">
           <property name="styleSheet">
@@ -1137,6 +1137,12 @@ QPushButton:checked{
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">#widget_total_image, #widget_defined_annotation, #widget_total_annotation, #widget_image_directory_area, #widget_management_personel_approval{
 	border-radius: 5px;
@@ -1247,7 +1253,7 @@ QPushButton:checked{
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>300</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -1256,13 +1262,13 @@ QPushButton:checked{
                    </property>
                    <layout class="QVBoxLayout" name="layout_image_list">
                     <property name="leftMargin">
-                     <number>9</number>
+                     <number>4</number>
                     </property>
                     <property name="topMargin">
                      <number>12</number>
                     </property>
                     <property name="rightMargin">
-                     <number>9</number>
+                     <number>4</number>
                     </property>
                     <property name="bottomMargin">
                      <number>9</number>

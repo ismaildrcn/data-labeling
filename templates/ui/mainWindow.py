@@ -543,6 +543,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_4.sizePolicy().hasHeightForWidth())
         self.widget_4.setSizePolicy(sizePolicy)
+        self.widget_4.setMaximumSize(QtCore.QSize(300, 16777215))
         self.widget_4.setStyleSheet("#widget_total_image, #widget_defined_annotation, #widget_total_annotation, #widget_image_directory_area, #widget_management_personel_approval{\n"
 "    border-radius: 5px;\n"
 "    background-color:  rgba(57, 62, 70, 128);;\n"
@@ -589,11 +590,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addWidget(self.widget_image_directory_area)
         self.widget_image_list = QtWidgets.QWidget(self.widget_4)
         self.widget_image_list.setMinimumSize(QtCore.QSize(300, 0))
-        self.widget_image_list.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.widget_image_list.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.widget_image_list.setStyleSheet("")
         self.widget_image_list.setObjectName("widget_image_list")
         self.layout_image_list = QtWidgets.QVBoxLayout(self.widget_image_list)
-        self.layout_image_list.setContentsMargins(9, 12, 9, 9)
+        self.layout_image_list.setContentsMargins(4, 12, 4, 9)
         self.layout_image_list.setObjectName("layout_image_list")
         self.label_image_list_title = QtWidgets.QLabel(self.widget_image_list)
         font = QtGui.QFont()
@@ -1003,7 +1004,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
