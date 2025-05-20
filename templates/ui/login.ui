@@ -141,8 +141,16 @@ QPushButton:hover{
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Hoşgeldiniz!&lt;br/&gt;Hesabınıza giriş yapın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Hoşgeldiniz!
+Hesabınıza giriş yapın</string>
               </property>
              </widget>
             </item>
@@ -259,7 +267,7 @@ QPushButton:hover{
                </font>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;veya&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>veya</string>
               </property>
              </widget>
             </item>
@@ -296,8 +304,15 @@ QPushButton:hover{
             </property>
             <item>
              <widget class="QLabel" name="label_6">
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Operatör olarak devam edin&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Operatör olarak devam edin</string>
               </property>
              </widget>
             </item>
