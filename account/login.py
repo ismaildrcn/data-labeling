@@ -56,10 +56,11 @@ class Login(QDialog, LoginUI):
             self._connector.label_account_username.setText(value.username)
             self.lineEdit_username.clear()
             self.lineEdit_password.clear()
-            if self.checkBox_remember_me.isChecked():
-                self._connector.database.setting.update(UtilsForSettings.REMEMBER_ME.value, value.username)
-            else:
-                self._connector.database.setting.update(UtilsForSettings.REMEMBER_ME.value, None)
+            if value is not Users["operator"].value:
+                if self.checkBox_remember_me.isChecked():
+                    self._connector.database.setting.update(UtilsForSettings.REMEMBER_ME.value, value.username)
+                else:
+                    self._connector.database.setting.update(UtilsForSettings.REMEMBER_ME.value, None)
             self.close()
         elif value is False:
             self._connector.show_message(PopupMessages.Warning.M205)
