@@ -18,3 +18,4 @@ class UtilsForSettings(Enum):
     SESSION = "session"
     TEMP_URL = "temp_url"
     AUTHORIZED = "authorized"
+    REMEMBER_ME = "remember_me"

@@ -26,7 +26,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QLabel{
+      <string notr="true">QLabel, QCheckBox{
 	color: #EEEEEE;
 }
 QLineEdit{
@@ -189,6 +189,13 @@ Hesabınıza giriş yapın</string>
               </property>
               <property name="clearButtonEnabled">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignRight">
+             <widget class="QCheckBox" name="checkBox_remember_me">
+              <property name="text">
+               <string>Beni Hatırla</string>
               </property>
              </widget>
             </item>

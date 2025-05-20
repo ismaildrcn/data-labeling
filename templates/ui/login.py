@@ -20,7 +20,7 @@ class Ui_Dialog(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.widget_main = QtWidgets.QWidget(Dialog)
         self.widget_main.setMaximumSize(QtCore.QSize(700, 500))
-        self.widget_main.setStyleSheet("QLabel{\n"
+        self.widget_main.setStyleSheet("QLabel, QCheckBox{\n"
 "    color: #EEEEEE;\n"
 "}\n"
 "QLineEdit{\n"
@@ -109,6 +109,9 @@ class Ui_Dialog(object):
         self.lineEdit_password.setClearButtonEnabled(True)
         self.lineEdit_password.setObjectName("lineEdit_password")
         self.verticalLayout_3.addWidget(self.lineEdit_password)
+        self.checkBox_remember_me = QtWidgets.QCheckBox(self.widget_3)
+        self.checkBox_remember_me.setObjectName("checkBox_remember_me")
+        self.verticalLayout_3.addWidget(self.checkBox_remember_me, 0, QtCore.Qt.AlignRight)
         self.pushButton_login = QtWidgets.QPushButton(self.widget_3)
         self.pushButton_login.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
@@ -249,6 +252,7 @@ class Ui_Dialog(object):
 "Hesabınıza giriş yapın"))
         self.lineEdit_username.setPlaceholderText(_translate("Dialog", "ismaildrcn"))
         self.lineEdit_password.setPlaceholderText(_translate("Dialog", "Password"))
+        self.checkBox_remember_me.setText(_translate("Dialog", "Beni Hatırla"))
         self.pushButton_login.setText(_translate("Dialog", "Giriş"))
         self.label_or.setText(_translate("Dialog", "veya"))
         self.label_6.setText(_translate("Dialog", "Operatör olarak devam edin"))
