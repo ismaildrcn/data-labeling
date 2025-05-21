@@ -184,7 +184,7 @@ class ImageHandler:
     def type_changed(self, l_type, annotation):
         for item in self._connector.configurator.label_type:
             if item.name == l_type.split()[-1]:
-                annotation.label = item.unquie_id
+                annotation.label = item.unique_id
                 self._connector.database.annotation.update(db_item=annotation.db_item, label_id=annotation.label)
                 self.check_annotation_in_current_source(annotation.source)
                 break
@@ -446,7 +446,7 @@ class ImageHandler:
                         archive.writestr(f'{base_name}.txt', content)
             label_type = {}
             for item in self._connector.configurator.label_type:
-                label_type[item.name] = item.unquie_id
+                label_type[item.name] = item.unique_id
             
             authorized = self._connector.login.user.username if bool(self._connector.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value) else None
             metadata = self.update_metadata(authorized = authorized, date = datetime.now().strftime("%Y-%m-%d %H:%M:%S"))

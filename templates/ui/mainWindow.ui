@@ -490,7 +490,7 @@ QPushButton{
 }</string>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_data_importing">
           <property name="styleSheet">
@@ -692,7 +692,7 @@ Seçmek için buraya tıklayın</string>
 	border-radius:5px;
 	border: 3px solid #6086EF;
 }
-QListWidget{
+QTableWidget, QTableWidget:item:selected{
 	border:none;
 	background-color: transparent;
 	color: #EEEEEE;
@@ -900,7 +900,29 @@ QPushButton{
                </widget>
               </item>
               <item>
-               <widget class="QListWidget" name="listWidget_label_list"/>
+               <widget class="QTableWidget" name="tableWidget_label_list">
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="showGrid">
+                 <bool>false</bool>
+                </property>
+                <property name="rowCount">
+                 <number>0</number>
+                </property>
+                <property name="columnCount">
+                 <number>0</number>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
               </item>
               <item>
                <widget class="QWidget" name="widget_add_label" native="true">
@@ -1027,24 +1049,6 @@ QPushButton:hover{
                 </property>
                 <property name="text">
                  <string>İlerle</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_clear_labels">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Temizle</string>
                 </property>
                </widget>
               </item>

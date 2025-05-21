@@ -17,50 +17,49 @@ class Listener(QMainWindow):
     
     def eventFilter(self, source, event):
         match event.type():
-            case QEvent.MouseButtonDblClick | QEvent.MouseButtonPress:
-                if source.parent() == self._connector.image_table:
-                    source = source.parent()
-                match source:
-                    case self._connector.label_drop_images | self._connector.icon_drop_images | self._connector.widget_importing_area:
-                        self._connector.image_handler.insert_image()
-                    case self._connector.label_image_labeling_title | self._connector.widget_top:
-                        self.offset = event.globalPos() - self._connector.frameGeometry().topLeft()
-                    case self._connector.pushButton_close_window:
-                        self._connector.close()
-                    case self._connector.pushButton_hide_window:
-                        self._connector.showMinimized()
-                    case self._connector.pushButton_fullscreen_window:
-                        self.pushButton_fullscreen_window_event_changed()
-                    case self._connector.pushButton_add_label:
-                        self._connector.configurator.add()
-                    case self._connector.pushButton_export_labels:
-                        self._connector.configurator.export_labels()
-                    case self._connector.label_import_labels | self._connector.icon_insert_label:
-                        self._connector.configurator.import_labels()
-                    case self._connector.pushButton_continue_labeling:
-                        self.continue_event_changed()
-                    case self._connector.pushButton_next_image:
-                        self.next_or_previous_image_eventh_changed(1)
-                    case self._connector.pushButton_previous_image:
-                        self.next_or_previous_image_eventh_changed(-1)
-                    case self._connector.pushButton_exit_project:
-                        self.pushButton_exit_project_event_changed()
-                    case self._connector.pushButton_activate_hand:
-                        self.pushButton_activate_hand_event_changed()
-                    case self._connector.pushButton_activate_crosshair:
-                        self.pushButton_activate_crosshair_event_changed()
-                    case self._connector.pushButton_zoom_in:
-                        self._connector.graphicsView.zoom(1)
-                    case self._connector.pushButton_zoom_out:
-                        self._connector.graphicsView.zoom(-1)
-                    case self._connector.pushButton_zoom_fit:
-                        self._connector.reset_zoom()
-                    case self._connector.icon_drop_project | self._connector.label_drop_project | self._connector.widget_import_project:
-                        self._connector.image_handler.insert_project()
-                    case self._connector.pushButton_clear_labels:
-                        self._connector.configurator.clear()
-                    case self._connector.image_table:
-                        self.image_table_event_changed(event)
+            case QEvent.MouseButtonPress:
+                if event.spontaneous():
+                    if source.parent() == self._connector.image_table:
+                        source = source.parent()
+                    match source:
+                        case self._connector.label_drop_images | self._connector.icon_drop_images | self._connector.widget_importing_area:
+                            self._connector.image_handler.insert_image()
+                        case self._connector.label_image_labeling_title | self._connector.widget_top:
+                            self.offset = event.globalPos() - self._connector.frameGeometry().topLeft()
+                        case self._connector.pushButton_close_window:
+                            self._connector.close()
+                        case self._connector.pushButton_hide_window:
+                            self._connector.showMinimized()
+                        case self._connector.pushButton_fullscreen_window:
+                            self.pushButton_fullscreen_window_event_changed()
+                        case self._connector.pushButton_add_label:
+                            self._connector.configurator.add()
+                        case self._connector.pushButton_export_labels:
+                            self._connector.configurator.export_labels()
+                        case self._connector.label_import_labels | self._connector.icon_insert_label:
+                            self._connector.configurator.import_labels()
+                        case self._connector.pushButton_continue_labeling:
+                            self.continue_event_changed()
+                        case self._connector.pushButton_next_image:
+                            self.next_or_previous_image_eventh_changed(1)
+                        case self._connector.pushButton_previous_image:
+                            self.next_or_previous_image_eventh_changed(-1)
+                        case self._connector.pushButton_exit_project:
+                            self.pushButton_exit_project_event_changed()
+                        case self._connector.pushButton_activate_hand:
+                            self.pushButton_activate_hand_event_changed()
+                        case self._connector.pushButton_activate_crosshair:
+                            self.pushButton_activate_crosshair_event_changed()
+                        case self._connector.pushButton_zoom_in:
+                            self._connector.graphicsView.zoom(1)
+                        case self._connector.pushButton_zoom_out:
+                            self._connector.graphicsView.zoom(-1)
+                        case self._connector.pushButton_zoom_fit:
+                            self._connector.reset_zoom()
+                        case self._connector.icon_drop_project | self._connector.label_drop_project | self._connector.widget_import_project:
+                            self._connector.image_handler.insert_project()
+                        case self._connector.image_table:
+                            self.image_table_event_changed(event)
 
                     
             case QEvent.KeyPress:

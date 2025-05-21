@@ -68,7 +68,6 @@ class Connector(QMainWindow, UI):
 
         self.widget_main.setGraphicsEffect(self.create_shadow())
 
-        self.listWidget_label_list.setSpacing(5)
 
         self.graphicsView = CustomGraphicsView(self.centralwidget)
         self.graphicsView.rect_created_signal.connect(self.created_rect)

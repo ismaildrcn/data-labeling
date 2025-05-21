@@ -334,7 +334,7 @@ class Ui_MainWindow(object):
 "    border-radius:5px;\n"
 "    border: 3px solid #6086EF;\n"
 "}\n"
-"QListWidget{\n"
+"QTableWidget, QTableWidget:item:selected{\n"
 "    border:none;\n"
 "    background-color: transparent;\n"
 "    color: #EEEEEE;\n"
@@ -426,9 +426,16 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
         self.layout_init_label_area.addWidget(self.line, 0, QtCore.Qt.AlignHCenter)
-        self.listWidget_label_list = QtWidgets.QListWidget(self.widget_init_label_area)
-        self.listWidget_label_list.setObjectName("listWidget_label_list")
-        self.layout_init_label_area.addWidget(self.listWidget_label_list)
+        self.tableWidget_label_list = QtWidgets.QTableWidget(self.widget_init_label_area)
+        self.tableWidget_label_list.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_label_list.setShowGrid(False)
+        self.tableWidget_label_list.setRowCount(0)
+        self.tableWidget_label_list.setColumnCount(0)
+        self.tableWidget_label_list.setObjectName("tableWidget_label_list")
+        self.tableWidget_label_list.horizontalHeader().setVisible(False)
+        self.tableWidget_label_list.horizontalHeader().setStretchLastSection(False)
+        self.tableWidget_label_list.verticalHeader().setVisible(False)
+        self.layout_init_label_area.addWidget(self.tableWidget_label_list)
         self.widget_add_label = QtWidgets.QWidget(self.widget_init_label_area)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -484,13 +491,6 @@ class Ui_MainWindow(object):
         self.pushButton_continue_labeling.setFont(font)
         self.pushButton_continue_labeling.setObjectName("pushButton_continue_labeling")
         self.layout_init_label_button_area.addWidget(self.pushButton_continue_labeling)
-        self.pushButton_clear_labels = QtWidgets.QPushButton(self.widget_init_label_button_area)
-        self.pushButton_clear_labels.setMinimumSize(QtCore.QSize(0, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_clear_labels.setFont(font)
-        self.pushButton_clear_labels.setObjectName("pushButton_clear_labels")
-        self.layout_init_label_button_area.addWidget(self.pushButton_clear_labels)
         self.pushButton_export_labels = QtWidgets.QPushButton(self.widget_init_label_button_area)
         self.pushButton_export_labels.setMinimumSize(QtCore.QSize(0, 40))
         font = QtGui.QFont()
@@ -1004,7 +1004,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1030,7 +1030,6 @@ class Ui_MainWindow(object):
         self.lineEdit_add_label.setPlaceholderText(_translate("MainWindow", "top_lehim"))
         self.pushButton_add_label.setText(_translate("MainWindow", "Oluştur"))
         self.pushButton_continue_labeling.setText(_translate("MainWindow", "İlerle"))
-        self.pushButton_clear_labels.setText(_translate("MainWindow", "Temizle"))
         self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Bilgisayara Aktar"))
         self.widget_image_directory_area.setToolTip(_translate("MainWindow", "Görsellerin uyugulama aktarıldığı klasörü temsil eder."))
         self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
