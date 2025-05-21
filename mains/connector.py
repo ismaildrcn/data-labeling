@@ -33,7 +33,6 @@ class Connector(QMainWindow, UI):
         self.rect_item = None
         self.setupUi(self)
         self.connection()
-        self.pages.setCurrentIndex(0)
         self.modules()
         self.initialize()
 
@@ -92,6 +91,7 @@ class Connector(QMainWindow, UI):
         self.lineEdit_add_label.setValidator(validator)
 
         self.init_actions()
+        self.pages.setCurrentIndex(0)
 
         self.pushButton_exit_project.setVisible(False)
         self.show()
@@ -218,6 +218,8 @@ class Connector(QMainWindow, UI):
         self.pages.setCurrentIndex(0)
 
     def pages_current_changed(self, index):
+        if index == 0:
+            self.widget_import_project.setVisible(not self.image_handler.count > 0)
         if index == 2:
             self.pushButton_exit_project.setVisible(True)
             self.label_total_image_value.setText(str(self.image_handler.count))
