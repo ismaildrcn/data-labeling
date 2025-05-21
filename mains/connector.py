@@ -82,7 +82,11 @@ class Connector(QMainWindow, UI):
         self.image_table.setColumnWidth(2, 40)
         self.image_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.image_table.horizontalHeader().setDefaultAlignment(Qt.AlignCenter)
-
+        self.image_table.setAcceptDrops(True)
+        self.image_table.viewport().setAcceptDrops(True)
+        self.image_table.setDragDropMode(QAbstractItemView.DropOnly)
+        self.image_table.setDefaultDropAction(Qt.CopyAction)
+        self.image_table.setDragEnabled(True)
         self.image_table.setIconSize(QSize(16, 16))  # Icon boyutunu ayarla
 
         regex = QRegularExpression("^[a-z_]*$")
@@ -92,6 +96,7 @@ class Connector(QMainWindow, UI):
         self.init_actions()
         self.pages.setCurrentIndex(0)
 
+        self.pushButton_continue_labeling_from_images.setVisible(False)
         self.pushButton_exit_project.setVisible(False)
         self.show()
 
@@ -218,7 +223,8 @@ class Connector(QMainWindow, UI):
 
     def pages_current_changed(self, index):
         if index == 0:
-            self.widget_import_project.setVisible(not self.image_handler.count > 0)
+            self.widget_import_project.setVisible(self.image_handler.count <= 0)
+            self.pushButton_continue_labeling_from_images.setVisible(self.image_handler.count > 0)
         if index == 2:
             self.pushButton_exit_project.setVisible(True)
             self.label_total_image_value.setText(str(self.image_handler.count))

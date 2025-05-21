@@ -47,7 +47,7 @@ class Configurator(object):
             Returns:
                 None
         """
-        self._connector.listWidget_label_list.clear()
+        self._connector.tableWidget_label_list.clear()
         # Add default labels
         self.add_default_labels()
         self._connector.database.setting.update('use_default_labels', True)

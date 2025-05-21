@@ -11,9 +11,10 @@ class Listener(QMainWindow):
     def __init__(self, connector=None):
         super().__init__()
         self._connector = connector
-
+        self.offset = None
         for widget in self._connector.findChildren(QWidget):
             widget.installEventFilter(self)
+        self._connector.image_table.viewport().installEventFilter(self)
     
     def eventFilter(self, source, event):
         match event.type():
@@ -60,6 +61,8 @@ class Listener(QMainWindow):
                             self._connector.image_handler.insert_project()
                         case self._connector.image_table:
                             self.image_table_event_changed(event)
+                        case self._connector.pushButton_continue_labeling_from_images:
+                            self._connector.pages.setCurrentIndex(2)
 
                     
             case QEvent.KeyPress:
@@ -73,22 +76,29 @@ class Listener(QMainWindow):
             case QEvent.MouseButtonRelease:
                 self.offset = None
             case QEvent.DragEnter:
-                if source in (self._connector.icon_drop_images, self._connector.label_drop_images, self._connector.icon_drop_project, self._connector.label_drop_project, self._connector.widget_importing_area, self._connector.widget_import_project):
-                    """Sadece dosya sürüklenirse kabul et"""
+                if source in (
+                    self._connector.icon_drop_images, self._connector.label_drop_images, self._connector.icon_drop_project, 
+                    self._connector.label_drop_project, self._connector.widget_importing_area, self._connector.widget_import_project,
+                    self._connector.image_table, self._connector.image_table.viewport(), self._connector.widget_image_list
+                    ):
                     if event.mimeData().hasUrls():
                         event.acceptProposedAction()
             case QEvent.Drop:
-                if source in (self._connector.icon_drop_images, self._connector.label_drop_images, self._connector.widget_importing_area):
+                if source in (
+                    self._connector.icon_drop_images, self._connector.label_drop_images, self._connector.widget_importing_area,
+                    self._connector.image_table, self._connector.image_table.viewport(), self._connector.widget_image_list
+                    ):
                     urls = event.mimeData().urls()
                     self._connector.image_handler.insert_image(urls)
-                elif source in (self._connector.label_drop_project, self._connector.label_drop_project, self._connector.widget_import_project):
+                elif source in (
+                    self._connector.label_drop_project, self._connector.icon_drop_project, self._connector.widget_import_project
+                    ):
                     urls = event.mimeData().urls()
                     self._connector.image_handler.insert_project(urls)
-                
         
-        
+
         return super().eventFilter(source, event)
-    
+
     def continue_event_changed(self) -> None:
         if self._connector.configurator.label_type:
             self._connector.pages.setCurrentIndex(2)

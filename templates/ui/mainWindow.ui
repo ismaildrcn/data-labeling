@@ -487,17 +487,19 @@ QPushButton{
          <property name="styleSheet">
           <string notr="true">#page_labeling, #page_data_importing, #page_init_label{
 	background-color: #222831;
-}</string>
+}
+#widget_init_label_area, #widget_insert_label_area, #widget_importing_area, #widget_import_project{
+	border-radius:5px;
+	border: 3px solid #6086EF;
+}
+</string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="page_data_importing">
           <property name="styleSheet">
-           <string notr="true">#widget_importing_area, #widget_import_project{
-	border-radius:5px;
-	border: 3px solid #6086EF;
-}</string>
+           <string notr="true"/>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_11">
            <property name="spacing">
@@ -521,13 +523,13 @@ QPushButton{
              <property name="minimumSize">
               <size>
                <width>450</width>
-               <height>250</height>
+               <height>210</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>450</width>
-               <height>250</height>
+               <height>210</height>
               </size>
              </property>
              <property name="acceptDrops">
@@ -538,7 +540,7 @@ QPushButton{
              </property>
              <layout class="QVBoxLayout" name="layout_importing_area">
               <property name="topMargin">
-               <number>40</number>
+               <number>20</number>
               </property>
               <item alignment="Qt::AlignHCenter">
                <widget class="QLabel" name="icon_drop_images">
@@ -600,13 +602,13 @@ Seçmek için buraya tıklayın</string>
              <property name="minimumSize">
               <size>
                <width>450</width>
-               <height>250</height>
+               <height>210</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>450</width>
-               <height>250</height>
+               <height>210</height>
               </size>
              </property>
              <property name="acceptDrops">
@@ -614,7 +616,7 @@ Seçmek için buraya tıklayın</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_12">
               <property name="topMargin">
-               <number>40</number>
+               <number>20</number>
               </property>
               <item alignment="Qt::AlignHCenter">
                <widget class="QLabel" name="icon_drop_project">
@@ -671,6 +673,69 @@ Seçmek için buraya tıklayın</string>
              </layout>
             </widget>
            </item>
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QWidget" name="widget_data_importing_button_area" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>450</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>450</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+	border: 2px solid #6086EF;
+	background-color: transparent;
+	color: #6086EF;
+	border-radius: 5px;
+	padding: 5px 10px 5px 10px;
+}
+QPushButton:hover{
+	background-color: #6086EF;
+	color: #FFFFFF;
+	border-radius: 5px;
+	padding: 5px 10px 5px 10px;
+}</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_16">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="pushButton_continue_labeling_from_images">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>İlerle</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item>
             <spacer name="verticalSpacer_4">
              <property name="orientation">
@@ -688,11 +753,7 @@ Seçmek için buraya tıklayın</string>
          </widget>
          <widget class="QWidget" name="page_init_label">
           <property name="styleSheet">
-           <string notr="true">#widget_init_label_area, #widget_insert_label_area{
-	border-radius:5px;
-	border: 3px solid #6086EF;
-}
-QTableWidget, QTableWidget:item:selected{
+           <string notr="true">QTableWidget, QTableWidget:item:selected{
 	border:none;
 	background-color: transparent;
 	color: #EEEEEE;
@@ -1261,6 +1322,15 @@ QPushButton:checked{
                      <height>16777215</height>
                     </size>
                    </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>Sürükle bırak yöntemi ile görsellerinizi ekleyebilirsiniz.</string>
+                   </property>
+                   <property name="toolTipDuration">
+                    <number>-1</number>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>
@@ -1293,6 +1363,9 @@ QPushButton:checked{
                     </item>
                     <item>
                      <widget class="QTableWidget" name="image_table">
+                      <property name="acceptDrops">
+                       <bool>true</bool>
+                      </property>
                       <property name="verticalScrollBarPolicy">
                        <enum>Qt::ScrollBarAsNeeded</enum>
                       </property>
@@ -1301,6 +1374,18 @@ QPushButton:checked{
                       </property>
                       <property name="editTriggers">
                        <set>QAbstractItemView::NoEditTriggers</set>
+                      </property>
+                      <property name="dragEnabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="dragDropOverwriteMode">
+                       <bool>false</bool>
+                      </property>
+                      <property name="dragDropMode">
+                       <enum>QAbstractItemView::NoDragDrop</enum>
+                      </property>
+                      <property name="defaultDropAction">
+                       <enum>Qt::IgnoreAction</enum>
                       </property>
                       <property name="alternatingRowColors">
                        <bool>false</bool>
@@ -1974,6 +2059,9 @@ QPushButton:hover, QPushButton:checked {
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="toolTipDuration">
+                    <number>-1</number>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QGraphicsView{

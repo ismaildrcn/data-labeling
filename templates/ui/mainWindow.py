@@ -256,13 +256,15 @@ class Ui_MainWindow(object):
         self.pages = QtWidgets.QStackedWidget(self.widget_main)
         self.pages.setStyleSheet("#page_labeling, #page_data_importing, #page_init_label{\n"
 "    background-color: #222831;\n"
-"}")
-        self.pages.setObjectName("pages")
-        self.page_data_importing = QtWidgets.QWidget()
-        self.page_data_importing.setStyleSheet("#widget_importing_area, #widget_import_project{\n"
+"}\n"
+"#widget_init_label_area, #widget_insert_label_area, #widget_importing_area, #widget_import_project{\n"
 "    border-radius:5px;\n"
 "    border: 3px solid #6086EF;\n"
-"}")
+"}\n"
+"")
+        self.pages.setObjectName("pages")
+        self.page_data_importing = QtWidgets.QWidget()
+        self.page_data_importing.setStyleSheet("")
         self.page_data_importing.setObjectName("page_data_importing")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.page_data_importing)
         self.verticalLayout_11.setSpacing(35)
@@ -270,13 +272,13 @@ class Ui_MainWindow(object):
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_11.addItem(spacerItem)
         self.widget_importing_area = QtWidgets.QWidget(self.page_data_importing)
-        self.widget_importing_area.setMinimumSize(QtCore.QSize(450, 250))
-        self.widget_importing_area.setMaximumSize(QtCore.QSize(450, 250))
+        self.widget_importing_area.setMinimumSize(QtCore.QSize(450, 210))
+        self.widget_importing_area.setMaximumSize(QtCore.QSize(450, 210))
         self.widget_importing_area.setAcceptDrops(True)
         self.widget_importing_area.setStyleSheet("")
         self.widget_importing_area.setObjectName("widget_importing_area")
         self.layout_importing_area = QtWidgets.QVBoxLayout(self.widget_importing_area)
-        self.layout_importing_area.setContentsMargins(-1, 40, -1, -1)
+        self.layout_importing_area.setContentsMargins(-1, 20, -1, -1)
         self.layout_importing_area.setObjectName("layout_importing_area")
         self.icon_drop_images = QtWidgets.QLabel(self.widget_importing_area)
         self.icon_drop_images.setMinimumSize(QtCore.QSize(60, 60))
@@ -299,12 +301,12 @@ class Ui_MainWindow(object):
         self.layout_importing_area.addWidget(self.label_drop_images)
         self.verticalLayout_11.addWidget(self.widget_importing_area, 0, QtCore.Qt.AlignHCenter)
         self.widget_import_project = QtWidgets.QWidget(self.page_data_importing)
-        self.widget_import_project.setMinimumSize(QtCore.QSize(450, 250))
-        self.widget_import_project.setMaximumSize(QtCore.QSize(450, 250))
+        self.widget_import_project.setMinimumSize(QtCore.QSize(450, 210))
+        self.widget_import_project.setMaximumSize(QtCore.QSize(450, 210))
         self.widget_import_project.setAcceptDrops(True)
         self.widget_import_project.setObjectName("widget_import_project")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.widget_import_project)
-        self.verticalLayout_12.setContentsMargins(-1, 40, -1, -1)
+        self.verticalLayout_12.setContentsMargins(-1, 20, -1, -1)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
         self.icon_drop_project = QtWidgets.QLabel(self.widget_import_project)
         self.icon_drop_project.setMinimumSize(QtCore.QSize(60, 60))
@@ -326,15 +328,39 @@ class Ui_MainWindow(object):
         self.label_drop_project.setObjectName("label_drop_project")
         self.verticalLayout_12.addWidget(self.label_drop_project)
         self.verticalLayout_11.addWidget(self.widget_import_project, 0, QtCore.Qt.AlignHCenter)
+        self.widget_data_importing_button_area = QtWidgets.QWidget(self.page_data_importing)
+        self.widget_data_importing_button_area.setMinimumSize(QtCore.QSize(450, 0))
+        self.widget_data_importing_button_area.setMaximumSize(QtCore.QSize(450, 16777215))
+        self.widget_data_importing_button_area.setStyleSheet("QPushButton{\n"
+"    border: 2px solid #6086EF;\n"
+"    background-color: transparent;\n"
+"    color: #6086EF;\n"
+"    border-radius: 5px;\n"
+"    padding: 5px 10px 5px 10px;\n"
+"}\n"
+"QPushButton:hover{\n"
+"    background-color: #6086EF;\n"
+"    color: #FFFFFF;\n"
+"    border-radius: 5px;\n"
+"    padding: 5px 10px 5px 10px;\n"
+"}")
+        self.widget_data_importing_button_area.setObjectName("widget_data_importing_button_area")
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout(self.widget_data_importing_button_area)
+        self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        self.pushButton_continue_labeling_from_images = QtWidgets.QPushButton(self.widget_data_importing_button_area)
+        self.pushButton_continue_labeling_from_images.setMinimumSize(QtCore.QSize(0, 40))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_continue_labeling_from_images.setFont(font)
+        self.pushButton_continue_labeling_from_images.setObjectName("pushButton_continue_labeling_from_images")
+        self.horizontalLayout_16.addWidget(self.pushButton_continue_labeling_from_images)
+        self.verticalLayout_11.addWidget(self.widget_data_importing_button_area, 0, QtCore.Qt.AlignHCenter)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_11.addItem(spacerItem1)
         self.pages.addWidget(self.page_data_importing)
         self.page_init_label = QtWidgets.QWidget()
-        self.page_init_label.setStyleSheet("#widget_init_label_area, #widget_insert_label_area{\n"
-"    border-radius:5px;\n"
-"    border: 3px solid #6086EF;\n"
-"}\n"
-"QTableWidget, QTableWidget:item:selected{\n"
+        self.page_init_label.setStyleSheet("QTableWidget, QTableWidget:item:selected{\n"
 "    border:none;\n"
 "    background-color: transparent;\n"
 "    color: #EEEEEE;\n"
@@ -591,6 +617,8 @@ class Ui_MainWindow(object):
         self.widget_image_list = QtWidgets.QWidget(self.widget_4)
         self.widget_image_list.setMinimumSize(QtCore.QSize(300, 0))
         self.widget_image_list.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.widget_image_list.setAcceptDrops(True)
+        self.widget_image_list.setToolTipDuration(-1)
         self.widget_image_list.setStyleSheet("")
         self.widget_image_list.setObjectName("widget_image_list")
         self.layout_image_list = QtWidgets.QVBoxLayout(self.widget_image_list)
@@ -605,9 +633,14 @@ class Ui_MainWindow(object):
         self.label_image_list_title.setObjectName("label_image_list_title")
         self.layout_image_list.addWidget(self.label_image_list_title, 0, QtCore.Qt.AlignHCenter)
         self.image_table = QtWidgets.QTableWidget(self.widget_image_list)
+        self.image_table.setAcceptDrops(True)
         self.image_table.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.image_table.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.image_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.image_table.setDragEnabled(False)
+        self.image_table.setDragDropOverwriteMode(False)
+        self.image_table.setDragDropMode(QtWidgets.QAbstractItemView.NoDragDrop)
+        self.image_table.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.image_table.setAlternatingRowColors(False)
         self.image_table.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.image_table.setShowGrid(False)
@@ -901,6 +934,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_labeling_area.sizePolicy().hasHeightForWidth())
         self.widget_labeling_area.setSizePolicy(sizePolicy)
+        self.widget_labeling_area.setToolTipDuration(-1)
         self.widget_labeling_area.setStyleSheet("QGraphicsView{\n"
 "    background-color: transparent;\n"
 "}")
@@ -1004,7 +1038,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1024,6 +1058,7 @@ class Ui_MainWindow(object):
 "veya\n"
 "\n"
 "Seçmek için buraya tıklayın"))
+        self.pushButton_continue_labeling_from_images.setText(_translate("MainWindow", "İlerle"))
         self.label_import_labels.setText(_translate("MainWindow", "Etiketleri Uygulamaya Aktar"))
         self.label_create_label.setText(_translate("MainWindow", "Etiket Oluştur"))
         self.label_2.setText(_translate("MainWindow", "Başlamadan önce, projenizdeki nesnelere atamayı planladığınız etiketlerin bir listesini istediğiniz gibi oluşturabilirsiniz."))
@@ -1032,6 +1067,7 @@ class Ui_MainWindow(object):
         self.pushButton_continue_labeling.setText(_translate("MainWindow", "İlerle"))
         self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Bilgisayara Aktar"))
         self.widget_image_directory_area.setToolTip(_translate("MainWindow", "Görsellerin uyugulama aktarıldığı klasörü temsil eder."))
+        self.widget_image_list.setToolTip(_translate("MainWindow", "Sürükle bırak yöntemi ile görsellerinizi ekleyebilirsiniz."))
         self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
         self.image_table.setSortingEnabled(False)
         item = self.image_table.horizontalHeaderItem(0)

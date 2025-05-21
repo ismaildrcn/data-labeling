@@ -67,7 +67,7 @@ class ImageHandler:
                 
         widget = LabelWidget().setup(self._connector)
         for item in self._connector.configurator.labels:
-            widget.label_list.addItem(f"{item[1]} - {item[0]}")
+            widget.label_list.addItem(f"{item[0]}")
             widget.label_list.setItemData(widget.label_list.count() - 1, item[0], Qt.ToolTipRole)
 
         widget.label_list.setCurrentIndex(-1)
@@ -113,7 +113,6 @@ class ImageHandler:
             db_item = self._connector.database.annotation.add(
                 image_id, 
                 annotation.label,
-                self._connector.database.annotation.current_count(image_id) + 1,
                 annotation.coords
             )
             annotation.db_item = db_item
@@ -243,7 +242,8 @@ class ImageHandler:
             self.insert_from_file_dialog()
         if self._images:
             self._connector.database.setting.update("session", True)
-            self._connector.pages.setCurrentIndex(1)
+            if len(self._images) == 0:
+                self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
             self.set_dashboard_values()
     
@@ -369,13 +369,17 @@ class ImageHandler:
             args:
                 source (QUrl): Kontrol edilecek görselin kaynağı.
         """
-        state = self._connector.database.annotation.filter(
-            image_id=self._connector.database.image.filter(source.toLocalFile()).id,
-        )
-        if state:
-            state = ImageStatus.UNANNOTATED
+        image_id = self._connector.database.image.filter(source.toLocalFile()).id
+        if self._connector.database.annotation.get_by_image_id(image_id):
+            state = self._connector.database.annotation.has_none_label(
+                image_id=image_id,
+            )
+            if state:
+                state = ImageStatus.UNANNOTATED
+            else:
+                state = ImageStatus.ANNOTATED
         else:
-            state = ImageStatus.ANNOTATED
+            state = ImageStatus.UNANNOTATED
         self._images[source].set_status(state)
     
     def export(self):

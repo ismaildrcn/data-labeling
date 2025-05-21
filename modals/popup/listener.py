@@ -40,6 +40,8 @@ class Listener(QMainWindow):
                 self._popup.lineEdit_verify_5.setFocus()
             case self._popup.lineEdit_verify_5:
                 self._popup.lineEdit_verify_6.setFocus()
+            case self._popup.lineEdit_verify_6:
+                self._popup.pushButton_ok.setFocus()
 
     def clear_digit(self, source):
         match source:

@@ -30,6 +30,6 @@ class Annotation(object):
         self.coords: tuple = coords
         self.rect_obj: QGraphicsRectItem = rect_obj
         self.item: QListWidgetItem = item
-        self.label: Union[int, None] = label if label else None 
+        self.label: Union[int, None] = label if isinstance(label, int) else None
         self.db_item: Union[object, None] = db_item
         self.rect_index = None

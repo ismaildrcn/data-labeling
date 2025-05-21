@@ -9,7 +9,8 @@ class AnnotationCRUD(CRUD):
         super().__init__()
     
     @staticmethod
-    def add(image_id: int, label_id: int, annotation_id, coord: tuple) -> Annotation:
+    def add(image_id: int, label_id: int, coord: tuple) -> Annotation:
+        annotation_id = session.query(Annotation).filter(Annotation.image_id == image_id).order_by(Annotation.annotation_id.desc()).first().annotation_id + 1 if session.query(Annotation).filter(Annotation.image_id == image_id).count() > 0 else 1
         db_item = Annotation(image_id=image_id, label_id=label_id, annotation_id=annotation_id, x=coord[0], y=coord[1], width=coord[2], height=coord[3])
         session.add(db_item)
         session.commit()
@@ -54,10 +55,14 @@ class AnnotationCRUD(CRUD):
     def filter(**kwargs) -> list[Annotation]:
         image_id = kwargs.get("image_id")
         return session.query(Annotation).filter(Annotation.image_id == image_id).filter(Annotation.label_id == None).all()
- 
+    
     @staticmethod
-    def current_count(image_id: int) -> int:
-        return session.query(Annotation).filter(Annotation.image_id == image_id).count()
+    def has_none_label(image_id: int) -> bool:
+        return session.query(Annotation).filter(Annotation.image_id == image_id).filter(Annotation.label_id == None).count() > 0
+    
+    @staticmethod
+    def get_by_image_id(image_id: int) -> list[Annotation]:
+        return session.query(Annotation).filter(Annotation.image_id == image_id).all()
     
     @staticmethod
     def count() -> int:
