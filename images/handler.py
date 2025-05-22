@@ -242,6 +242,7 @@ class ImageHandler:
             self.insert_from_file_dialog()
         if self._images:
             self._connector.database.setting.update("session", True)
+            self._connector.show_message(PopupMessages.Info.M102)
             if len(self._images) == 0:
                 self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
