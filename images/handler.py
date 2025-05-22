@@ -32,7 +32,6 @@ class ImageHandler:
             "date": "",
         }
         self.image_dir_list = []
-        self.annotation_count = 0
 
     @overload
     def add_annotation(self, annotation) -> None: ...
@@ -96,7 +95,6 @@ class ImageHandler:
                 item=item, 
                 label=arg_db_item.label_id, 
                 db_item=arg_db_item)
-            self.annotation_count += 1
             self.add_annotation_to_list(annotation)
         elif arg_annotation:
             annotation = args[0]
@@ -117,9 +115,8 @@ class ImageHandler:
             )
             annotation.db_item = db_item
 
-            self.annotation_count += 1
             self.add_annotation_to_list(annotation)
-
+        self.set_dashboard_values()
         add_annotation_index_to_rect()
         self.check_annotation_in_current_source(annotation.source)
         widget.delete_label.clicked.connect(lambda: self.delete_annotation(annotation))
@@ -149,7 +146,6 @@ class ImageHandler:
                     annotation.rect_index = None
                 
                 self.remove_annotation(annotation)
-                self.annotation_count -= 1
             self.set_dashboard_values()
             self.check_annotation_in_current_source(annotation.source)
             self._connector.authorize_project()
@@ -332,7 +328,7 @@ class ImageHandler:
                 db_item=annotation
             )
         self._connector.pages.setCurrentIndex(2)
-        self._connector.load_selected_image(0, 1)
+        self._connector.load_selected_image(0 if images.all() else -1, 1)
         self.set_dashboard_values()
     
     def clear_tempdir(self):
@@ -523,15 +519,6 @@ class ImageHandler:
             return len(self._images[source]._annotations)
         return 0
 
-    @property
-    def annotation_count(self):
-        return self._annotation_count
-    
-    @annotation_count.setter
-    def annotation_count(self, value):
-        self._annotation_count = value
-        self._connector.label_total_annotation_value.setText(str(value))
-
     def check_directroy(self, path: QUrl):
         if path.fragment() != "":
             dirname = os.path.dirname(path.fragment()).split('/')[-1]
@@ -544,7 +531,6 @@ class ImageHandler:
             self._connector.label_image_directory.setToolTip(text)
 
     def clear(self):
-        self.annotation_count = 0
         self.images.clear()
         self.clear_tempdir()
         self.image_dir_list.clear()
@@ -568,7 +554,7 @@ class ImageHandler:
                     return
             self._connector.database.image.delete(db_item)
             if self.images[image].row_index == self._connector.image_table.currentRow():
-                self._connector.load_selected_image(self.images[image].row_index - 1 if self.images[image].row_index > 0 else 1, 1)
+                self._connector.load_selected_image(self.images[image].row_index - 1, 1)
             self._connector.image_table.removeRow(self.images[image].row_index)
             self._images.pop(image)
 

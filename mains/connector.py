@@ -138,6 +138,14 @@ class Connector(QMainWindow, UI):
         if len(args) == 1:
             item = args[0]
         else:
+            self.widget_scene_actions.setEnabled(args[0] >= 0)
+            if args[0] == -1:
+                self.scene.clear()  # Önceki sahneyi temizle
+                self.current_label_list.clear()
+                self.label_current_image_name.clear()
+                self.source.current = None
+                self.graphicsView.setDragMode(QGraphicsView.NoDrag)
+                return
             item = self.image_table.item(args[0], 1)
         """ Seçilen görseli yükle"""
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
