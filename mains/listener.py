@@ -80,8 +80,7 @@ class Listener(QMainWindow):
                     self._connector.icon_drop_images, self._connector.label_drop_images, self._connector.icon_drop_project, 
                     self._connector.label_drop_project, self._connector.widget_importing_area, self._connector.widget_import_project,
                     self._connector.image_table, self._connector.image_table.viewport(), self._connector.widget_image_list
-                    ):
-                    if event.mimeData().hasUrls():
+                    ) and event.mimeData().hasUrls():
                         event.acceptProposedAction()
             case QEvent.Drop:
                 if source in (
@@ -89,7 +88,7 @@ class Listener(QMainWindow):
                     self._connector.image_table, self._connector.image_table.viewport(), self._connector.widget_image_list
                     ):
                     urls = event.mimeData().urls()
-                    self._connector.image_handler.insert_image(urls)
+                    self._connector.image_handler.insert_image(urls, route=False)
                 elif source in (
                     self._connector.label_drop_project, self._connector.icon_drop_project, self._connector.widget_import_project
                     ):

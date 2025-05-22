@@ -65,8 +65,8 @@ class Popup(QDialog, PopupUI):
         self.popup_icon.setPixmap(QPixmap(p_code.icon))
         if isinstance(p_code, PopupMessages.Info):
             self.widget_bottom_area.setVisible(False)
-            super().show()
             QTimer.singleShot(2000, self.close)
+            self.exec_()
         elif isinstance(p_code, PopupMessages.Warning) or isinstance(p_code, PopupMessages.Error):
             self.pushButton_cancel.setVisible(False)
             self.exec_()

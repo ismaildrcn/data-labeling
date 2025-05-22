@@ -235,7 +235,7 @@ class ImageHandler:
         return QRectF(real_x, real_y, real_width, real_height)
 
 
-    def insert_image(self, drop_list=False):
+    def insert_image(self, drop_list=False, route=True):
         if drop_list:
             self.insert_from_drag_drop(drop_list)
         else:
@@ -243,7 +243,7 @@ class ImageHandler:
         if self._images:
             self._connector.database.setting.update("session", True)
             self._connector.show_message(PopupMessages.Info.M102)
-            if len(self._images) == 0:
+            if route:
                 self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
             self.set_dashboard_values()
