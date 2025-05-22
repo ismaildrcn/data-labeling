@@ -152,7 +152,7 @@ class ImageHandler:
                 self.annotation_count -= 1
             self.set_dashboard_values()
             self.check_annotation_in_current_source(annotation.source)
-            self._connector.authorize_project(None)
+            self._connector.authorize_project()
 
 
     def delete_all_annotation_from_list(self):
@@ -188,7 +188,7 @@ class ImageHandler:
                 self.check_annotation_in_current_source(annotation.source)
                 break
         self.set_dashboard_values()
-        self._connector.authorize_project(None)
+        self._connector.authorize_project()
     
     def add_multi_annotation(self, source: Source):
         self.delete_multi_annotation(source)

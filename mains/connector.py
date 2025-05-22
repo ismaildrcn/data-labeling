@@ -1,6 +1,6 @@
 import sys
 
-from typing import overload
+from typing import Union, overload
 from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator, QMovie
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem, QLabel
@@ -58,7 +58,7 @@ class Connector(QMainWindow, UI):
         elif answer == Users.operator.value:
             self.widget_personel_state.setVisible(False)
         else:
-            self.authorize_project(self.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value, None)
+            self.authorize_project(self.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value, False)
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
@@ -128,7 +128,7 @@ class Connector(QMainWindow, UI):
                 detail (tuple): Dikdörtgenin koordinatları ve QGraphicsRectItem nesnesi.
         """
         self.image_handler.add_annotation(source=self.source.current, coords=detail[0], rect_obj=detail[1])
-        self.authorize_project(None)
+        self.authorize_project()
 
     @overload
     def load_selected_image(self, item: QTableWidgetItem) -> None: ...
@@ -235,8 +235,8 @@ class Connector(QMainWindow, UI):
         self.graphicsView.reset()
         self.graphicsView.resetTransform()
         self.graphicsView.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
-    
-    def authorize_project(self, authorized: str, animation: bool = True):
+
+    def authorize_project(self, authorized: Union[str, None] = None, animation: bool = True):
         """
             Onaylama işlemini gerçekleştirir.
             Eğer onaylama işlemi başarılı olursa, animasyon gösterilir.
