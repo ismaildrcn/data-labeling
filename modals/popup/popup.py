@@ -63,6 +63,13 @@ class Popup(QDialog, PopupUI):
         self.popup_message.setText(p_code.message.replace('&param', f"{self.verify_key}") if isinstance(p_code, PopupMessages.Verify) else p_code.message)
         self.popup_type.setText(p_code.type)
         self.popup_icon.setPixmap(QPixmap(p_code.icon))
+
+        main_rect = self._connector.geometry()
+        popup_rect = self.geometry()
+        x = main_rect.x() + (main_rect.width() - popup_rect.width()) // 2
+        y = main_rect.y() + (main_rect.height() - popup_rect.height()) // 2
+        self.move(x, y)
+
         if isinstance(p_code, PopupMessages.Info):
             self.widget_bottom_area.setVisible(False)
             QTimer.singleShot(2000, self.close)
