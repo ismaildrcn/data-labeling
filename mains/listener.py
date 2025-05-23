@@ -5,6 +5,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
 
+import os
 
 
 class Listener(QMainWindow):
@@ -88,12 +89,16 @@ class Listener(QMainWindow):
                     self._connector.image_table, self._connector.image_table.viewport(), self._connector.widget_image_list
                     ):
                     urls = event.mimeData().urls()
-                    self._connector.image_handler.insert_image(urls, route=False)
+                    file_urls = self.has_file(urls)
+                    if file_urls:
+                        self._connector.image_handler.insert_image(file_urls, route=False)
                 elif source in (
                     self._connector.label_drop_project, self._connector.icon_drop_project, self._connector.widget_import_project
                     ):
                     urls = event.mimeData().urls()
-                    self._connector.image_handler.insert_project(urls)
+                    file_urls = self.has_file(urls)
+                    if file_urls:
+                        self._connector.image_handler.insert_project(file_urls)
         
 
         return super().eventFilter(source, event)
@@ -190,3 +195,13 @@ class Listener(QMainWindow):
                 )
                 # Menüyü göster
                 menu.exec_(event.globalPos())
+
+    @staticmethod
+    def has_file(urls: list) -> list:
+        # Sadece dosya olanları al
+        file_urls = []
+        for url in urls:
+            local_path = url.toLocalFile()
+            if os.path.isfile(local_path):
+                file_urls.append(url)
+        return file_urls
