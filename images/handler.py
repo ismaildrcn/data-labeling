@@ -552,10 +552,12 @@ class ImageHandler:
                         self._connector.database.annotation.delete(item)
                 else:
                     return
+            row_index = self.images[image].row_index
             self._connector.database.image.delete(db_item)
-            if self.images[image].row_index == self._connector.image_table.currentRow():
-                self._connector.load_selected_image(self.images[image].row_index - 1, 1)
-                return
+            if row_index == self._connector.image_table.currentRow():
+                self._connector.load_selected_image(row_index - 1, 1)
+                if row_index == 0:
+                    return
             self._connector.image_table.removeRow(self.images[image].row_index)
             self._images.pop(image)
 
