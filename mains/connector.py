@@ -87,7 +87,7 @@ class Connector(QMainWindow, UI):
         self.image_table.setDragDropMode(QAbstractItemView.DropOnly)
         self.image_table.setIconSize(QSize(16, 16))  # Icon boyutunu ayarla
 
-        regex = QRegularExpression("^[a-z_]*$")
+        regex = QRegularExpression("^[a-zA-Z_]*$")
         validator = QRegularExpressionValidator(regex)
         self.lineEdit_add_label.setValidator(validator)
 
@@ -131,6 +131,7 @@ class Connector(QMainWindow, UI):
     @overload
     def load_selected_image(self, row: int, column: int) -> None: ...  
     def load_selected_image(self, *args) -> None:
+        self.widget_labeling_area.setEnabled(True)
         if args[0] == -1:
             self.show_message(PopupMessages.Info.M103)
             self.clear_project()
@@ -206,6 +207,8 @@ class Connector(QMainWindow, UI):
         return self.modals.popup.show(p_code)
 
     def clear_project(self):
+        self.widget_labeling_area.setEnabled(False)
+        self.label_image_directory.clear()
         self.scene.clear()
         self.image_pixmap = None
 

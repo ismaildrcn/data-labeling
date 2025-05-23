@@ -65,9 +65,7 @@ class ImageHandler:
             widget.annotation_index.setText(str(annotation.db_item.annotation_id))
                 
         widget = LabelWidget().setup(self._connector)
-        for item in self._connector.configurator.labels:
-            widget.label_list.addItem(f"{item[0]}")
-            widget.label_list.setItemData(widget.label_list.count() - 1, item[0], Qt.ToolTipRole)
+        self.fill_label_list(widget)
 
         widget.label_list.setCurrentIndex(-1)
         item = QListWidgetItem(self._connector.current_label_list)
@@ -126,6 +124,8 @@ class ImageHandler:
     def hide(self, annotation):
         if annotation.rect_obj:
             annotation.rect_obj.setVisible(not annotation.rect_obj.isVisible())
+        if annotation.rect_index:
+            annotation.rect_index.setVisible(not annotation.rect_index.isVisible())
 
     def delete_annotation(self, annotation, only_front=False):
         if only_front:
@@ -590,3 +590,12 @@ class ImageHandler:
             if key in self.archive_metadata:
                 self.archive_metadata[key] = value
         return self.archive_metadata
+
+    def fill_label_list(self, widget):
+        """
+            Etiket listesini doldurur.
+        """
+        widget.label_list.clear()
+        for item in self._connector.configurator.labels:
+            widget.label_list.addItem(f"{item[0]}")
+            widget.label_list.setItemData(widget.label_list.count() - 1, item[0], Qt.ToolTipRole)

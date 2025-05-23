@@ -93,7 +93,7 @@ class CustomGraphicsView(QGraphicsView):
             # Zoom faktörünü belirle
             zoom_out = event.angleDelta().y() < 0
             zoom_factor = 1 / 1.2 if zoom_out else 1.2
-            
+            self._zoom += 1 if not zoom_out else -1
             # Mevcut transform'u al
             current_transform = self.transform()
             
@@ -161,16 +161,24 @@ class CustomGraphicsView(QGraphicsView):
         return QPointF(x, y)
 
     def zoom(self, step):
-        self._zoom = self._zoom + step
-        if self._zoom >= 0:
-            if step > 0:
-                factor = SCALE_FACTOR ** step
-            else:
-                factor = 1 / SCALE_FACTOR ** abs(step)
-            self.scale(factor, factor)
-        else:
-            self.scale(1, 1)
+        if step == 0:
+            return
+        self._zoom += step
+        if self._zoom <= 0:
             self._zoom = 0
-    
+            self.resetTransform()
+            # fitInView ile sahneyi tamamen göster
+            scene_rect = self.scene().sceneRect()
+            if not scene_rect.isNull():
+                self.fitInView(scene_rect, Qt.KeepAspectRatio)
+            return
+        # Transform'u sıfırla ve yeni scale uygula
+        self.resetTransform()
+        factor = SCALE_FACTOR ** self._zoom
+        self.scale(factor, factor)
+        # Sahnenin merkezini ortala
+        scene_rect = self.scene().sceneRect()
+        self.centerOn(scene_rect.center())
+
     def reset(self):
         self._zoom = 0

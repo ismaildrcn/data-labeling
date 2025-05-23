@@ -26,7 +26,9 @@ class Configurator(object):
         for key, value in LABEL_TYPES.items():
             self._connector.database.label.add(name=key, is_default=True)
         self.add_default_labels()                
-    
+        
+        self._connector.lineEdit_add_label.textChanged.connect(self.lowercase_lineedit)
+
     @property
     def labels(self):
         labels = self._connector.database.label.get().all()
@@ -102,6 +104,7 @@ class Configurator(object):
                 self.label_type.append(db_item)
                 self.create_table_item_for_label(db_item)
                 self._connector.lineEdit_add_label.clear()
+                self._connector.image_handler.update_all_label_comboboxes()
                 
     def export_labels(self):
         """
@@ -221,3 +224,10 @@ class Configurator(object):
         name_item = QTableWidgetItem(label.name)
         self._connector.tableWidget_label_list.setItem(row, 1, name_item)
         self._connector.tableWidget_label_list.scrollToBottom()
+
+    def lowercase_lineedit(self, text):
+        cursor_pos = self._connector.lineEdit_add_label.cursorPosition()
+        self._connector.lineEdit_add_label.blockSignals(True)
+        self._connector.lineEdit_add_label.setText(text.lower())
+        self._connector.lineEdit_add_label.setCursorPosition(cursor_pos)
+        self._connector.lineEdit_add_label.blockSignals(False)
