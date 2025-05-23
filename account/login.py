@@ -1,6 +1,6 @@
 from typing import Union
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
+from PyQt5.QtWidgets import QDialog, QWidget
+from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot, QPoint
 
 from database.utils import UtilsForSettings
 from modals.popup.messages import PopupMessages
@@ -13,8 +13,11 @@ class Login(QDialog, LoginUI):
         super().__init__()
         self.answer = None
         self._connector = connector
+        self._drag_active = False
+        self._drag_position = QPoint()
         self.setupUi(self)
         self.initialize()
+        self.install_drag_events()
 
     def initialize(self):
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
@@ -75,6 +78,32 @@ class Login(QDialog, LoginUI):
     @user.setter
     def user(self, value: Union[User, bool]) -> None:
         self._user = value
+
+    def install_drag_events(self):
+        def recursive_install(widget):
+            # QLineEdit ve QPushButton hariç
+            if widget.inherits("QLineEdit") or widget.inherits("QPushButton") or widget.inherits("QCheckBox"):
+                return
+            widget.installEventFilter(self)
+            for child in widget.findChildren(QWidget):
+                recursive_install(child)
+        recursive_install(self)
+
+    def eventFilter(self, obj, event):
+        if event.type() == event.MouseButtonPress:
+            if event.button() == Qt.LeftButton:
+                self._drag_active = True
+                self._drag_position = event.globalPos() - self.frameGeometry().topLeft()
+                return True
+        elif event.type() == event.MouseMove:
+            if self._drag_active and event.buttons() & Qt.LeftButton:
+                self.move(event.globalPos() - self._drag_position)
+                return True
+        elif event.type() == event.MouseButtonRelease:
+            if self._drag_active:
+                self._drag_active = False
+                return True
+        return super().eventFilter(obj, event)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape:
