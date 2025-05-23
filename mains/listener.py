@@ -134,9 +134,7 @@ class Listener(QMainWindow):
             
             # Liste sınırları içinde mi kontrol et
             if  0 <= next_index < total_items:
-                next_item = self._connector.image_table.item(next_index, 1)
-                self._connector.image_table.setCurrentItem(next_item)
-                self._connector.load_selected_image(next_item)
+                self._connector.load_selected_image(next_index)
     
     def pushButton_exit_project_event_changed(self):
         answer = self._connector.show_message(PopupMessages.Action.M402)
