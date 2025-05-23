@@ -8,7 +8,7 @@ from zipfile import ZipFile
 from datetime import datetime
 from PyQt5.QtCore import QUrl, QRectF, Qt
 from PyQt5.QtGui import QPixmap, QPen
-from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem
+from PyQt5.QtWidgets import QFileDialog, QGraphicsRectItem, QListWidgetItem, QComboBox
 
 from database.utils import UtilsForSettings
 from images.annotation import Annotation
@@ -65,7 +65,7 @@ class ImageHandler:
             widget.annotation_index.setText(str(annotation.db_item.annotation_id))
                 
         widget = LabelWidget().setup(self._connector)
-        self.fill_label_list(widget)
+        self.fill_label_list(widget.label_list)
 
         widget.label_list.setCurrentIndex(-1)
         item = QListWidgetItem(self._connector.current_label_list)
@@ -595,7 +595,28 @@ class ImageHandler:
         """
             Etiket listesini doldurur.
         """
-        widget.label_list.clear()
+        widget.blockSignals(True)  # Sinyalleri geçici olarak kapat
+        current_text = widget.currentText()
+        widget.clear()
         for item in self._connector.configurator.labels:
-            widget.label_list.addItem(f"{item[0]}")
-            widget.label_list.setItemData(widget.label_list.count() - 1, item[0], Qt.ToolTipRole)
+            widget.addItem(f"{item[0]}")
+            widget.setItemData(widget.count() - 1, item[0], Qt.ToolTipRole)
+        # Eski seçim varsa tekrar seç
+        idx = widget.findText(current_text)
+        if idx >= 0:
+            widget.setCurrentIndex(idx)
+        else:
+            widget.setCurrentIndex(-1)
+        widget.blockSignals(False)  # Sinyalleri tekrar aç
+
+    def update_all_label_comboboxes(self):
+        """
+        LabelWidget'ların label_list comboboxlarını günceller.
+        """
+        list_widget = self._connector.current_label_list
+        for i in range(list_widget.count()):
+            item = list_widget.item(i)
+            widget = list_widget.itemWidget(item)
+            for child in widget.children():
+                if isinstance(child, QComboBox):
+                    self.fill_label_list(child)
