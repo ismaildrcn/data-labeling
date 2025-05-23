@@ -1067,7 +1067,7 @@ class Ui_MainWindow(object):
         self.pushButton_continue_labeling.setText(_translate("MainWindow", "İlerle"))
         self.pushButton_export_labels.setText(_translate("MainWindow", "Etiketleri Bilgisayara Aktar"))
         self.widget_image_directory_area.setToolTip(_translate("MainWindow", "Görsellerin uyugulama aktarıldığı klasörü temsil eder."))
-        self.widget_image_list.setToolTip(_translate("MainWindow", "Sürükle bırak yaparak ile görsellerinizi ekleyebilirsiniz."))
+        self.widget_image_list.setToolTip(_translate("MainWindow", "Sürükle bırak yaparak görsellerinizi ekleyebilirsiniz."))
         self.label_image_list_title.setText(_translate("MainWindow", "Görseller"))
         self.image_table.setSortingEnabled(False)
         item = self.image_table.horizontalHeaderItem(0)
