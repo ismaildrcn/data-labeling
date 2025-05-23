@@ -3,7 +3,7 @@ import sys
 from typing import Union, overload
 from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator, QMovie
-from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QTableWidgetItem, QLabel
+from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QLabel
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QApplication
 
 from database.utils import UtilsForSettings
@@ -85,8 +85,6 @@ class Connector(QMainWindow, UI):
         self.image_table.setAcceptDrops(True)
         self.image_table.viewport().setAcceptDrops(True)
         self.image_table.setDragDropMode(QAbstractItemView.DropOnly)
-        self.image_table.setDefaultDropAction(Qt.CopyAction)
-        self.image_table.setDragEnabled(True)
         self.image_table.setIconSize(QSize(16, 16))  # Icon boyutunu ayarla
 
         regex = QRegularExpression("^[a-z_]*$")
@@ -131,22 +129,14 @@ class Connector(QMainWindow, UI):
         self.authorize_project()
 
     @overload
-    def load_selected_image(self, item: QTableWidgetItem) -> None: ...
-    @overload
     def load_selected_image(self, row: int, column: int) -> None: ...  
     def load_selected_image(self, *args) -> None:
-        if len(args) == 1:
-            item = args[0]
-        else:
-            self.widget_scene_actions.setEnabled(args[0] >= 0)
-            if args[0] == -1:
-                self.scene.clear()  # Önceki sahneyi temizle
-                self.current_label_list.clear()
-                self.label_current_image_name.clear()
-                self.source.current = None
-                self.graphicsView.setDragMode(QGraphicsView.NoDrag)
-                return
-            item = self.image_table.item(args[0], 1)
+        if args[0] == -1:
+            self.show_message(PopupMessages.Info.M103)
+            self.clear_project()
+            return
+
+        item = self.image_table.item(args[0], 1)
         """ Seçilen görseli yükle"""
         self.source.current = item.data(Qt.UserRole)  # Listedeki resim yolunu al
         self.image_table.setCurrentItem(item)  # Seçili satırı güncelle

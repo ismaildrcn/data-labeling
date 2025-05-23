@@ -20,7 +20,7 @@ class Listener(QMainWindow):
     def eventFilter(self, source, event):
         match event.type():
             case QEvent.MouseButtonPress:
-                if event.spontaneous():
+                if event.spontaneous() and source.isEnabled():
                     if source.parent() == self._connector.image_table:
                         source = source.parent()
                     match source:
@@ -108,7 +108,7 @@ class Listener(QMainWindow):
             self._connector.pages.setCurrentIndex(2)
             self._connector.modals.popup.show(PopupMessages.Info.M100)
             if self._connector.image_table.rowCount() > 0:
-                self._connector.load_selected_image(self._connector.image_table.item(0, 1))
+                self._connector.load_selected_image(0, 1)
             self._connector.label_total_image_value.setText(str(self._connector.image_table.rowCount()))
         else:
             self._connector.modals.popup.show(PopupMessages.Error.M300)

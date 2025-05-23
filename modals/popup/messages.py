@@ -27,6 +27,7 @@ class PopupMessages(object):
         M100 = "Çalışmanız başarıyla oluşturuldu, etiketlemeye başlayabilirsiniz."
         M101 = "Çalışmanız başarıyla seçmiş olduğunuz dizine aktarılmıştır."
         M102 = "Görseller başarıyla yüklendi."
+        M103 = "Çalışma yüzeyiniz boş olduğu için kapatılmıştır."
 
     class Warning(BaseEnum):
         @property
