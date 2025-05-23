@@ -23,7 +23,7 @@ class Login(QDialog, LoginUI):
         self.widget_main.setGraphicsEffect(self._connector.create_shadow())
 
         remember_me = self._connector.database.setting.filter(UtilsForSettings.REMEMBER_ME.value)
-        if remember_me.value:
+        if remember_me and remember_me.value:
             self.lineEdit_username.setText(remember_me.value)
             self.checkBox_remember_me.setChecked(True)
             self.lineEdit_password.setFocus()
