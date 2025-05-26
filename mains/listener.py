@@ -91,7 +91,7 @@ class Listener(QMainWindow):
                     urls = event.mimeData().urls()
                     file_urls = self.has_file(urls)
                     if file_urls:
-                        self._connector.image_handler.insert_image(file_urls, route=False)
+                        self._connector.image_handler.insert_image(file_urls, route=source not in (self._connector.image_table, self._connector.image_table.viewport(), self._connector.widget_image_list))
                 elif source in (
                     self._connector.label_drop_project, self._connector.icon_drop_project, self._connector.widget_import_project
                     ):
@@ -106,10 +106,12 @@ class Listener(QMainWindow):
     def continue_event_changed(self) -> None:
         if self._connector.configurator.label_type:
             self._connector.pages.setCurrentIndex(2)
-            self._connector.modals.popup.show(PopupMessages.Info.M100)
-            if self._connector.image_table.rowCount() > 0:
-                self._connector.load_selected_image(0, 1)
-            self._connector.label_total_image_value.setText(str(self._connector.image_table.rowCount()))
+            if self._connector.first_start:
+                self._connector.modals.popup.show(PopupMessages.Info.M100)
+                if self._connector.image_table.rowCount() > 0:
+                    self._connector.load_selected_image(0, 1)
+                    self._connector.image_handler.set_dashboard_values()
+                self._connector.first_start = False
         else:
             self._connector.modals.popup.show(PopupMessages.Error.M300)
 

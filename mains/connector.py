@@ -31,6 +31,8 @@ class Connector(QMainWindow, UI):
         super().__init__()
         self.start_pos = None
         self.rect_item = None
+        self.first_start = True
+
         self.setupUi(self)
         self.connection()
         self.modules()
@@ -103,6 +105,7 @@ class Connector(QMainWindow, UI):
             answer = self.show_message(PopupMessages.Action.M404)
             if answer == Answers.OK:
                 self.image_handler.insert_from_database()
+                self.first_start = False
             else:
                 answer = self.show_message(PopupMessages.Verify.M500)
                 if answer == Answers.OK:
@@ -221,6 +224,7 @@ class Connector(QMainWindow, UI):
         self.image_table.setRowCount(0)
         self.source.clear()
         self.pages.setCurrentIndex(0)
+        self.first_start = True
 
     def pages_current_changed(self, index):
         if index == 0:

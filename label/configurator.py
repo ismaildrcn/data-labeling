@@ -85,9 +85,17 @@ class Configurator(object):
             if items:
                 row = items[0].row()
                 self._connector.tableWidget_label_list.removeRow(row)
-            
-            # Memory'den sil
-            self.label_type = [lbl for lbl in self.label_type if lbl.name != name]
+                # Bir üst satırı seç ve scroll et
+                row_count = self._connector.tableWidget_label_list.rowCount()
+                if row_count > 0:
+                    new_row = max(0, row - 1)
+                    self._connector.tableWidget_label_list.selectRow(new_row)
+                    item = self._connector.tableWidget_label_list.item(new_row, 1)
+                    if item:
+                        self._connector.tableWidget_label_list.scrollToItem(item, QAbstractItemView.PositionAtCenter)
+        
+        # Memory'den sil
+        self.label_type = [lbl for lbl in self.label_type if lbl.name != name]
 
     def add(self):
         """

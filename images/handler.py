@@ -232,15 +232,19 @@ class ImageHandler:
 
 
     def insert_image(self, drop_list=False, route=True):
+        temp_list = self._images.copy()
         if drop_list:
             self.insert_from_drag_drop(drop_list)
         else:
             self.insert_from_file_dialog()
-        if self._images:
+        if temp_list != self._images:
             self._connector.database.setting.update("session", True)
             self._connector.show_message(PopupMessages.Info.M102)
             if route:
-                self._connector.pages.setCurrentIndex(1)
+                if self._connector.pushButton_continue_labeling_from_images.isVisible():
+                    self._connector.pages.setCurrentIndex(2)
+                else:
+                    self._connector.pages.setCurrentIndex(1)
             self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
             self.set_dashboard_values()
     
