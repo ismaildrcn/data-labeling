@@ -46,6 +46,7 @@ class PopupMessages(object):
         M204 = "Böyle bir kullanıcı bulunamadı. Lütfen kullanıcı adınızı doğru girdiğinizden emin olun!"
         M205 = "Parola yanlış, lütfen doğru girdiğinizden emin olun!"
         M206 = "Çalışma yüzeyiniz boş değil, lütfen çalışmadaki işlemlerini bitirmeden yeni bir çalışmayı uygulamaya aktarmayı denemeyin."
+        M207 = "Lütfen önce görsel ekleyin, daha sonra etiketleri düzenleyebilirsiniz."
     
     class Error(BaseEnum):
         @property

@@ -403,9 +403,15 @@ class ImageHandler:
                 if available_annotation - defined_annotation > 0:
                     answer = self._connector.show_message(PopupMessages.Action.M400)
                 if available_annotation - defined_annotation == 0 or answer == Answers.OK:
-                    save_dir = QFileDialog.getExistingDirectory(self._connector, 'Çalışmanın Kaydedileceği Klasörü Seçin')
-                    if save_dir:
-                        self.zipper(save_dir)
+                    default_name = f"catch_{datetime.now().strftime('%Y%m%d_%H%M%S')}{ARCHIVE_EXTENSION}"
+                    save_path, _ = QFileDialog.getSaveFileName(
+                        self._connector,
+                        'Çalışmanın Kaydedileceği Dosyayı Seçin',
+                        default_name,
+                        f"ANNS File (*{ARCHIVE_EXTENSION})"
+                    )
+                    if save_path:
+                        self.zipper(save_path)
                         self._connector.show_message(PopupMessages.Info.M101)
         except Exception as _:
             self._connector.show_message(PopupMessages.Error.M301)
@@ -426,7 +432,7 @@ class ImageHandler:
             image_name = os.path.basename(image_path)
             base_name = os.path.splitext(image_name)[0]
             return image_path, image_name, base_name
-        with ZipFile(os.path.join(save_dir, str(uuid.uuid4()) + ARCHIVE_EXTENSION), 'w') as archive:
+        with ZipFile(save_dir, 'w') as archive:
             exists_error = False
             for image in self.images:
                 try:
@@ -558,7 +564,7 @@ class ImageHandler:
                     return
             row_index = self.images[image].row_index
             self._connector.database.image.delete(db_item)
-            if row_index == self._connector.image_table.currentRow():
+            if row_index == self._connector.image_table.currentRow() and (row_index == 0 and self._connector.image_table.rowCount() == 1):
                 self._connector.load_selected_image(row_index - 1, 1)
                 if row_index == 0:
                     return

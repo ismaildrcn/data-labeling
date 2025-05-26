@@ -49,9 +49,9 @@ class Listener(QMainWindow):
                         case self._connector.pushButton_exit_project:
                             self.pushButton_exit_project_event_changed()
                         case self._connector.pushButton_activate_hand:
-                            self.pushButton_activate_hand_event_changed()
+                            self._connector.graphicsView.setDragMode(QGraphicsView.ScrollHandDrag)
                         case self._connector.pushButton_activate_crosshair:
-                            self.pushButton_activate_crosshair_event_changed()
+                            self._connector.graphicsView.setDragMode(QGraphicsView.NoDrag)
                         case self._connector.pushButton_zoom_in:
                             self._connector.graphicsView.zoom(1)
                         case self._connector.pushButton_zoom_out:
@@ -145,20 +145,6 @@ class Listener(QMainWindow):
             if answer == Answers.OK:
                 self._connector.clear_project()
 
-    def pushButton_activate_hand_event_changed(self):
-        if self._connector.pushButton_activate_hand.isChecked():
-            self._connector.graphicsView.setDragMode(QGraphicsView.NoDrag)
-        else:
-            self._connector.graphicsView.setDragMode(QGraphicsView.ScrollHandDrag)
-        self._connector.pushButton_activate_crosshair.setChecked(not self._connector.pushButton_activate_crosshair.isChecked())
-
-    def pushButton_activate_crosshair_event_changed(self):
-        if self._connector.pushButton_activate_crosshair.isChecked():
-            self._connector.graphicsView.setDragMode(QGraphicsView.ScrollHandDrag)
-        else:
-            self._connector.graphicsView.setDragMode(QGraphicsView.NoDrag)
-        self._connector.pushButton_activate_hand.setChecked(not self._connector.pushButton_activate_hand.isChecked())
-    
     def image_table_event_changed(self, event):
         if event.button() == Qt.RightButton:
             menu = QMenu(self._connector.image_table)

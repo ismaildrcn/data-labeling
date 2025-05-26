@@ -4,7 +4,7 @@ from typing import Union, overload
 from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator, QMovie
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QLabel
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QApplication
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QApplication, QButtonGroup
 
 from database.utils import UtilsForSettings
 from modals.popup.utils import Answers
@@ -100,6 +100,11 @@ class Connector(QMainWindow, UI):
         self.pushButton_exit_project.setVisible(False)
         self.show()
 
+        self.button_group = QButtonGroup(self)
+        self.button_group.setExclusive(True)
+        self.button_group.addButton(self.pushButton_activate_hand)
+        self.button_group.addButton(self.pushButton_activate_crosshair)
+
         # Yarım bırakılmış oturum varsa tüm çalışmayı veritabanından içeri aktarır.
         if self.database.settings.session:
             answer = self.show_message(PopupMessages.Action.M404)
@@ -184,7 +189,7 @@ class Connector(QMainWindow, UI):
         self.menu.addAction(import_images)
 
         edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Etiketleri Düzenle", self)
-        edit_label.triggered.connect(lambda: self.pages.setCurrentIndex(1))
+        edit_label.triggered.connect(self.edit_action)
         self.menu.addAction(edit_label)
 
         import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı Uygulamaya Aktar", self)
@@ -200,7 +205,16 @@ class Connector(QMainWindow, UI):
             authorize_action.triggered.connect(lambda: self.authorize_project(self.login.user.username))
             self.menu.addAction(authorize_action)
         
-        
+    def edit_action(self):
+        """
+            Etiketleri düzenlemek için menüdeki "Etiketleri Düzenle" seçeneğini tetikler.
+            Bu, kullanıcıyı etiket düzenleme sayfasına yönlendirir.
+        """
+        if self.image_handler.count <= 0:
+            self.show_message(PopupMessages.Warning.M207)
+            return
+        self.pages.setCurrentIndex(1)
+    
     def show_menu(self):
         if len(self.menu.actions()) == 5: 
             self.menu.actions()[4].setVisible(self.pages.currentIndex() == 2)
