@@ -25,7 +25,6 @@ from account.login import Login
 from account.users import Users
 
 
-
 class Connector(QMainWindow, UI):
     def __init__(self, anns_file: Union[QUrl, None] = None):
         super().__init__()
@@ -34,10 +33,27 @@ class Connector(QMainWindow, UI):
         self.first_start = True
         self.anns_file = anns_file
 
+        self.menu_style = f"""
+            QMenu {{
+                border: 1px solid #5678d5;
+                background-color: {Colors.PRIMARY};
+                color: #EEEEEE;
+                padding: 8px;
+            }}
+            QMenu::item {{
+                padding: 8px 10px;
+                background-color: transparent;
+            }}
+            QMenu::item:selected {{
+                background-color: #5678d5;
+            }}
+        """
+
         self.setupUi(self)
-        self.connection()
         self.modules()
+        self.init_widgets()
         self.initialize()
+        self.connection()
 
     def modules(self):
         self.listener = Listener(self)
@@ -50,27 +66,21 @@ class Connector(QMainWindow, UI):
 
     def connection(self):
         self.image_table.cellClicked.connect(self.load_selected_image)
-        self.pushButton_actions.clicked.connect(self.show_menu)
+        self.pushButton_actions.clicked.connect(lambda: self.show_menu(self.pushButton_actions, self.actions_menu))
+        self.pushButton_user.clicked.connect(lambda: self.show_menu(self.pushButton_user, self.user_menu))
         self.pages.currentChanged.connect(self.pages_current_changed)
-
-
-    def initialize(self):
-        answer = self.login.show()
-        if not answer:
-            sys.exit()
-        elif answer == Users.operator.value:
-            self.widget_personel_state.setVisible(False)
-        else:
-            self.authorize_project(self.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value, False)
+    
+    def init_widgets(self):
+        """
+            Uygulama arayüzünü başlatır ve gerekli bileşenleri ayarlar. 
+        """
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        # Alternatif Qt çözümü
         QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
         QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 
         self.widget_main.setGraphicsEffect(self.create_shadow())
-
 
         self.graphicsView = CustomGraphicsView(self.centralwidget)
         self.graphicsView.rect_created_signal.connect(self.created_rect)
@@ -94,18 +104,20 @@ class Connector(QMainWindow, UI):
         validator = QRegularExpressionValidator(regex)
         self.lineEdit_add_label.setValidator(validator)
 
-        self.init_actions()
-        self.pages.setCurrentIndex(0)
-
         self.pushButton_continue_labeling_from_images.setVisible(False)
         self.pushButton_exit_project.setVisible(False)
-        self.show()
 
         self.button_group = QButtonGroup(self)
         self.button_group.setExclusive(True)
         self.button_group.addButton(self.pushButton_activate_hand)
         self.button_group.addButton(self.pushButton_activate_crosshair)
 
+    def initialize(self):
+        self.login.show()
+
+        self.init_actions()
+        self.clear_widgets()
+        self.show()
         # Yarım bırakılmış oturum varsa tüm çalışmayı veritabanından içeri aktarır.
         if self.database.settings.session:
             answer = self.show_message(PopupMessages.Action.M404)
@@ -180,43 +192,39 @@ class Connector(QMainWindow, UI):
             self.label_current_image_name.setText(f"{self.image_table.currentRow() + 1} - {self.source.current.toLocalFile().split('/')[-1]}")
 
     def init_actions(self):
-        self.menu = QMenu(self)
-        self.menu.setStyleSheet(f"""
-            QMenu {{
-                border: 1px solid #5678d5;
-                background-color: {Colors.PRIMARY};
-                color: #EEEEEE;
-                padding: 8px;
-            }}
-            QMenu::item {{
-                padding: 8px 10px;
-                background-color: transparent;
-            }}
-            QMenu::item:selected {{
-                background-color: #5678d5;
-            }}
-        """)
+        self.actions_menu = QMenu(self)
+        self.actions_menu.setStyleSheet(self.menu_style)
 
-        import_images = QAction(QIcon(":/images/templates/images/import-image.svg"), "Görüntüleri Uygulamaya Aktar", self)
-        import_images.triggered.connect(lambda: self.pages.setCurrentIndex(0))
-        self.menu.addAction(import_images)
+        self.user_menu = QMenu(self)
+        self.user_menu.setStyleSheet(self.menu_style)
 
-        edit_label = QAction(QIcon(":/images/templates/images/label.svg"), "Etiketleri Düzenle", self)
-        edit_label.triggered.connect(self.edit_action)
-        self.menu.addAction(edit_label)
-
-        import_action = QAction(QIcon(":/images/templates/images/database-import.svg"), "Çalışmayı Uygulamaya Aktar", self)
-        import_action.triggered.connect(self.image_handler.insert_project)
-        self.menu.addAction(import_action)
-        
-        export_action = QAction(QIcon(":/images/templates/images/database-export.svg"), "Çalışmayı Bilgisayara Aktar", self)
-        export_action.triggered.connect(self.image_handler.export)
-        self.menu.addAction(export_action)
+        self.create_action(self.actions_menu, ":/images/templates/images/import-image.svg", "Görüntüleri Uygulamaya Aktar", lambda: self.pages.setCurrentIndex(0))
+        self.create_action(self.actions_menu, ":/images/templates/images/label.svg", "Etiketleri Düzenle", self.edit_action)
+        self.create_action(self.actions_menu, ":/images/templates/images/database-import.svg", "Çalışmayı Uygulamaya Aktar", self.image_handler.insert_project)
+        self.create_action(self.actions_menu, ":/images/templates/images/database-export.svg", "Çalışmayı Bilgisayara Aktar", self.image_handler.export)
 
         if self.login.user != Users.operator.value:
-            authorize_action = QAction(QIcon(":/images/templates/images/authorize.svg"), "Çalışmayı Onayla", self)
-            authorize_action.triggered.connect(lambda: self.authorize_project(self.login.user.username))
-            self.menu.addAction(authorize_action)
+            self.create_action(self.actions_menu, ":/images/templates/images/authorize.svg", "Çalışmayı Onayla", lambda: self.authorize_project(self.login.user.username))
+
+        self.create_action(self.user_menu, ":/images/templates/images/logout.svg", "Oturumu Kapat", self.login.logout)
+
+    def create_action(self, menu: QMenu, icon: str, text: str, slot: callable) -> QAction:
+        """
+            Yeni bir QAction oluşturur ve verilen ikon, metin ve slot ile ilişkilendirir.
+            Bu method, menüdeki eylemleri oluşturmak için kullanılır.
+            
+            Args:
+                icon (str): Eylem için ikonun yolu.
+                text (str): Eylemin metni.
+                slot (callable): Eylem tetiklendiğinde çağrılacak fonksiyon.
+
+            Returns:
+                QAction: Oluşturulan QAction nesnesi.
+        """
+        action = QAction(QIcon(icon), text, self)
+        action.triggered.connect(slot)
+        menu.addAction(action)
+        return action
         
     def edit_action(self):
         """
@@ -228,29 +236,35 @@ class Connector(QMainWindow, UI):
             return
         self.pages.setCurrentIndex(1)
     
-    def show_menu(self):
-        if len(self.menu.actions()) == 5: 
-            self.menu.actions()[4].setVisible(self.pages.currentIndex() == 2)
-        self.menu.exec_(self.pushButton_actions.mapToGlobal(self.pushButton_actions.rect().bottomLeft()))
-    
+    def show_menu(self, button, menu: QMenu = None):
+        if menu is None:
+            menu = self.actions_menu
+        if len(menu.actions()) == 5:
+            menu.actions()[4].setVisible(self.pages.currentIndex() == 2)
+        menu.exec_(button.mapToGlobal(button.rect().bottomLeft()))
+
     def show_message(self, p_code: PopupMessages):
         return self.modals.popup.show(p_code)
 
-    def clear_project(self):
+    def clear_widgets(self):
+        self.image_pixmap = None
+        self.current_label_list.clear()
+        self.image_table.clearContents()
+        self.image_table.setRowCount(0)
         self.widget_labeling_area.setEnabled(False)
         self.label_image_directory.clear()
+        self.pages.setCurrentIndex(0)
+        self.source.clear()
+        self.image_handler.image_dir_list.clear()
+
+
+    def clear_project(self, database: bool = True):
         self.scene.clear()
-        self.image_pixmap = None
 
         self.configurator.reset()
         self.image_handler.clear()
         self.database.clear()
-        
-        self.current_label_list.clear()
-        self.image_table.clearContents()
-        self.image_table.setRowCount(0)
-        self.source.clear()
-        self.pages.setCurrentIndex(0)
+        self.clear_widgets()
         self.first_start = True
 
     def pages_current_changed(self, index):

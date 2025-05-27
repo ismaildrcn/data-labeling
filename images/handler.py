@@ -97,8 +97,6 @@ class ImageHandler:
         elif arg_annotation:
             annotation = args[0]
             annotation.item = item
-            if annotation.label is not None:
-                widget.label_list.setCurrentIndex(int(annotation.label))
         else:
             if len(args) == 3:
                 annotation = Annotation(source=arg_source, coords=arg_coords, rect_obj=arg_rect_obj, item=arg_item if arg_item else item)
@@ -114,6 +112,8 @@ class ImageHandler:
             annotation.db_item = db_item
 
             self.add_annotation_to_list(annotation)
+        if annotation.label is not None:
+            widget.label_list.setCurrentIndex(int(annotation.label))
         self.set_dashboard_values()
         add_annotation_index_to_rect()
         self.check_annotation_in_current_source(annotation.source)
@@ -564,16 +564,20 @@ class ImageHandler:
                     return
             row_index = self.images[image].row_index
             self._connector.database.image.delete(db_item)
-            if row_index == self._connector.image_table.currentRow() and (row_index == 0 and self._connector.image_table.rowCount() == 1):
-                self._connector.load_selected_image(row_index - 1, 1)
-                if row_index == 0:
-                    return
+            if row_index == 0 and self._connector.image_table.rowCount() > 1:
+                row_index += 1
+            else:
+                row_index -= 1
+            self._connector.load_selected_image(row_index, 1)
+            if row_index == -1:
+                return
             self._connector.image_table.removeRow(self.images[image].row_index)
             self._images.pop(image)
 
             for index, image in enumerate(self._images):
                 self._images[image].row_index = index
         self.set_dashboard_values()
+        self._connector.authorize_project()
     
     def set_dashboard_values(self):
         self._connector.label_total_image_value.setNum(self._connector.database.image.count())

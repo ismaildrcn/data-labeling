@@ -1,3 +1,5 @@
+import sys
+
 from typing import Union
 from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot, QPoint
@@ -38,7 +40,19 @@ class Login(QDialog, LoginUI):
     
     def show(self):
         self.exec()
+        if not self.answer:
+            sys.exit()
+        elif self.answer == Users.operator.value:
+            self._connector.widget_personel_state.setVisible(False)
+        else:
+            self._connector.widget_personel_state.setVisible(True)
+            self._connector.authorize_project(self._connector.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value, False)
         return self.answer
+    
+    def logout(self):
+        self._connector.close()
+        self._connector.initialize()
+        
 
     def check_login_input(self, operator: bool = False) -> None:
         if operator:
@@ -56,7 +70,7 @@ class Login(QDialog, LoginUI):
     def accept_login(self, value):
         self.answer = value
         if value:
-            self._connector.label_account_username.setText(value.username)
+            self._connector.pushButton_user.setText(value.username)
             self.lineEdit_username.clear()
             self.lineEdit_password.clear()
             if value is not Users["operator"].value:

@@ -207,73 +207,36 @@ QPushButton{
               </widget>
              </item>
              <item>
-              <widget class="QWidget" name="widget_username" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
+              <widget class="QPushButton" name="pushButton_user">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">#widget_username{
+                <string notr="true">QPushButton{
 	border-radius: 5px;
-	background-color: rgba(76,81,88, 150)
-;
+	background-color: rgba(76,81,88, 150);
+}
+QPushButton:hover{
+	background-color: rgba(76,81,88, 80);
 }</string>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_14">
-                <property name="topMargin">
-                 <number>4</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>4</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="icon_account">
-                  <property name="minimumSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="pixmap">
-                   <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/account.svg</pixmap>
-                  </property>
-                  <property name="scaledContents">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_account_username">
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>username</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <property name="text">
+                <string>username</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../rcc_files/rsrc.qrc">
+                 <normaloff>:/images/templates/images/account.svg</normaloff>:/images/templates/images/account.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>22</width>
+                 <height>22</height>
+                </size>
+               </property>
               </widget>
              </item>
              <item>
