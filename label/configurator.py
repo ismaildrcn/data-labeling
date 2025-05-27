@@ -234,8 +234,11 @@ class Configurator(object):
         self._connector.tableWidget_label_list.scrollToBottom()
 
     def lowercase_lineedit(self, text):
+        new_text = text.lower()
+        if new_text.endswith("__"):
+            new_text = new_text[:-1]
         cursor_pos = self._connector.lineEdit_add_label.cursorPosition()
         self._connector.lineEdit_add_label.blockSignals(True)
-        self._connector.lineEdit_add_label.setText(text.lower())
+        self._connector.lineEdit_add_label.setText(new_text)
         self._connector.lineEdit_add_label.setCursorPosition(cursor_pos)
         self._connector.lineEdit_add_label.blockSignals(False)
