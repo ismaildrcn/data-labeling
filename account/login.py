@@ -27,11 +27,6 @@ class Login(QDialog, LoginUI):
         self.connection()
         self.widget_main.setGraphicsEffect(self._connector.create_shadow())
 
-        remember_me = self._connector.database.setting.filter(UtilsForSettings.REMEMBER_ME.value)
-        if remember_me and remember_me.value:
-            self.lineEdit_username.setText(remember_me.value)
-            self.checkBox_remember_me.setChecked(True)
-            self.lineEdit_password.setFocus()
 
     def connection(self):
         self.pushButton_login.clicked.connect(self.check_login_input)
@@ -39,6 +34,11 @@ class Login(QDialog, LoginUI):
         self.userSignal.connect(self.accept_login)
     
     def show(self):
+        remember_me = self._connector.database.setting.filter(UtilsForSettings.REMEMBER_ME.value)
+        if remember_me and remember_me.value:
+            self.lineEdit_username.setText(remember_me.value)
+            self.checkBox_remember_me.setChecked(True)
+            self.lineEdit_password.setFocus()
         self.exec()
         if not self.answer:
             sys.exit()
