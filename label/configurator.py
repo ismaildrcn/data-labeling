@@ -49,6 +49,7 @@ class Configurator(object):
             Returns:
                 None
         """
+        self._connector.database.label.clear()
         self._connector.tableWidget_label_list.clear()
         # Add default labels
         self.add_default_labels()
@@ -159,9 +160,6 @@ class Configurator(object):
             answer = Answers.OK
             
         if answer == Answers.OK:
-            self.label_type.clear()
-            self._connector.tableWidget_label_list.setRowCount(0)
-            
             if args:
                 fname = args[0]
             else:
@@ -173,6 +171,8 @@ class Configurator(object):
                 )[0]
                 
             if fname:
+                self.label_type.clear()
+                self._connector.tableWidget_label_list.setRowCount(0)
                 with open(f"{fname}", 'r') as f:
                     text = ast.literal_eval(f.readline().strip())
                     if text:

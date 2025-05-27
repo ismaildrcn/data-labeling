@@ -1,7 +1,7 @@
 import sys
 
 from typing import Union, overload
-from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer
+from PyQt5.QtCore import Qt, pyqtSlot, QSize, QRegularExpression, QTimer, QUrl
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QRegularExpressionValidator, QMovie
 from PyQt5.QtWidgets import QMainWindow, QAbstractItemView, QGraphicsScene, QGraphicsView, QAction, QMenu, QLabel
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QApplication, QButtonGroup
@@ -27,11 +27,12 @@ from account.users import Users
 
 
 class Connector(QMainWindow, UI):
-    def __init__(self):
+    def __init__(self, anns_file: Union[QUrl, None] = None):
         super().__init__()
         self.start_pos = None
         self.rect_item = None
         self.first_start = True
+        self.anns_file = anns_file
 
         self.setupUi(self)
         self.connection()
@@ -115,11 +116,23 @@ class Connector(QMainWindow, UI):
                 answer = self.show_message(PopupMessages.Verify.M500)
                 if answer == Answers.OK:
                     self.clear_project()
+                    self.start_app_with_anns_file(self.anns_file)
                 else:
                     self.close()
                     sys.exit()
+        else:
+            self.start_app_with_anns_file(self.anns_file)
 
 
+    def start_app_with_anns_file(self, anns_file: QUrl):
+        """
+            Uygulamayı bir .anns dosyası ile başlatır.
+            Bu method, uygulama başlatıldığında eğer bir .anns dosyası verilmişse
+            bu dosyayı içe aktarır ve etiketleme alanını hazırlar.
+        """
+        if anns_file:
+            self.image_handler.insert_project([anns_file])
+            self.first_start = False
         
     @pyqtSlot(tuple)
     def created_rect(self, detail):
