@@ -532,10 +532,9 @@ class ImageHandler:
     def elide_text(self, label, text):
         """Text uzun ise ... ile kısaltılmış şekilde döndürür."""
         metrics = label.fontMetrics()
-        elided = metrics.elidedText(text, Qt.ElideRight, label.width() - 10)
-        return elided
-
-    def check_directroy(self, path: QUrl):
+        return metrics.elidedText(text, Qt.ElideRight, 230)
+    
+    def check_directory(self, path: QUrl):
         if path.fragment() != "":
             dirname = os.path.dirname(path.fragment()).split('/')[-1]
         else:

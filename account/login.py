@@ -34,6 +34,8 @@ class Login(QDialog, LoginUI):
         self.userSignal.connect(self.accept_login)
     
     def show(self):
+        self.label_username_warning.setVisible(False)
+        self.label_password_warning.setVisible(False)
         remember_me = self._connector.database.setting.filter(UtilsForSettings.REMEMBER_ME.value)
         if remember_me and remember_me.value:
             self.lineEdit_username.setText(remember_me.value)
@@ -52,7 +54,6 @@ class Login(QDialog, LoginUI):
     def logout(self):
         self._connector.close()
         self._connector.initialize()
-        
 
     def check_login_input(self, operator: bool = False) -> None:
         if operator:
@@ -60,9 +61,22 @@ class Login(QDialog, LoginUI):
         else:
             username = self.lineEdit_username.text()
             password = self.lineEdit_password.text()
+            if "" in (username, password):
+                if username == "":
+                    self.label_username_warning.setVisible(True)
+                else:
+                    self.label_username_warning.setVisible(False)
+                if password == "":
+                    self.label_password_warning.setVisible(True)
+                else:
+                    self.label_password_warning.setVisible(False)
+                return
+            else:
+                self.label_username_warning.setVisible(False)
+                self.label_password_warning.setVisible(False)
             try:
                 user = Users[username].value
-                self.userSignal.emit(user if user.password == password else False)
+                self.userSignal.emit(user if user.password == password else None)
             except KeyError:
                 return self.userSignal.emit(None)
     
@@ -79,8 +93,6 @@ class Login(QDialog, LoginUI):
                 else:
                     self._connector.database.setting.update(UtilsForSettings.REMEMBER_ME.value, None)
             self.close()
-        elif value is False:
-            self._connector.show_message(PopupMessages.Warning.M205)
         else:
             self._connector.show_message(PopupMessages.Warning.M204)
         self.user = value

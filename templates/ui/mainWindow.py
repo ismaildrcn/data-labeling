@@ -589,7 +589,7 @@ class Ui_MainWindow(object):
         self.icon_image_directory.setObjectName("icon_image_directory")
         self.horizontalLayout_12.addWidget(self.icon_image_directory)
         self.label_image_directory = QtWidgets.QLabel(self.widget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_image_directory.sizePolicy().hasHeightForWidth())
