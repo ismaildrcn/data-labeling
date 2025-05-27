@@ -529,6 +529,12 @@ class ImageHandler:
             return len(self._images[source]._annotations)
         return 0
 
+    def elide_text(self, label, text):
+        """Text uzun ise ... ile kısaltılmış şekilde döndürür."""
+        metrics = label.fontMetrics()
+        elided = metrics.elidedText(text, Qt.ElideRight, label.width() - 10)
+        return elided
+
     def check_directroy(self, path: QUrl):
         if path.fragment() != "":
             dirname = os.path.dirname(path.fragment()).split('/')[-1]
@@ -537,7 +543,8 @@ class ImageHandler:
         if dirname not in self.image_dir_list:
             self.image_dir_list.append(dirname)
             text = ', '.join(self.image_dir_list)
-            self._connector.label_image_directory.setText(text)
+            elided_text = self.elide_text(self._connector.label_image_directory, text)
+            self._connector.label_image_directory.setText(elided_text)
             self._connector.label_image_directory.setToolTip(text)
 
     def clear(self):
