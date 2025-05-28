@@ -71,6 +71,10 @@ class AnnotationCRUD(CRUD):
     @staticmethod
     def defined_count() -> int:
         return session.query(Annotation).filter(Annotation.label_id != None).count()
+
+    @staticmethod
+    def undefined_count() -> int:
+        return session.query(Annotation).filter(Annotation.label_id == None).count()
     
     @staticmethod
     def clear() -> None:

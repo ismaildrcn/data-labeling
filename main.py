@@ -6,7 +6,6 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtNetwork import QLocalServer, QLocalSocket
 from mains.connector import Connector
 # High DPI ayarları
-import winreg
 import ctypes
 ctypes.windll.shcore.SetProcessDpiAwareness(1)  # 1: SYSTEM_AWARE, 2: PER_MONITOR_AWARE
 

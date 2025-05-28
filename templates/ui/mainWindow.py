@@ -945,7 +945,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_labeling_bottom_area.sizePolicy().hasHeightForWidth())
         self.widget_labeling_bottom_area.setSizePolicy(sizePolicy)
-        self.widget_labeling_bottom_area.setMinimumSize(QtCore.QSize(0, 25))
+        self.widget_labeling_bottom_area.setMinimumSize(QtCore.QSize(350, 25))
         self.widget_labeling_bottom_area.setStyleSheet("")
         self.widget_labeling_bottom_area.setObjectName("widget_labeling_bottom_area")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.widget_labeling_bottom_area)
@@ -953,6 +953,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.pushButton_previous_image = QtWidgets.QPushButton(self.widget_labeling_bottom_area)
         self.pushButton_previous_image.setMinimumSize(QtCore.QSize(25, 25))
+        self.pushButton_previous_image.setMaximumSize(QtCore.QSize(25, 25))
         self.pushButton_previous_image.setStyleSheet("QPushButton {\n"
 "    background-repeat: no-repeat;\n"
 "    border-image: url(:/images/templates/images/left.svg);\n"
@@ -968,7 +969,7 @@ class Ui_MainWindow(object):
         self.pushButton_previous_image.setObjectName("pushButton_previous_image")
         self.horizontalLayout_5.addWidget(self.pushButton_previous_image)
         self.label_current_image_name = QtWidgets.QLabel(self.widget_labeling_bottom_area)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_current_image_name.sizePolicy().hasHeightForWidth())
@@ -981,6 +982,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addWidget(self.label_current_image_name)
         self.pushButton_next_image = QtWidgets.QPushButton(self.widget_labeling_bottom_area)
         self.pushButton_next_image.setMinimumSize(QtCore.QSize(25, 25))
+        self.pushButton_next_image.setMaximumSize(QtCore.QSize(25, 25))
         self.pushButton_next_image.setStyleSheet("QPushButton {\n"
 "    background-repeat: no-repeat;\n"
 "    border-image: url(:/images/templates/images/right.svg);\n"

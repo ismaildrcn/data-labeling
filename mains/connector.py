@@ -113,6 +113,7 @@ class Connector(QMainWindow, UI):
         self.button_group.addButton(self.pushButton_activate_crosshair)
 
     def initialize(self):
+        self.first_start = True
         self.login.show()
 
         self.init_actions()
@@ -204,7 +205,7 @@ class Connector(QMainWindow, UI):
         self.create_action(self.actions_menu, ":/images/templates/images/database-export.svg", "Çalışmayı Bilgisayara Aktar", self.image_handler.export)
 
         if self.login.user != Users.operator.value:
-            self.create_action(self.actions_menu, ":/images/templates/images/authorize.svg", "Çalışmayı Onayla", lambda: self.authorize_project(self.login.user.username))
+            self.create_action(self.actions_menu, ":/images/templates/images/authorize.svg", "Çalışmayı Onayla", lambda: self.authorize_project(self.login.user.username, warning=True))
 
         self.create_action(self.user_menu, ":/images/templates/images/logout.svg", "Oturumu Kapat", self.login.logout)
 
@@ -257,20 +258,18 @@ class Connector(QMainWindow, UI):
         self.source.clear()
         self.image_handler.image_dir_list.clear()
 
-
-    def clear_project(self, database: bool = True):
+    def clear_project(self):
         self.scene.clear()
 
         self.configurator.reset()
         self.image_handler.clear()
         self.database.clear()
         self.clear_widgets()
-        self.first_start = True
 
     def pages_current_changed(self, index):
         if index == 0:
-            self.widget_import_project.setVisible(self.image_handler.count <= 0)
-            self.pushButton_continue_labeling_from_images.setVisible(self.image_handler.count > 0)
+            self.widget_import_project.setVisible(self.image_handler.count <= 0 if not self.first_start else True)
+            self.pushButton_continue_labeling_from_images.setVisible(self.image_handler.count > 0 if not self.first_start else False)
         if index == 2:
             self.pushButton_exit_project.setVisible(True)
             self.label_total_image_value.setText(str(self.image_handler.count))
@@ -282,16 +281,22 @@ class Connector(QMainWindow, UI):
         self.graphicsView.resetTransform()
         self.graphicsView.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
 
-    def authorize_project(self, authorized: Union[str, None] = None, animation: bool = True):
+    def authorize_project(self, authorized: Union[str, None] = None, animation: bool = True, warning: bool = False):
         """
             Onaylama işlemini gerçekleştirir.
             Eğer onaylama işlemi başarılı olursa, animasyon gösterilir.
         """
-        self.database.setting.update(UtilsForSettings.AUTHORIZED.value, authorized)
-        self.pushButton_personel_state.setChecked(bool(authorized))
-        self.label_authorized.setText(authorized if authorized else "Onaylanmamış")
-        if authorized and animation:
-            self.create_authorize_animation()
+        if not warning or self.database.annotation.count() > 0:
+            if warning and self.database.annotation.undefined_count() > 0:
+                self.show_message(PopupMessages.Warning.M205)
+                return
+            self.database.setting.update(UtilsForSettings.AUTHORIZED.value, authorized)
+            self.pushButton_personel_state.setChecked(bool(authorized))
+            self.label_authorized.setText(authorized if authorized else "Onaylanmamış")
+            if authorized and animation:
+                self.create_authorize_animation()
+        else:
+            self.show_message(PopupMessages.Warning.M200)
 
     def create_authorize_animation(self):
         """
