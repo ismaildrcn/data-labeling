@@ -245,7 +245,7 @@ class ImageHandler:
                     self._connector.pages.setCurrentIndex(2)
                 else:
                     self._connector.pages.setCurrentIndex(1)
-            self._connector.image_table.setCurrentItem(self._connector.image_table.item(0, 1))
+                self._connector.load_selected_image(0, 1)
             self.set_dashboard_values()
     
     def insert_from_drag_drop(self, drop_list):
