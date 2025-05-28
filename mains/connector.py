@@ -52,8 +52,8 @@ class Connector(QMainWindow, UI):
         self.setupUi(self)
         self.modules()
         self.init_widgets()
-        self.initialize()
         self.connection()
+        self.initialize()
 
     def modules(self):
         self.listener = Listener(self)
@@ -267,9 +267,8 @@ class Connector(QMainWindow, UI):
         self.clear_widgets()
 
     def pages_current_changed(self, index):
-        if index == 0:
-            self.widget_import_project.setVisible(self.image_handler.count <= 0 if not self.first_start else True)
-            self.pushButton_continue_labeling_from_images.setVisible(self.image_handler.count > 0 if not self.first_start else False)
+        self.widget_import_project.setVisible(self.image_handler.count <= 0 if not self.first_start else True)
+        self.pushButton_continue_labeling_from_images.setVisible(self.image_handler.count > 0 if not self.first_start else False)
         if index == 2:
             self.pushButton_exit_project.setVisible(True)
             self.label_total_image_value.setText(str(self.image_handler.count))

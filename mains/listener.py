@@ -165,22 +165,24 @@ class Listener(QMainWindow):
                     border-radius: 2px;
                 }
             """)
-            delete_action = QAction("Görseli Sil", menu)
-            icon = QIcon()
-            icon.addPixmap(QPixmap(":/images/templates/images/delete.svg"), QIcon.Normal, QIcon.Off)
-            delete_action.setIcon(icon)
-            menu.addAction(delete_action)
-
+            self._connector.create_action(
+                    menu,
+                    ":/images/templates/images/import-image.svg",
+                    "Görsel Ekle",
+                    lambda: self._connector.image_handler.insert_image(route=False)
+                )
             clicked_item = self._connector.image_table.itemAt(event.pos())
             if clicked_item:
-                clicked_item.row()
-                delete_action.triggered.connect(
+                self._connector.create_action(
+                    menu, 
+                    ":/images/templates/images/delete.svg", 
+                    "Görseli Sil",
                     lambda: self._connector.image_handler.delete_image(
-                        self._connector.image_table.item(clicked_item.row(), 1).data(Qt.UserRole)
-                        )
+                            self._connector.image_table.item(clicked_item.row(), 1).data(Qt.UserRole)
+                            )
                 )
-                # Menüyü göster
-                menu.exec_(event.globalPos())
+            # Menüyü göster
+            menu.exec_(event.globalPos())
 
     @staticmethod
     def has_file(urls: list) -> list:

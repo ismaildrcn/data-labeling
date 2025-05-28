@@ -125,16 +125,34 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_7.sizePolicy().hasHeightForWidth())
         self.widget_7.setSizePolicy(sizePolicy)
+        self.widget_7.setMinimumSize(QtCore.QSize(0, 0))
         self.widget_7.setObjectName("widget_7")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.widget_7)
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.lineEdit_password = QtWidgets.QLineEdit(self.widget_7)
         self.lineEdit_password.setMinimumSize(QtCore.QSize(0, 30))
         self.lineEdit_password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_password.setClearButtonEnabled(True)
         self.lineEdit_password.setObjectName("lineEdit_password")
-        self.verticalLayout_5.addWidget(self.lineEdit_password)
+        self.horizontalLayout_7.addWidget(self.lineEdit_password)
+        self.pushButton_show_password = QtWidgets.QPushButton(self.widget_7)
+        self.pushButton_show_password.setMinimumSize(QtCore.QSize(30, 30))
+        self.pushButton_show_password.setStyleSheet("QPushButton, QPushButton:hover{\n"
+"    border:none;\n"
+"    background-color:transparent;\n"
+"}")
+        self.pushButton_show_password.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/templates/images/view.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/images/templates/images/unview.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.pushButton_show_password.setIcon(icon)
+        self.pushButton_show_password.setCheckable(True)
+        self.pushButton_show_password.setObjectName("pushButton_show_password")
+        self.horizontalLayout_7.addWidget(self.pushButton_show_password)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_7)
         self.label_password_warning = QtWidgets.QLabel(self.widget_7)
         self.label_password_warning.setStyleSheet("color:red;")
         self.label_password_warning.setObjectName("label_password_warning")
@@ -274,6 +292,11 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        Dialog.setTabOrder(self.lineEdit_username, self.lineEdit_password)
+        Dialog.setTabOrder(self.lineEdit_password, self.pushButton_login)
+        Dialog.setTabOrder(self.pushButton_login, self.pushButton_show_password)
+        Dialog.setTabOrder(self.pushButton_show_password, self.checkBox_remember_me)
+        Dialog.setTabOrder(self.checkBox_remember_me, self.pushButton_operator_continue)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate

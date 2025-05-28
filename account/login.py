@@ -1,7 +1,8 @@
 import sys
 
 from typing import Union
-from PyQt5.QtWidgets import QDialog, QWidget
+from PyQt5.QtWidgets import QDialog, QWidget, QAction
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot, QPoint
 
 from database.utils import UtilsForSettings
@@ -27,10 +28,10 @@ class Login(QDialog, LoginUI):
         self.connection()
         self.widget_main.setGraphicsEffect(self._connector.create_shadow())
 
-
     def connection(self):
         self.pushButton_login.clicked.connect(self.check_login_input)
         self.pushButton_operator_continue.clicked.connect(lambda: self.check_login_input(operator=True))
+        self.pushButton_show_password.clicked.connect(self.toggle_password_visibility)
         self.userSignal.connect(self.accept_login)
     
     def show(self):
@@ -136,3 +137,9 @@ class Login(QDialog, LoginUI):
             event.ignore()
         else:
             super().keyPressEvent(event)
+    
+    def toggle_password_visibility(self):
+        if self.pushButton_show_password.isChecked():
+            self.lineEdit_password.setEchoMode(self.lineEdit_password.Normal)
+        else:
+            self.lineEdit_password.setEchoMode(self.lineEdit_password.Password)
