@@ -88,18 +88,43 @@ class CustomGraphicsView(QGraphicsView):
     def wheelEvent(self, event: QWheelEvent):
         """Mouse wheel zoom with Ctrl key at cursor position."""
         if event.modifiers() == Qt.ControlModifier:
-            old_pos = self.mapToScene(event.pos())  # Zoom öncesi mouse sahnedeki pozisyonu
+            old_pos = self.mapToScene(event.pos())
             
             # Zoom faktörünü belirle
-            zoom_factor = 1.2 if event.angleDelta().y() > 0 else 1 / 1.2
-            self.scale(zoom_factor, zoom_factor)
-
-            # Yeni sahne konumunu hesapla
-            new_pos = self.mapToScene(event.pos())  
-            delta = new_pos - old_pos  # Farkı hesapla
+            zoom_out = event.angleDelta().y() < 0
+            zoom_factor = 1 / 1.2 if zoom_out else 1.2
+            self._zoom += 1 if not zoom_out else -1
+            # Mevcut transform'u al
+            current_transform = self.transform()
             
-            # Viewport'u kaydırarak mouse'un sabit kalmasını sağla
-            self.translate(delta.x(), delta.y())
+            # Zoom out yapılıyorsa, minimum boyut kontrolü yap
+            if self._zoom > 0:
+                if zoom_out:
+                    # Viewport ve scene boyutlarını al
+                    viewport_rect = self.viewport().rect()
+                    scene_rect = self.scene().sceneRect()
+                    
+                    # Yeni transform'u hesapla
+                    new_transform = current_transform.scale(zoom_factor, zoom_factor)
+                    
+                    # Yeni transform ile scene'in viewport'a sığıp sığmayacağını kontrol et
+                    mapped_rect = new_transform.mapRect(scene_rect)
+                    
+                    # Eğer yeni boyut viewport'tan küçük olacaksa, zoom'u engelle
+                    if mapped_rect.width() < viewport_rect.width() and mapped_rect.height() < viewport_rect.height():
+                        return
+                # Zoom işlemini uygula
+                self.scale(zoom_factor, zoom_factor)
+                
+                # Yeni sahne konumunu hesapla
+                new_pos = self.mapToScene(event.pos())
+                delta = new_pos - old_pos
+                
+                # Viewport'u kaydırarak mouse'un sabit kalmasını sağla
+                self.translate(delta.x(), delta.y())
+            else:
+                self.fit_scene()
+                self.reset()
         else:
             super().wheelEvent(event)
 
@@ -139,16 +164,28 @@ class CustomGraphicsView(QGraphicsView):
         return QPointF(x, y)
 
     def zoom(self, step):
-        self._zoom = self._zoom + step
-        if self._zoom >= 0:
-            if step > 0:
-                factor = SCALE_FACTOR ** step
-            else:
-                factor = 1 / SCALE_FACTOR ** abs(step)
-            self.scale(factor, factor)
-        else:
-            self.scale(1, 1)
+        if step == 0:
+            return
+        self._zoom += step
+        print(self._zoom)
+        if self._zoom <= 0:
             self._zoom = 0
+            self.fit_scene()
+            return
+        # Transform'u sıfırla ve yeni scale uygula
+        self.resetTransform()
+        factor = SCALE_FACTOR ** self._zoom
+        self.scale(factor, factor)
+        # Sahnenin merkezini ortala
+        scene_rect = self.scene().sceneRect()
+        self.centerOn(scene_rect.center())
     
+    def fit_scene(self):
+        self.resetTransform()
+        # fitInView ile sahneyi tamamen göster
+        scene_rect = self.scene().sceneRect()
+        if not scene_rect.isNull():
+            self.fitInView(scene_rect, Qt.KeepAspectRatio)
+
     def reset(self):
         self._zoom = 0

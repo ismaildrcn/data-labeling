@@ -3,9 +3,26 @@ from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 
 class NoScrollComboBox(QComboBox):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.isEditable():
+            self.lineEdit().installEventFilter(self)
+
     def wheelEvent(self, event):
         event.ignore()  # Tekerlek hareketini yok say
 
+    def mousePressEvent(self, event):
+        # ComboBox'ın boş alanına tıklanırsa
+        if self.isEditable() and self.lineEdit().isReadOnly():
+            self.showPopup()
+        else:
+            super().mousePressEvent(event)
+
+    def eventFilter(self, obj, event):
+        if obj == self.lineEdit() and event.type() == event.MouseButtonPress:
+            self.showPopup()
+            return True
+        return super().eventFilter(obj, event)
  
 
 class LabelWidget(QWidget):
@@ -56,6 +73,8 @@ class LabelWidget(QWidget):
         self.label_list.setEditable(True)
         self.label_list.lineEdit().setPlaceholderText("Etiket Seç")
         self.label_list.lineEdit().setReadOnly(True)
+        self.label_list.lineEdit().installEventFilter(self.label_list)
+        self.label_list.setMinimumSize(QSize(125, 25))
         self.label_list.setMaximumSize(QSize(125, 25))
         self.horizontalLayout_2.addWidget(self.label_list)
         self.widget_2 = QWidget(self.main)

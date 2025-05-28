@@ -8,7 +8,7 @@ from images.utils import ImageStatus
 class ImageCore(object):
     def __init__(self, connector=None, image: QUrl=None):
         self._connector = connector
-        self._connector.image_handler.check_directroy(image)
+        self._connector.image_handler.check_directory(image)
         self._annotations = []
         self.image_content = TableImageContent(connector.image_table, image)
         self.image_content.delete_image.clicked.connect(lambda: self._connector.image_handler.delete_image(image))

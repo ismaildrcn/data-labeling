@@ -26,7 +26,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QLabel{
+      <string notr="true">QLabel, QCheckBox{
 	color: #EEEEEE;
 }
 QLineEdit{
@@ -105,7 +105,10 @@ QPushButton:hover{
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="topMargin">
-             <number>50</number>
+             <number>40</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
             </property>
             <item>
              <widget class="QLabel" name="label_2">
@@ -141,46 +144,169 @@ QPushButton:hover{
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Hoşgeldiniz!&lt;br/&gt;Hesabınıza giriş yapın&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Hoşgeldiniz!
+Hesabınıza giriş yapın</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_username">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
+             <widget class="QWidget" name="widget_8" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="placeholderText">
-               <string>ismaildrcn</string>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>true</bool>
-              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_username">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>ismaildrcn</string>
+                 </property>
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_username_warning">
+                 <property name="styleSheet">
+                  <string notr="true">color: red;</string>
+                 </property>
+                 <property name="text">
+                  <string>Kullanıcı adı boş bırakılamaz.</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_password">
+             <widget class="QWidget" name="widget_7" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>30</height>
+                <height>0</height>
                </size>
               </property>
-              <property name="echoMode">
-               <enum>QLineEdit::Password</enum>
-              </property>
-              <property name="placeholderText">
-               <string>Password</string>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>true</bool>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_password">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="echoMode">
+                    <enum>QLineEdit::Password</enum>
+                   </property>
+                   <property name="placeholderText">
+                    <string>Password</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_show_password">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton, QPushButton:hover{
+	border:none;
+	background-color:transparent;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../../rcc_files/rsrc.qrc">
+                     <normaloff>:/images/templates/images/view.svg</normaloff>
+                     <normalon>:/images/templates/images/unview.svg</normalon>:/images/templates/images/view.svg</iconset>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_password_warning">
+                 <property name="styleSheet">
+                  <string notr="true">color:red;</string>
+                 </property>
+                 <property name="text">
+                  <string>Parola boş bırakılamaz.</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignRight">
+             <widget class="QCheckBox" name="checkBox_remember_me">
+              <property name="text">
+               <string>Beni Hatırla</string>
               </property>
              </widget>
             </item>
@@ -224,13 +350,13 @@ QPushButton:hover{
              <number>0</number>
             </property>
             <property name="topMargin">
-             <number>15</number>
+             <number>10</number>
             </property>
             <property name="rightMargin">
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>15</number>
+             <number>10</number>
             </property>
             <item>
              <widget class="Line" name="line_2">
@@ -259,7 +385,7 @@ QPushButton:hover{
                </font>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;veya&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>veya</string>
               </property>
              </widget>
             </item>
@@ -291,13 +417,23 @@ QPushButton:hover{
             <property name="spacing">
              <number>12</number>
             </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
             <property name="bottomMargin">
-             <number>50</number>
+             <number>40</number>
             </property>
             <item>
              <widget class="QLabel" name="label_6">
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Operatör olarak devam edin&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Operatör olarak devam edin</string>
               </property>
              </widget>
             </item>
@@ -443,6 +579,14 @@ QPushButton:hover{
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_username</tabstop>
+  <tabstop>lineEdit_password</tabstop>
+  <tabstop>pushButton_login</tabstop>
+  <tabstop>pushButton_show_password</tabstop>
+  <tabstop>checkBox_remember_me</tabstop>
+  <tabstop>pushButton_operator_continue</tabstop>
+ </tabstops>
  <resources>
   <include location="../../rcc_files/rsrc.qrc"/>
  </resources>

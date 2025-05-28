@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['templates\\images\\fad.ico'],
+    icon=['templates\\images\\microchip.ico'],
 )

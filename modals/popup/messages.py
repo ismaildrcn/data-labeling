@@ -26,6 +26,8 @@ class PopupMessages(object):
 
         M100 = "Çalışmanız başarıyla oluşturuldu, etiketlemeye başlayabilirsiniz."
         M101 = "Çalışmanız başarıyla seçmiş olduğunuz dizine aktarılmıştır."
+        M102 = "Görseller başarıyla yüklendi."
+        M103 = "Çalışma yüzeyiniz boş olduğu için kapatılmıştır."
 
     class Warning(BaseEnum):
         @property
@@ -41,8 +43,10 @@ class PopupMessages(object):
         M201 = "Bilgisayara aktarılacak etiket bulunamadı."
         M202 = "Bu isimlendirmeye ait zaten bir etiketiniz var, lütfen farklı bir isim girmeyi deneyiniz."
         M203 = "Bazı görseller aktarmış olduğunuz dizinde bulunamadı (görsellerin yeri değişmiş olabilir), bu görseller ve etiketleri dışarıya aktarılmayacaktır."
-        M204 = "Böyle bir kullanıcı bulunamadı. Lütfen kullanıcı adınızı doğru girdiğinizden emin olun!"
-        M205 = "Çalışma yüzeyiniz boş değil, lütfen çalışmadaki işlemlerini bitirmeden yeni bir çalışmayı uygulamaya aktarmayı denemeyin."
+        M204 = "Kullanıcı adı veya parolanızı yanlış girdiniz, lütfen doğru bilgileri girdiğinizden emin olun!"
+        M205 = "Onaylama işleminden önce lütfen tanımsız etiket türlerini atayın."
+        M206 = "Çalışma yüzeyiniz boş değil, lütfen çalışmadaki işlemlerinizi bitirmeden yeni bir çalışmayı uygulamaya aktarmayı denemeyin."
+        M207 = "Lütfen önce görsel ekleyin, daha sonra etiketleri düzenleyebilirsiniz."
     
     class Error(BaseEnum):
         @property

@@ -11,14 +11,20 @@ class LabelCRUD(CRUD):
 
 
     @staticmethod
-    def add(unique_id: str, name: str, is_default: bool) -> Label:
-        if session.query(Label).filter(Label.unquie_id == unique_id).first() is not None:
-            return None
-        else:
-            new_item = Label(unquie_id=unique_id, name=name, is_default=is_default)
-            session.add(new_item)
-            session.commit()
-            return new_item
+    def add(name: str, is_default: bool) -> Label:
+        if is_default:
+            existing_label = session.query(Label).filter(Label.name == name).first()
+            if existing_label:
+                return existing_label
+        # En yüksek unique_id değerini bul
+        max_id = session.query(Label).order_by(Label.unique_id.desc()).first()
+        new_unique_id = max_id.unique_id + 1 if max_id else 0
+        
+        # Yeni kayıt oluştur
+        new_item = Label(unique_id=new_unique_id, name=name, is_default=is_default)
+        session.add(new_item)
+        session.commit()
+        return new_item
     
     @staticmethod
     def get():

@@ -1,7 +1,9 @@
 import ast
 from typing import overload
 
-from PyQt5.QtWidgets import QListWidgetItem, QFileDialog
+from PyQt5.QtWidgets import QListWidgetItem, QFileDialog, QTableWidgetItem, QPushButton, QWidget, QHBoxLayout, QAbstractItemView
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 
 from modals.popup.messages import PopupMessages
 from modals.popup.utils import Answers
@@ -13,19 +15,28 @@ SETTINGS = {}
 class Configurator(object):
     def __init__(self, connector=None):
         self._connector = connector
+        
+        # Table widget setup
+        self._connector.tableWidget_label_list.setColumnCount(2)
+        self._connector.tableWidget_label_list.setColumnWidth(0, 40)  # Delete button column
+        self._connector.tableWidget_label_list.setColumnWidth(1, 350) # Label column
+        self._connector.tableWidget_label_list.setSelectionBehavior(QAbstractItemView.SelectRows)
+
         self.label_type = {}
         for key, value in LABEL_TYPES.items():
-            self._connector.database.label.add(unique_id=value, name=key, is_default=True)
+            self._connector.database.label.add(name=key, is_default=True)
         self.add_default_labels()                
-    
+        
+        self._connector.lineEdit_add_label.textChanged.connect(self.lowercase_lineedit)
+
     @property
     def labels(self):
         labels = self._connector.database.label.get().all()
         self.get_settings_from_database()
         if bool(int(SETTINGS['use_default_labels'])):
-            return [[label.name, label.unquie_id + 1] for label in labels]
+            return [[label.name, label.unique_id + 1] for label in labels]
         else:
-            return [[label.name, label.unquie_id + 1] for label in labels if not label.is_default]
+            return [[label.name, label.unique_id + 1] for label in labels if not label.is_default]
         
 
     def reset(self):
@@ -38,71 +49,72 @@ class Configurator(object):
             Returns:
                 None
         """
-        self._connector.listWidget_label_list.clear()
+        self._connector.database.label.clear()
+        self._connector.tableWidget_label_list.clear()
         # Add default labels
         self.add_default_labels()
         self._connector.database.setting.update('use_default_labels', True)
         
     def add_default_labels(self):
         """
-            Varsayılan etiketleri ekler.
-
-            Bu method, varsayılan etiketleri etiket listesine ekler
-            ve etiket listesi widget'ını günceller.
-
-            Returns:
-                None
+        Varsayılan etiketleri ekler.
+        Default etiketler için silme butonu olmayacak.
         """
         self.label_type = self._connector.database.label.get().all()
-        for lbl in self.label_type:
-            item = QListWidgetItem(lbl.name)
-            self._connector.listWidget_label_list.addItem(item)
-        self._connector.database.setting.update('use_default_labels', True)
+        self._connector.tableWidget_label_list.setRowCount(0)
         
+        for label in self.label_type:
+            self.create_table_item_for_label(label)
 
-    def clear(self):
+    def delete_label(self, name):
         """
-            Etiket listesini temizler.
-
-            Bu method, etiket listesini sıfırlar ve etiket listesi
-            widget'ını temizler.
-
-            Returns:
-                None
+        Etiket silme işlemi.
+        Label ismi üzerinden silme işlemi yapar.
+        
+        Args:
+            name (str): Silinecek etiketin ismi
         """
-        if self.label_type:
-            answer = self._connector.show_message(PopupMessages.Action.M403)
-            if answer is Answers.OK:
-                labels = self._connector.database.label.get().all()
-                for label in labels:
-                    if not label.is_default:
-                        self._connector.database.label.delete(label)
-                self._connector.listWidget_label_list.clear()
-            self._connector.database.setting.update('use_default_labels', False)
+        # Database'den label objesini bul
+        label = next((lbl for lbl in self.label_type if lbl.name == name), None)
+        
+        if label and not label.is_default:
+            # Database'den sil
+            self._connector.database.label.delete(label)
+            
+            # Tablodan bul ve sil
+            items = self._connector.tableWidget_label_list.findItems(name, Qt.MatchExactly)
+            if items:
+                row = items[0].row()
+                self._connector.tableWidget_label_list.removeRow(row)
+                # Bir üst satırı seç ve scroll et
+                row_count = self._connector.tableWidget_label_list.rowCount()
+                if row_count > 0:
+                    new_row = max(0, row - 1)
+                    self._connector.tableWidget_label_list.selectRow(new_row)
+                    item = self._connector.tableWidget_label_list.item(new_row, 1)
+                    if item:
+                        self._connector.tableWidget_label_list.scrollToItem(item, QAbstractItemView.PositionAtCenter)
+        
+        # Memory'den sil
+        self.label_type = [lbl for lbl in self.label_type if lbl.name != name]
 
     def add(self):
         """
-            Yeni bir etiket ekler.
-
-            Bu method, kullanıcının girdiği metni etiket olarak ekler.
-            Etiket text input alanından alınır ve hem etiket listesine
-            hem de görsel listeye eklenir.
-
-            Returns:
-                None
+        Yeni bir etiket ekler.
+        Yeni eklenen etiketler için silme butonu ekler.
         """
         text = self._connector.lineEdit_add_label.text()
-        name_list  = [item for item in self.label_type if item.name == text]
-        if text in name_list:
+        name_list = [item for item in self.label_type if item.name == text]
+        if name_list:
             self._connector.show_message(PopupMessages.Warning.M202)
         else:
             if text != '':
-                db_item = self._connector.database.label.add(unique_id=len(self.label_type), name=text, is_default=False)
+                db_item = self._connector.database.label.add(name=text, is_default=False)
                 self.label_type.append(db_item)
-                item = QListWidgetItem(text)
-                self._connector.listWidget_label_list.addItem(item)
+                self.create_table_item_for_label(db_item)
                 self._connector.lineEdit_add_label.clear()
-
+                self._connector.image_handler.update_all_label_comboboxes()
+                
     def export_labels(self):
         """
             Etiketleri bir dosyaya dışa aktarır.
@@ -119,8 +131,11 @@ class Configurator(object):
             return
         fname = QFileDialog.getSaveFileName(self._connector, 'Etiketleri Bilgisayara Aktar', '', 'Label Files (*.lbl)')[0]
         if fname:
+            temp = {}
+            for label in self.label_type:
+                temp[label.name] = label.unique_id
             with open(fname, 'w') as f:
-                f.write(str(self.label_type))
+                f.write(str(temp))
 
     @overload
     def import_labels(self) -> None: ...
@@ -128,38 +143,48 @@ class Configurator(object):
     def import_labels(self, file_path: str) -> None: ...
     def import_labels(self, *args):
         """
-            Etiketleri bir dosyadan içe aktarın ve etiket listesine ekleyin.
+        Etiketleri bir dosyadan içe aktarın ve etiket listesine ekleyin.
 
-            Bu fonksiyon, kullanıcının bir etiket dosyası seçmesi için bir dosya iletişim kutusu açar,
-            dosyanın içeriğini okur ve her etiketi etiket listesine
-            ve QListWidget'a ekler.
+        Bu fonksiyon, kullanıcının bir etiket dosyası seçmesi için bir dosya iletişim kutusu açar,
+        dosyanın içeriğini okur ve her etiketi etiket listesine ve tabloya ekler.
 
-            Returns:
-                None
+        Args:
+            *args: Opsiyonel dosya yolu
+
+        Returns:
+            None
         """
-        if self.label_type:
+        if not args and self.label_type:
             answer = self._connector.show_message(PopupMessages.Action.M401)
         else:
             answer = Answers.OK
+            
         if answer == Answers.OK:
-            self.label_type.clear()
-            self._connector.listWidget_label_list.clear()
             if args:
                 fname = args[0]
             else:
-                fname = QFileDialog.getOpenFileName(self._connector, 'Etiketleri Uygulamaya Aktar', '', 'Label Files (*.lbl)')[0]
+                fname = QFileDialog.getOpenFileName(
+                    self._connector, 
+                    'Etiketleri Uygulamaya Aktar', 
+                    '', 
+                    'Label Files (*.lbl)'
+                )[0]
+                
             if fname:
+                self.label_type.clear()
+                self._connector.tableWidget_label_list.setRowCount(0)
                 with open(f"{fname}", 'r') as f:
                     text = ast.literal_eval(f.readline().strip())
                     if text:
                         for key, value in text.items():
-                            item = QListWidgetItem(key)
-                            self._connector.listWidget_label_list.addItem(item)
+                            # Database'e ekle veya var olanı al
                             if not self._connector.database.label.filter(Label.name, key):
-                                db_item = self._connector.database.label.add(unique_id=len(self.label_type), name=key, is_default=False)
+                                db_item = self._connector.database.label.add(name=key, is_default=False)
                             else:
                                 db_item = self._connector.database.label.filter(Label.name, key)[0]
                             self.label_type.append(db_item)
+                            
+                            self.create_table_item_for_label(db_item)
 
     def get_settings_from_database(self):
         """
@@ -174,3 +199,46 @@ class Configurator(object):
         settings = self._connector.database.setting.get().all()
         for setting in settings:
             SETTINGS[setting.name] = setting.value
+
+    def create_table_item_for_label(self, label):
+        """
+            Etiket için tablo öğesi oluşturur.
+
+            Args:
+                label (str): Etiket ismi
+        """
+        row = self._connector.tableWidget_label_list.rowCount()
+        self._connector.tableWidget_label_list.insertRow(row)
+        
+        if not label.is_default:
+            # Create widget for centered button
+            btn_widget = QWidget()
+            btn_layout = QHBoxLayout(btn_widget)
+            btn_layout.setContentsMargins(0, 0, 0, 0)
+            
+            # Delete button
+            delete_btn = QPushButton()
+            delete_btn.setIcon(QIcon(":/images/templates/images/delete.svg"))
+            delete_btn.setFixedSize(22, 22)
+            delete_btn.clicked.connect(lambda checked, name=label.name: self.delete_label(name))
+            
+            # Add button to layout centered
+            btn_layout.addWidget(delete_btn, 0, Qt.AlignCenter)
+            
+            # Set widget as cell widget
+            self._connector.tableWidget_label_list.setCellWidget(row, 0, btn_widget)
+        
+        # Label name item
+        name_item = QTableWidgetItem(label.name)
+        self._connector.tableWidget_label_list.setItem(row, 1, name_item)
+        self._connector.tableWidget_label_list.scrollToBottom()
+
+    def lowercase_lineedit(self, text):
+        new_text = text.lower()
+        if new_text.endswith("__"):
+            new_text = new_text[:-1]
+        cursor_pos = self._connector.lineEdit_add_label.cursorPosition()
+        self._connector.lineEdit_add_label.blockSignals(True)
+        self._connector.lineEdit_add_label.setText(new_text)
+        self._connector.lineEdit_add_label.setCursorPosition(cursor_pos)
+        self._connector.lineEdit_add_label.blockSignals(False)
