@@ -352,7 +352,7 @@ class ImageHandler:
                         if len(line) == 5:
                             coords = (float(line[1]), float(line[2]), float(line[3]), float(line[4]))
                             rect_obj = QGraphicsRectItem()
-                            self.add_annotation(source=image, coords=coords, rect_obj=rect_obj, label=int(line[0]))
+                            self.add_annotation(source=image, coords=coords, rect_obj=rect_obj, label=int(line[0]) if line[0].isnumeric() else None)
                             self.check_annotation_in_current_source(image)
         
     def check_image_path_list(self, path: str) -> Union[QUrl, bool]:
@@ -395,24 +395,19 @@ class ImageHandler:
             İşlem sırasında herhangi bir hata olması durumunda, hata mesajı gösterilir.
         """
         try:
-            available_annotation = self._connector.database.annotation.count()
-            defined_annotation = self._connector.database.annotation.defined_count()
-            if available_annotation == 0:
+            if self._connector.database.annotation.count() == 0:
                 self._connector.show_message(PopupMessages.Warning.M200)
             else:
-                if available_annotation - defined_annotation > 0:
-                    answer = self._connector.show_message(PopupMessages.Action.M400)
-                if available_annotation - defined_annotation == 0 or answer == Answers.OK:
-                    default_name = f"catch_{datetime.now().strftime('%Y%m%d_%H%M%S')}{ARCHIVE_EXTENSION}"
-                    save_path, _ = QFileDialog.getSaveFileName(
-                        self._connector,
-                        'Çalışmanın Kaydedileceği Dosyayı Seçin',
-                        default_name,
-                        f"ANNS File (*{ARCHIVE_EXTENSION})"
-                    )
-                    if save_path:
-                        self.zipper(save_path)
-                        self._connector.show_message(PopupMessages.Info.M101)
+                default_name = f"catch_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{'verified' if self._connector.is_project_authorized() else 'unverified'}{ARCHIVE_EXTENSION}"
+                save_path, _ = QFileDialog.getSaveFileName(
+                    self._connector,
+                    'Çalışmanın Kaydedileceği Dosyayı Seçin',
+                    default_name,
+                    f"ANNS File (*{ARCHIVE_EXTENSION})"
+                )
+                if save_path:
+                    self.zipper(save_path)
+                    self._connector.show_message(PopupMessages.Info.M101)
         except Exception as _:
             self._connector.show_message(PopupMessages.Error.M301)
     
@@ -451,8 +446,7 @@ class ImageHandler:
                 if os.path.exists(image_path):
                     content = ""
                     for annotation in self.get_annotation(image):
-                        if isinstance(annotation.label, int):
-                            content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
+                        content += f"{annotation.label} {annotation.coords[0]} {annotation.coords[1]} {annotation.coords[2]} {annotation.coords[3]}\n"
                     if content:
                         archive.writestr(f'{base_name}.txt', content)
             label_type = {}

@@ -296,6 +296,9 @@ class Connector(QMainWindow, UI):
                 self.create_authorize_animation()
         else:
             self.show_message(PopupMessages.Warning.M200)
+    
+    def is_project_authorized(self) -> bool:
+        return bool(self.database.setting.filter(UtilsForSettings.AUTHORIZED.value).value)
 
     def create_authorize_animation(self):
         """
