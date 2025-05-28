@@ -290,7 +290,8 @@ class Connector(QMainWindow, UI):
                 self.show_message(PopupMessages.Warning.M205)
                 return
             self.database.setting.update(UtilsForSettings.AUTHORIZED.value, authorized)
-            self.pushButton_personel_state.setChecked(bool(authorized))
+            self.label_authorized_icon.setPixmap(QPixmap(f":/images/templates/images/document-{'check' if bool(authorized) else 'cross'}.svg"))
+            # self.pushButton_personel_state.setChecked(bool(authorized))
             self.label_authorized.setText(authorized if authorized else "Onaylanmamış")
             if authorized and animation:
                 self.create_authorize_animation()

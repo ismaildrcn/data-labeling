@@ -1972,10 +1972,7 @@ QPushButton:hover, QPushButton:checked {
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QPushButton" name="pushButton_personel_state">
-                         <property name="enabled">
-                          <bool>true</bool>
-                         </property>
+                        <widget class="QLabel" name="label_authorized_icon">
                          <property name="minimumSize">
                           <size>
                            <width>22</width>
@@ -1988,38 +1985,14 @@ QPushButton:hover, QPushButton:checked {
                            <height>22</height>
                           </size>
                          </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:focus, QPushButton:checked{
-	background-color: transparent;
-}</string>
-                         </property>
                          <property name="text">
                           <string/>
                          </property>
-                         <property name="icon">
-                          <iconset resource="../../rcc_files/rsrc.qrc">
-                           <normaloff>:/images/templates/images/document-cross.svg</normaloff>
-                           <normalon>:/images/templates/images/document-check.svg</normalon>
-                           <disabledoff>:/images/templates/images/document-cross.svg</disabledoff>
-                           <disabledon>:/images/templates/images/document-check.svg</disabledon>:/images/templates/images/document-cross.svg</iconset>
+                         <property name="pixmap">
+                          <pixmap resource="../../rcc_files/rsrc.qrc">:/images/templates/images/document-cross.svg</pixmap>
                          </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>22</width>
-                           <height>22</height>
-                          </size>
-                         </property>
-                         <property name="checkable">
+                         <property name="scaledContents">
                           <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeat">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoExclusive">
-                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
