@@ -978,6 +978,7 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.label_current_image_name.setFont(font)
         self.label_current_image_name.setText("")
+        self.label_current_image_name.setAlignment(QtCore.Qt.AlignCenter)
         self.label_current_image_name.setObjectName("label_current_image_name")
         self.horizontalLayout_5.addWidget(self.label_current_image_name)
         self.pushButton_next_image = QtWidgets.QPushButton(self.widget_labeling_bottom_area)
