@@ -2,9 +2,13 @@ import os
 import sys
 
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtNetwork import QLocalServer, QLocalSocket
 from mains.connector import Connector
+
+QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+
 # High DPI ayarları
 import ctypes
 ctypes.windll.shcore.SetProcessDpiAwareness(1)  # 1: SYSTEM_AWARE, 2: PER_MONITOR_AWARE

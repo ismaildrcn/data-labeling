@@ -77,9 +77,6 @@ class Connector(QMainWindow, UI):
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-        QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-
         self.widget_main.setGraphicsEffect(self.create_shadow())
 
         self.graphicsView = CustomGraphicsView(self.centralwidget)
@@ -179,11 +176,10 @@ class Connector(QMainWindow, UI):
             self.image_pixmap = QPixmap(self.source.current.toLocalFile())
 
             self.scene.clear()  # Önceki sahneyi temizle
-            pixmap_item = self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
+            self.scene.addPixmap(self.image_pixmap)  # Yeni görseli ekle
 
             self.scene.setSceneRect(0, 0, self.image_pixmap.width(), self.image_pixmap.height())
-
-            self.graphicsView.fitInView(pixmap_item, Qt.KeepAspectRatio)
+            self.graphicsView.fit_scene()
 
             self.graphicsView.setTransformationAnchor(QGraphicsView.NoAnchor)
             self.graphicsView.setResizeAnchor(QGraphicsView.NoAnchor)
@@ -260,7 +256,7 @@ class Connector(QMainWindow, UI):
 
     def clear_project(self):
         self.scene.clear()
-
+        self.authorize_project()
         self.configurator.reset()
         self.image_handler.clear()
         self.database.clear()
@@ -272,6 +268,7 @@ class Connector(QMainWindow, UI):
         if index == 2:
             self.pushButton_exit_project.setVisible(True)
             self.label_total_image_value.setText(str(self.image_handler.count))
+            self.graphicsView.fit_scene()
             return
         self.pushButton_exit_project.setVisible(False)
 
@@ -291,7 +288,6 @@ class Connector(QMainWindow, UI):
                 return
             self.database.setting.update(UtilsForSettings.AUTHORIZED.value, authorized)
             self.label_authorized_icon.setPixmap(QPixmap(f":/images/templates/images/document-{'check' if bool(authorized) else 'cross'}.svg"))
-            # self.pushButton_personel_state.setChecked(bool(authorized))
             self.label_authorized.setText(authorized if authorized else "Onaylanmamış")
             if authorized and animation:
                 self.create_authorize_animation()

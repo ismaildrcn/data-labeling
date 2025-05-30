@@ -585,7 +585,6 @@ class ImageHandler:
         self._connector.label_defined_annotation_value.setNum(self._connector.database.annotation.defined_count())
 
     def copy_image_to_temp_dir(self, images) -> list:
-        print(self._connector.database.settings.tempdir)
         temp_images = []
         for image in images:
             source = image.toLocalFile() if isinstance(image, QUrl) else image
