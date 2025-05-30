@@ -193,7 +193,7 @@ Hesabınıza giriş yapın</string>
                   <string/>
                  </property>
                  <property name="placeholderText">
-                  <string>ismaildrcn</string>
+                  <string>username</string>
                  </property>
                  <property name="clearButtonEnabled">
                   <bool>true</bool>
@@ -254,7 +254,7 @@ Hesabınıza giriş yapın</string>
                     <enum>QLineEdit::Password</enum>
                    </property>
                    <property name="placeholderText">
-                    <string>Password</string>
+                    <string>password</string>
                    </property>
                    <property name="clearButtonEnabled">
                     <bool>true</bool>

@@ -304,9 +304,9 @@ class Ui_Dialog(object):
         self.label_2.setText(_translate("Dialog", "Görsel Veri Etiketleme"))
         self.label_4.setText(_translate("Dialog", "Hoşgeldiniz!\n"
 "Hesabınıza giriş yapın"))
-        self.lineEdit_username.setPlaceholderText(_translate("Dialog", "ismaildrcn"))
+        self.lineEdit_username.setPlaceholderText(_translate("Dialog", "username"))
         self.label_username_warning.setText(_translate("Dialog", "Kullanıcı adı boş bırakılamaz."))
-        self.lineEdit_password.setPlaceholderText(_translate("Dialog", "Password"))
+        self.lineEdit_password.setPlaceholderText(_translate("Dialog", "password"))
         self.label_password_warning.setText(_translate("Dialog", "Parola boş bırakılamaz."))
         self.checkBox_remember_me.setText(_translate("Dialog", "Beni Hatırla"))
         self.pushButton_login.setText(_translate("Dialog", "Giriş"))
