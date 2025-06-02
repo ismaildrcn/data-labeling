@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Oturum Aç</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../rcc_files/rsrc.qrc">
+    <normaloff>:/images/templates/images/microchip.ico</normaloff>:/images/templates/images/microchip.ico</iconset>
+  </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
