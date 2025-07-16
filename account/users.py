@@ -8,5 +8,6 @@ class User:
 class Users(Enum):
 
     ismaildrcn = User(username="ismaildrcn", password="123456")
+    operator = User(username="operator", password="operator")
 
 
